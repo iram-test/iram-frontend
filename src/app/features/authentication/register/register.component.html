@@ -1,0 +1,34 @@
+<div class="overlay" *ngIf="popupService.isRegisterVisible()">
+  <div class="popup">
+    <div>
+      <button class="close-btn" (click)="closeRegister()"><svg width="38" height="38" viewBox="0 0 38 38" fill="none"
+          xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M10.1333 30.0834L7.91663 27.8667L16.7833 19L7.91663 10.1334L10.1333 7.91669L19 16.7834L27.8666 7.91669L30.0833 10.1334L21.2166 19L30.0833 27.8667L27.8666 30.0834L19 21.2167L10.1333 30.0834Z"
+            fill="#1D1B20" />
+        </svg>
+      </button>
+    </div>
+    <form>
+      <h1 class="logo">iram</h1>
+      <div class="form-group">
+        <input id="first-name" type="text" placeholder="first name:" required />
+      </div>
+      <div class="form-group">
+        <input id="last-name" type="text" placeholder="last name:" required />
+      </div>
+      <div class="form-group">
+        <input id="email" type="email" placeholder="email:" required />
+      </div>
+      <div class="form-group">
+        <input id="password" type="password" placeholder="password:" required />
+      </div>
+      <div class="form-group">
+        <button type="submit">Sign up</button>
+      </div>
+    </form>
+    <div>
+      <div>Have an account? <a routerLinkActive="active" (click)="openLogin()">Sign In</a></div>
+    </div>
+  </div>
+</div>

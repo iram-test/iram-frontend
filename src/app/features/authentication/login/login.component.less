@@ -1,0 +1,115 @@
+.overlay {
+  font-family: 'Dosis';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 30px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.popup {
+  position: relative;
+  width: 90%;
+  max-width: 585px;
+  height: auto;
+  max-height: 90vh;
+  border-radius: 15px;
+  background: white;
+  text-align: center;
+  overflow-y: auto;
+  padding: 20px;
+
+  font-family: 'Dosis';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 30px;
+}
+
+h1.logo {
+  margin-top: 0;
+  font-family: 'Ms Madi';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 6vw;
+  line-height: 1.2;
+  color: #1B3687;
+}
+
+form {
+  display: flex;
+  row-gap: 40px;
+  flex-direction: column;
+}
+
+form~div,
+a {
+  color: #1B3687;
+}
+
+a {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+input {
+  border: none;
+  width: 100%;
+  max-width: 438px;
+  padding: 14px 22px;
+  border: 3px solid #1B3687;
+  border-radius: 12px;
+
+  font-family: 'Dosis';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 24px;
+}
+
+input::placeholder {
+  color: #1B3687;
+  font-family: 'Dosis';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 24px;
+}
+
+.form-group>button[type='submit'] {
+  cursor: pointer;
+  color: white;
+  border: none;
+  width: 100%;
+  max-width: 438px;
+  padding: 15px 0;
+  text-align: center;
+  background: #1B3687;
+  border-radius: 12px;
+  margin-bottom: 24px;
+}
+
+.close-btn {
+  width: 38px;
+  height: 38px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: transparent;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.close-btn:hover {
+  cursor: pointer;
+}
