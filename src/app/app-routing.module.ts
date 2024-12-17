@@ -4,9 +4,6 @@ import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
 
 const routes: Routes = [
-  {
-    path: '', component: AppComponent, pathMatch: 'full'
-  },
   { path: 'authentication', loadChildren: () => import('../app/features/authentication/authentication.module').then(m => m.AuthenticationModule) }
 ];
 

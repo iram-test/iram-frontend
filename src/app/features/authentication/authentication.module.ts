@@ -13,7 +13,6 @@ import { FormsModule } from '@angular/forms';
     CommonModule,
     FormsModule,
     AuthenticationRoutingModule
-  ],
-  // exports: [LoginComponent]
+  ]
 })
 export class AuthenticationModule { }
