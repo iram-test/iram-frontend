@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { TestCasesComponent } from './test-cases/test-cases.component';
 import { AddTestCaseComponent } from './add-test-case/add-test-case.component';
-import { BrowserModule } from '@angular/platform-browser';
 
 const routes: Routes = [
   {
