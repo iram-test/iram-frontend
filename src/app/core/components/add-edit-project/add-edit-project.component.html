@@ -1,0 +1,28 @@
+<div class="hero-section">
+    <h1>iram</h1>
+    <div class="flx">
+        <ul class="flx">
+            <li><a href="#">Dashboard</a></li>
+        </ul>
+    </div>
+</div>
+<h2 *ngIf="!id">Add Project</h2>
+<h2 *ngIf="id">Edit Project</h2>
+<main>
+    <form method="post" [formGroup]="projectForm" (ngSubmit)="sendData(projectForm.value)">
+        <fieldset>
+            <div class="form-group">
+                <label for="name">Name*</label><br />
+                <input id="name" class="name" type="text" formControlName="name" placeholder="Some name" />
+            </div>
+            <div class="form-group">
+                <label for="announcement">Announcement</label><br />
+                <textarea id="announcement" formControlName="announcement"></textarea>
+            </div>
+        </fieldset>
+        <div class="btns">
+            <button type="submit" class="add-btn">Add Project</button>
+            <button class="cancel-btn">Cancel</button>
+        </div>
+    </form>
+</main>

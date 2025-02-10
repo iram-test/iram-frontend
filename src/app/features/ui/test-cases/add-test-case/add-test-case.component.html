@@ -1,0 +1,141 @@
+<app-internal-menu></app-internal-menu>
+
+<div class="header">
+    <h2>Test Cases</h2>
+</div>
+
+<div class="test-case-form">
+    <form [formGroup]="testCaseForm" (ngSubmit)="onSubmit()">
+        <div class="form-section">
+            <div class="title-group">
+                <label for="title">Title*</label>
+                <input id="title" class="title" type="text" formControlName="title"
+                    placeholder="Enter test case title" />
+            </div>
+
+            <div class="dropdown-group">
+                <div>
+                    <label for="section">Section*</label>
+                    <select id="section" formControlName="section">
+                        <option *ngFor="let section of sections" [value]="section">{{ section }}</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="template">Template*</label>
+                    <select id="template" formControlName="template">
+                        <option *ngFor="let template of templates" [value]="template">{{ template }}</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="type">Type*</label>
+                    <select id="type" formControlName="type">
+                        <option *ngFor="let type of types" [value]="type">{{ type }}</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="priority">Priority*</label>
+                    <select id="priority" formControlName="priority">
+                        <option *ngFor="let priority of priorities" [value]="priority">{{ priority }}</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="estimate">Estimate</label>
+                    <input id="estimate" type="text" formControlName="estimate" placeholder="Enter estimate" />
+                </div>
+
+                <div>
+                    <label for="references">References</label>
+                    <input id="references" type="text" formControlName="references" placeholder="Enter references" />
+                </div>
+
+                <div>
+                    <label for="automationType">Automation Type</label>
+                    <select id="automationType" formControlName="automationType">
+                        <option *ngFor="let automationType of automationTypes" [value]="automationType">
+                            {{ automationType }}
+                        </option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="preconditions-group">
+            <div class="preconditions">
+                <label for="preconditions">Preconditions:</label>
+                <textarea id="preconditions" rows="4" formControlName="preconditions"
+                    placeholder="Enter preconditions"></textarea>
+                <div>The preconditions of this test case. Reference other test cases with [C#](e.g. [C17])</div>
+            </div>
+        </div>
+
+        <div class="steps-section" formArrayName="steps">
+            <div *ngFor="let step of steps.controls; let i = index" [formGroupName]="i">
+                <div class="step">
+                    <div class="step-header">
+                        <div class="step-number">{{ i + 1 }}</div>
+                        <div class="step-title">Step {{ i + 1 }}</div>
+                    </div>
+                    <div class="step-content">
+                        <div>
+                            <label for="steps">Step Description</label>
+                            <app-contenteditable formControlName="steps"></app-contenteditable>
+                        </div>
+                        <div>
+                            <label for="expectedResults">Expected Result</label>
+                            <app-contenteditable formControlName="expectedResults"></app-contenteditable>
+                        </div>
+
+                        <!-- Image Preview -->
+                        <div *ngIf="stepImages[i]">
+                            <img [src]="stepImages[i]" alt="Step image" class="uploaded-image" />
+                        </div>
+                    </div>
+                    <button type="button" (click)="removeStep(i)">Delete Step</button>
+                </div>
+            </div>
+        </div>
+
+        <button type="button" (click)="addStep()">Add Step</button>
+
+
+        <button type="button" (click)="addStep()">Add Step</button>
+
+
+
+
+        <!-- <div class="steps-section">
+            <div class="step">
+                <div class="step-header">
+                    <div class="step-number">1</div>
+                    <div class="step-title">To push on gaming laptop category</div>
+                </div>
+                <div class="step-content">
+                    <div class="step-image">
+                        <div class="image-drop-zone" contenteditable="true">
+                            <span>Paste image here</span>
+                        </div>
+                    </div>
+                    <div class="step-result">
+                        <div class="image-drop-zone" contenteditable="true">
+                            <span>Paste image here</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="step-actions">
+                    <button class="share-btn">Share</button>
+                    <button class="import-btn">Import</button>
+                    <button class="up-btn">Up</button>
+                    <button class="down-btn">Down</button>
+                    <button class="delete-btn">Delete</button>
+                    <button class="add-btn">Add</button>
+                </div>
+            </div>
+        </div> -->
+
+        <div class="form-actions">
+            <button type="submit">Save</button>
+            <button type="reset" (click)="resetForm()">Clear</button>
+        </div>
+    </form>
+</div>

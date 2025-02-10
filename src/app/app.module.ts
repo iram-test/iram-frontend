@@ -6,16 +6,18 @@ import { AppComponent } from './app.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { PopupService } from './core/services/popup.service';
 import { AuthenticationModule } from "./features/authentication/authentication.module";
-import { NavMenuComponent } from './core/components/nav-menu/nav-menu.component';
+import { TestCasesModule } from './features/ui/test-cases/test-cases.module';
+import { CoreModule } from './core/core.module';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    NavMenuComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    CoreModule,
+    TestCasesModule,
     AuthenticationModule
 ],
   providers: [
