@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
-import { TestCaseDTO } from '../../../../core/Models/test-case-dto';
+import { TestCase } from '../../../../core/models/test-case-entity';
 
 @Component({
   selector: 'app-add-test-case',
@@ -9,7 +9,7 @@ import { TestCaseDTO } from '../../../../core/Models/test-case-dto';
 })
 export class AddTestCaseComponent {
   testCaseForm: FormGroup;
-  testCase: TestCaseDTO;
+  testCase: TestCase;
   sections = ['Section 1', 'Section 2', 'Section 3'];
   templates = ['Template 1', 'Template 2', 'Template 3'];
   types = ['Type 1', 'Type 2', 'Type 3'];

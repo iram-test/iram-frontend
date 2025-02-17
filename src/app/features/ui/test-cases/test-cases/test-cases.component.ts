@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { TestCaseDTO } from '../../../../core/Models/test-case-dto';
+import { TestCase } from '../../../../core/models/test-case-entity';
 import { HttpClient } from '@angular/common/http';
-import { TemplateType } from '../../../../core/Models/enums/template-type';
-import { TestType } from '../../../../core/Models/enums/test-type';
-import { Priority } from '../../../../core/Models/enums/project-priority';
-import { Status } from '../../../../core/Models/enums/status';
+import { TemplateType } from '../../../../core/models/enums/template-type';
+import { TestType } from '../../../../core/models/enums/test-type';
+import { Priority } from '../../../../core/models/enums/project-priority';
+import { Status } from '../../../../core/models/enums/status';
 
 @Component({
   selector: 'app-test-cases',
@@ -12,7 +12,7 @@ import { Status } from '../../../../core/Models/enums/status';
   styleUrl: './test-cases.component.less'
 })
 export class TestCasesComponent implements OnInit {
-  testCases: TestCaseDTO[];
+  testCases: TestCase[];
 
 
   constructor(private readonly http: HttpClient) { }

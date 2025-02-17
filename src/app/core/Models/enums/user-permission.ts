@@ -3,4 +3,5 @@ export enum UserPermission {
     WRITE = "write",
     DELETE = "delete",
     CREATE = "create",
+    ASSIGN = "assign",
 }

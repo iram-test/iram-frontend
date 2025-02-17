@@ -1,1 +1,71 @@
-<p>milestones works!</p>
+<div class="page-wrapper">
+    <app-internal-menu></app-internal-menu>
+    <div class="container">
+        <div class="header">
+            <h2>Milestones</h2>
+        </div>
+        <div class="content" *ngIf="isMilestonesEmpty()">
+            <div class="info-box">
+                <div class="flx">
+                    <div class="info"></div>
+                    <div>
+                        <p><strong>There are not any test cases, yet.</strong></p>
+                        <p>Use the following buttons to create a section or test case.</p>
+                    </div>
+                </div>
+                <div class="buttons">
+                    <button class="btn">+ Add Milestone</button>
+                </div>
+            </div>
+        </div>
+        <!-- <div class="section-container" *ngIf="!isMilestonesEmpty()">
+            <div class="head">
+                <div class="actions">
+                    <button class="add-case">+ Add case</button>
+                    <button class="edit">Edit</button>
+                    <button class="delete">Delete</button>
+                </div>
+            </div>
+
+            <div class="product-filtration">
+                <div class="title-row">
+                    <span>Product filtration</span>
+                    <span class="count">5</span>
+                    <button class="edit">Edit</button>
+                </div>
+                <div class="case-list">
+                    <div class="case-item">
+                        <div class="drag-handle">☰</div>
+                        <div class="checkbox"><input type="checkbox" /></div>
+                        <div class="case-id">ID</div>
+                        <div class="case-title">Title</div>
+                    </div>
+                    <div class="case-item">
+                        <div class="drag-handle">☰</div>
+                        <div class="checkbox"><input type="checkbox" /></div>
+                        <div class="case-id">C2</div>
+                        <div class="case-title">Iram test case</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="case-actions">
+                <label for="case-title">Case Title:</label>
+                <input type="text" />
+                <button class="accept">Accept</button>
+                <button class="reject">Reject</button>
+            </div>
+        </div> -->
+
+        <div class="sidebar">
+            <button class="sidebar-btn">+ Add Milestone</button>
+            <p *ngIf="isMilestonesEmpty()">There are no milestones.</p>
+            <p *ngIf="!isMilestonesEmpty()">There are {{milestones.length}} milestones.</p>
+            <div class="sidebar-section" *ngIf="!isMilestonesEmpty()">
+                <div *ngFor="let milestone of milestones">
+                    <p>{{milestone.name}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
