@@ -34,7 +34,7 @@ export class MilestonesComponent implements OnInit {
       testReportId: '',
       testRunId: ''
     };
-    this.milestones = [milestone];
-    // this.milestones = [];
+    // this.milestones = [milestone];
+    this.milestones = [];
   }
 }

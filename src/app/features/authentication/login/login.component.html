@@ -10,13 +10,13 @@
         </svg>
       </button>
     </div>
-    <form>
+    <form method="post" [formGroup]="loginForm" (ngSubmit)="login(loginForm.value)">
       <h1 class="logo">iram</h1>
       <div class="form-group">
-        <input id="email" type="email" placeholder="email:" required />
+        <input id="email" type="email" placeholder="email:" required formControlName="email" />
       </div>
       <div class="form-group">
-        <input id="password" type="password" placeholder="password:" required />
+        <input id="password" type="password" placeholder="password:" required formControlName="password" />
       </div>
       <div class="form-group">
         <button type="submit">Sign in</button>

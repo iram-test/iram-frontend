@@ -1,0 +1,37 @@
+<div class="page-wrapper">
+    <app-internal-menu></app-internal-menu>
+    <div class="container">
+        <div class="header">
+            <h2>Test Runs</h2>
+        </div>
+        <div class="content" *ngIf="isTestRunsEmpty()">
+            <div class="info-box">
+                <div class="flx">
+                    <div class="info"></div>
+                    <div>
+                        <p><strong>There are not any test runs, yet.</strong></p>
+                        <p>Use the following buttons to create test run.</p>
+                    </div>
+                </div>
+                <div class="buttons">
+                    <button class="btn">+ Add Test Run</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="test-runs-section" *ngIf="!isTestRunsEmpty()">
+            <h2>Open</h2>
+        </div>
+
+        <div class="sidebar">
+            <button class="sidebar-btn">+ Add Test Run</button>
+            <p>There are no test runs.</p>
+            <div class="order-by-attribute">
+                <label for="attribute">Order By</label>
+                <select name="attribute" id="attribute">
+                    <option value="date">Date</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</div>

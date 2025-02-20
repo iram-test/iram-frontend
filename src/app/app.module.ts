@@ -9,6 +9,7 @@ import { AuthenticationModule } from "./features/authentication/authentication.m
 import { TestCasesModule } from './features/ui/test-cases/test-cases.module';
 import { CoreModule } from './core/core.module';
 import { MilestonesModule } from './features/ui/milestones/milestones.module';
+import { TestRunsModule } from './features/ui/test-runs/test-runs.module';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { MilestonesModule } from './features/ui/milestones/milestones.module';
     CoreModule,
     TestCasesModule,
     MilestonesModule,
+    TestRunsModule,
     AuthenticationModule
 ],
   providers: [
