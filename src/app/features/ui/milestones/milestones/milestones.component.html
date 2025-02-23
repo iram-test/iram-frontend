@@ -14,14 +14,31 @@
                     </div>
                 </div>
                 <div class="buttons">
-                    <button class="btn">+ Add Milestone</button>
+                    <button class="btn" (click)="navigateAddMilestone()">+ Add Milestone</button>
                 </div>
             </div>
         </div>
 
+        <div class="section-container" *ngIf="!isMilestonesEmpty()">
+            <div class="product-filtration">
+                <div class="case-list">
+                    <div class="case-item" *ngFor="let milestone of filteredMilestones">
+                        <div class="drag-handle">☰</div>
+                        <div class="case-id">{{milestone.milestoneID}}</div>
+                        <div class="case-title">{{milestone.name}}</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="case-actions">
+                <label for="case-title">Milestone:</label>
+                <input type="text" id="case-title" (input)="filterMilestones($event)" />
+            </div>
+        </div>
+
         <div class="sidebar">
-            <button class="sidebar-btn">+ Add Milestone</button>
-            <p *ngIf="isMilestonesEmpty()">There are no milestones.</p>
+            <button class="sidebar-btn" (click)="navigateAddMilestone()">+ Add Milestone</button>
+            <p *ngIf=" isMilestonesEmpty()">There are no milestones.</p>
             <p *ngIf="!isMilestonesEmpty()">There are {{milestones.length}} milestones.</p>
             <div class="sidebar-section" *ngIf="!isMilestonesEmpty()">
                 <div *ngFor="let milestone of milestones">

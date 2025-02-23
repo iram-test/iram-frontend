@@ -1,0 +1,42 @@
+<div class="select-cases-container">
+    <div class="header">Select cases</div>
+
+    <div *ngIf="isLoading()" class="loading-spinner">Loading...</div>
+
+    <div *ngIf="errorMessage()" class="error-message">{{ errorMessage() }}</div>
+
+    <form [formGroup]="testCaseForm" (ngSubmit)="onSubmit()" *ngIf="!isLoading() && !errorMessage()">
+        <div class="cases-grid">
+            <div class="category-column" *ngFor="let section of sectionFormArray.controls; let i = index">
+                <div class="category-header" [formGroupName]="i">
+                    <div class="select-all-none">
+                        <a href="#"
+                            (click)="setAllSectionCases(caseSections()[i].sectionId, true); $event.preventDefault()">All</a>
+                        |
+                        <a href="#"
+                            (click)="setAllSectionCases(caseSections()[i].sectionId, false); $event.preventDefault()">None</a>
+                    </div>
+                    <div class="category-title" (click)="toggleSection(caseSections()[i].sectionId)">
+                        <input type="checkbox" [checked]="isEveryTestCaseSelected(caseSections()[i].sectionId)"
+                            (change)="toggleAllSectionCases(caseSections()[i].sectionId)">
+                        {{ caseSections()[i].name }} ({{ caseSections()[i].testCases.length }})
+                    </div>
+                </div>
+                <div class="cases-list" *ngIf="getSectionFormGroup(caseSections()[i].sectionId).get('expanded')?.value">
+                    <div class="case-item" *ngFor="let testCase of caseSections()[i].testCases; let j = index">
+                        <label>
+                            <input type="checkbox"
+                                [formControl]="getTestCaseFormArray(caseSections()[i].sectionId).controls[j]">
+                            {{ testCase.title }}
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="buttons">
+                <button class="ok-button" type="submit">OK</button>
+                <button class="cancel-button" type="button" (click)="onCancel()">Cancel</button>
+            </div>
+        </div>
+    </form>
+</div>

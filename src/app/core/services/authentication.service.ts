@@ -4,14 +4,7 @@ import { Observable, Subject } from 'rxjs';
 import { AppSettings } from '../constants/AppSettings';
 import { RegisterDTO } from '../models/auth-dto'; // Import RegisterDTO
 import { LoginWithUsernameDTO, LoginWithEmailDTO } from '../models/auth-dto'; // Import Login DTOs
-
-interface AuthResponseDto {
-  isAuthSuccessful: boolean;
-  token: string;
-  errorMessage?: string;
-  is2StepVerificationRequired?: boolean;
-  provider?: string;
-}
+import { AuthResult } from '../models/AuthResult';
 
 @Injectable({
   providedIn: 'root'
@@ -22,20 +15,20 @@ export class AuthenticationService {
 
   constructor(private readonly http: HttpClient) { }
 
-  public registerUser(registerDto: RegisterDTO): Observable<AuthResponseDto> {
-    return this.http.post<AuthResponseDto>(`${AppSettings.AUTH_ENDPOINT}register`, registerDto);
+  public registerUser(registerDto: RegisterDTO): Observable<AuthResult> {
+    return this.http.post<AuthResult>(`${AppSettings.AUTH_ENDPOINT}register`, registerDto);
   }
 
-  public loginUserWithUsername(loginDto: LoginWithUsernameDTO): Observable<AuthResponseDto> {
-    return this.http.post<AuthResponseDto>(`${AppSettings.AUTH_ENDPOINT}login/username`, loginDto);
+  public loginUserWithUsername(loginDto: LoginWithUsernameDTO): Observable<AuthResult> {
+    return this.http.post<AuthResult>(`${AppSettings.AUTH_ENDPOINT}login/username`, loginDto);
   }
 
-  public loginUserWithEmail(loginDto: LoginWithEmailDTO): Observable<AuthResponseDto> {
-    return this.http.post<AuthResponseDto>(`${AppSettings.AUTH_ENDPOINT}login/email`, loginDto);
+  public loginUserWithEmail(loginDto: LoginWithEmailDTO): Observable<AuthResult> {
+    return this.http.post<AuthResult>(`${AppSettings.AUTH_ENDPOINT}login/email`, loginDto);
   }
 
-  public logoutUser(): Observable<AuthResponseDto> {
-    return this.http.post<AuthResponseDto>(`${AppSettings.AUTH_ENDPOINT}logout`, {});
+  public logoutUser(): Observable<AuthResult> {
+    return this.http.post<AuthResult>(`${AppSettings.AUTH_ENDPOINT}logout`, {});
   }
 
   public isUserAuthenticated = (): boolean => {

@@ -39,24 +39,18 @@
                     <button class="edit">Edit</button>
                 </div>
                 <div class="case-list">
-                    <div class="case-item">
+                    <div class="case-item" *ngFor="let testCase of filteredTestCases">
                         <div class="drag-handle">☰</div>
                         <div class="checkbox"><input type="checkbox" /></div>
-                        <div class="case-id">ID</div>
-                        <div class="case-title">Title</div>
-                    </div>
-                    <div class="case-item">
-                        <div class="drag-handle">☰</div>
-                        <div class="checkbox"><input type="checkbox" /></div>
-                        <div class="case-id">C2</div>
-                        <div class="case-title">Iram test case</div>
+                        <div class="case-id">{{testCase.testCaseId}}</div>
+                        <div class="case-title">{{testCase.title}}</div>
                     </div>
                 </div>
             </div>
 
             <div class="case-actions">
                 <label for="case-title">Case Title:</label>
-                <input type="text" />
+                <input type="text" id="case-title" (input)="filterCases($event)" />
                 <button class="accept">Accept</button>
                 <button class="reject">Reject</button>
             </div>

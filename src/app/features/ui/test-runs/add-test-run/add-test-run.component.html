@@ -2,6 +2,9 @@
 
 <div class="header">
     <h2>Add Test Run</h2>
+    <!-- <div class="sidebar">
+        <p></p>
+    </div> -->
 </div>
 
 <div class="test-run-form">
@@ -14,7 +17,7 @@
 
         <div class="form-group">
             <label for="assign-to">Assign To</label>
-            <select name="assign-to" id="assign-to" formControlName="assign-to">
+            <select name="assign-to" id="assign-to" formControlName="assignTo">
                 <option *ngFor="let user of users" [value]="user">{{user}}</option>
             </select>
         </div>
@@ -22,7 +25,7 @@
         <div class="row"></div>
 
         <div class="form-group">
-            <label for="assign-to">Milestones</label>
+            <label for="milestones">Milestones</label>
             <select name="milestones" class="milestones" id="milestones" formControlName="milestones">
                 <option *ngFor="let milestone of milestones" [value]="milestone">{{milestone}}</option>
             </select>
@@ -55,7 +58,7 @@
 
             <div class="form-group">
                 <div class="radio-groups">
-                    <input type="radio" name="include-cases" id="include-specific-cases" class="include-cases" />
+                    <input type="radio" name="include-cases" id="include-specific-cases" class="include-cases" (click)="selectSpecificCases()" />
                     <div>
                         <h4>Select specific test cases</h4>
                         <p>You can alternatively select the test cases to include in this test run. New
@@ -72,7 +75,4 @@
             <button type="reset" (click)="resetForm()">Cancel</button>
         </div>
     </form>
-    <div class="sidebar">
-        <button class="sidebar-btn">+ Add Test Run</button>
-    </div>
 </div>

@@ -8,6 +8,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { AddEditProjectComponent } from './components/add-edit-project/add-edit-project.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AuthenticationModule } from '../features/authentication/authentication.module';
+import { ProjectOverviewComponent } from './components/project-overview/project-overview.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { AuthenticationModule } from '../features/authentication/authentication.
     InternalMenuComponent,
     LandingPageComponent,
     DashboardComponent,
-    AddEditProjectComponent],
+    AddEditProjectComponent,
+    ProjectOverviewComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,

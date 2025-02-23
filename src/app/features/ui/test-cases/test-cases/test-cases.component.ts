@@ -5,6 +5,7 @@ import { TemplateType } from '../../../../core/models/enums/template-type';
 import { TestType } from '../../../../core/models/enums/test-type';
 import { Priority } from '../../../../core/models/enums/project-priority';
 import { Status } from '../../../../core/models/enums/status';
+import { TestCaseDTO } from '../../../../core/models/test-case-dto';
 
 @Component({
   selector: 'app-test-cases',
@@ -12,8 +13,8 @@ import { Status } from '../../../../core/models/enums/status';
   styleUrl: './test-cases.component.less'
 })
 export class TestCasesComponent implements OnInit {
-  testCases: TestCase[];
-
+  testCases: TestCaseDTO[];
+  filteredTestCases: TestCaseDTO[];
 
   constructor(private readonly http: HttpClient) { }
 
@@ -23,29 +24,49 @@ export class TestCasesComponent implements OnInit {
 
   ngOnInit(): void {
     //Later here will be logic with httpClient
-    // const testCase: TestCaseDTO = {
-    //   testCaseId: '',
-    //   title: 'Test Case',
-    //   collection: '',
-    //   folderId: '',
-    //   templateType: TemplateType.STEPS,
-    //   testType: TestType.ACCESSIBILITY,
-    //   priority: Priority.LOW,
-    //   description: '',
-    //   timeEstimation: '',
-    //   reference: '',
-    //   createdAt: undefined,
-    //   updatedAt: undefined,
-    //   projectId: '',
-    //   status: Status.PASSED,
-    //   assignedUserId: '',
-    //   comment: '',
-    //   elapsedTime: '',
-    //   defects: '',
-    //   version: '',
-    //   step: []
-    // };
-    // this.testCases = [testCase];
-    this.testCases = [];
+    const testCase1: TestCaseDTO = {
+      testCaseId: 'ID',
+      title: 'Title',
+      sectionId: '',
+      projectId: '',
+      assignedUserId: '',
+      templateType: TemplateType.STEPS,
+      testType: TestType.ACCESSIBILITY,
+      priority: Priority.LOW,
+      timeEstimation: '',
+      description: '',
+      stepIds: [],
+      createdAt: '',
+      updatedAt: ''
+    };
+
+    const testCase2: TestCaseDTO = {
+      testCaseId: 'CS2',
+      title: 'Iram test case',
+      sectionId: '',
+      projectId: '',
+      assignedUserId: '',
+      templateType: TemplateType.STEPS,
+      testType: TestType.ACCESSIBILITY,
+      priority: Priority.LOW,
+      timeEstimation: '',
+      description: '',
+      stepIds: [],
+      createdAt: '',
+      updatedAt: ''
+    }
+
+    this.testCases = [testCase1, testCase2];
+    this.filteredTestCases = [...this.testCases];
+    // this.testCases = [];
+  }
+
+  filterCases(event: Event) {
+    const searchText = (event.target as HTMLInputElement).value;
+    // console.log(searchText);
+    this.filteredTestCases = this.testCases.filter(testCase =>
+      testCase.title.toLowerCase().includes(searchText.toLowerCase())
+    );
+    console.log(this.filteredTestCases);
   }
 }

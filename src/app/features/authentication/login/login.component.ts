@@ -5,14 +5,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthenticationService } from '../../../core/services/authentication.service';
 import { LoginWithUsernameDTO, LoginWithEmailDTO } from '../../../core/models/auth-dto';
 import { HttpErrorResponse } from '@angular/common/http';
-
-interface AuthResponseDto {
-  isAuthSuccessful: boolean;
-  token: string;
-  errorMessage?: string;
-  is2StepVerificationRequired?: boolean;
-  provider?: string;
-}
+import { AuthResult } from '../../../core/models/AuthResult';
 
 @Component({
   selector: 'app-login',
@@ -52,10 +45,10 @@ export class LoginComponent {
     };
 
     this.authService.loginUserWithEmail(loginDto).subscribe({
-      next: (response: AuthResponseDto) => {
-        localStorage.setItem("token", response.token);
-        this.authService.sendAuthStateChangeNotification(response.isAuthSuccessful);
-        this.router.navigate([this.returnUrl]);
+      next: (response: AuthResult) => {
+        localStorage.setItem("token", response.refreshToken);
+        // this.authService.sendAuthStateChangeNotification(response.isAuthSuccessful);
+        this.router.navigate(['/dashboard']);
       },
       error: (error: HttpErrorResponse) => {
         this.errorMessage = error.message;

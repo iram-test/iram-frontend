@@ -34,11 +34,11 @@
                             <div class="test-run-details-img"></div>
                             <div class="test-run-details">
                                 <h3>{{testRun.name}} {{testRun.createdAt}}</h3>
-                                <p class="results-line"><span>{{calculatePassed(testRun)}}</span> Passed,
-                                    <span>{{calculateBlocked(testRun)}}</span> Blocked,
-                                    <span>{{calculateUntested(testRun)}}</span> Untested,
-                                    <span>{{calculateRetest(testRun)}}</span> Retest and
-                                    <span>{{calculateFailed(testRun)}}</span>
+                                <p class="results-line"><span>{{testRun.passed}}</span> Passed,
+                                    <span>{{testRun.blocked}}</span> Blocked,
+                                    <span>{{testRun.untested}}</span> Untested,
+                                    <span>{{testRun.retested}}</span> Retest and
+                                    <span>{{testRun.failed}}</span>
                                     Failed.
                                 </p>
                             </div>
@@ -50,7 +50,7 @@
                                     <div class="progress" style="width: 75%;"></div>
                                 </div>
                                 <!-- <span class="percentage">{{calculatePercentage(testRun)}}</span> -->
-                                <button class="remove-button">x</button>
+                                <button class="remove-button" (click)="onRemoveTestRun(testRun.testRunId)">x</button>
                             </div>
                         </div>
                     </div>

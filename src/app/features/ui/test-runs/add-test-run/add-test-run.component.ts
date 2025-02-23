@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TestRun } from '../../../../core/models/test-run-entity';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-test-run',
@@ -13,13 +14,17 @@ export class AddTestRunComponent {
   testRunForm: FormGroup;
   testRun: TestRun;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private router: Router) {
     this.testRunForm = this.fb.group({
       name: ['', Validators.required],
-      description: [''],
-      startdate: [''],
-      enddate: ['']
+      assignTo: [''],
+      milestones: [''],
+      description: ['']
     });
+  }
+
+  selectSpecificCases() {
+    this.router.navigate(['/select-cases']);
   }
 
   onSubmit() {

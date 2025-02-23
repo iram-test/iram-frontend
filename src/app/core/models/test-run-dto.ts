@@ -1,3 +1,5 @@
+import { TestCaseDTO } from "./test-case-dto";
+
 export interface TestRunDTO {
   testRunId: string;
   name: string;
@@ -8,6 +10,17 @@ export interface TestRunDTO {
   description: string;
   createdAt: string;
   updatedAt: string;
+}
+
+export interface TestRunResult {
+  testRunId: string;
+  name: string;
+  createdAt: string;
+  passed: number;
+  failed: number;
+  blocked: number;
+  untested: number;
+  retested: number;
 }
 
 export interface CreateTestRunDTO {

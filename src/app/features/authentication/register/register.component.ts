@@ -8,11 +8,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { UserRole } from '../../../core/models/enums/user-role';
 
 interface AuthResponseDto {
-  isAuthSuccessful: boolean;
-  token: string;
-  errorMessage?: string;
-  is2StepVerificationRequired?: boolean;
-  provider?: string;
+  accessToken: string;
+  refreshToken: string;
 }
 
 @Component({

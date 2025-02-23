@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { TestRunDTO } from '../../../../core/models/test-run-dto'; // Adjust the path if necessary
+import { TestRunDTO, TestRunResult } from '../../../../core/models/test-run-dto'; // Adjust the path if necessary
 import { Router } from '@angular/router';
 
 @Component({
@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./test-runs.component.less']
 })
 export class TestRunsComponent implements OnInit {
-  testRuns: TestRunDTO[] = [];
+  testRuns: TestRunResult[] = [];
   selectedAttribute: string = 'date';
 
   constructor(private readonly router: Router) { }
@@ -17,25 +17,23 @@ export class TestRunsComponent implements OnInit {
     this.testRuns = [
       {
         testRunId: '1',
-        name: 'Test Run 1/5/2025',
-        milestoneIds: [],
-        assignedUserIds: null,
-        projectId: 'ProjectA',
-        testCaseIds: ['TC1', 'TC2', 'TC3'],
-        description: 'Description for Test Run 1',
-        createdAt: '2024-01-01',
-        updatedAt: '2024-01-05'
+        name: 'Test Run Result 1',
+        createdAt: Date.now().toString(),
+        passed: 3,
+        failed: 1,
+        blocked: 0,
+        untested: 0,
+        retested: 0
       },
       {
         testRunId: '2',
-        name: 'Another Test Run',
-        milestoneIds: [],
-        assignedUserIds: null,
-        projectId: 'ProjectB',
-        testCaseIds: ['TC4', 'TC5', 'TC6', 'TC7', 'TC8'],
-        description: 'Description for Test Run 2',
-        createdAt: '2023-12-20',
-        updatedAt: '2024-01-10'
+        name: 'Test Run Result 2',
+        createdAt: Date.now().toString(),
+        passed: 4,
+        failed: 5,
+        blocked: 0,
+        untested: 0,
+        retested: 0
       }
     ];
   }

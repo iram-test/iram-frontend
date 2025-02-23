@@ -29,19 +29,20 @@
 
         <div class="projects">
             <h2><span>Proje</span>cts</h2>
-            <section class="project-details">
+            <section class="project-details" *ngFor="let project of projects">
                 <div class="case"></div>
                 <div>
-                    <h3>Laptop Shop</h3>
+                    <h3>{{project.name}} <div class="pencil" (click)="navigateEditProject(project.projectId)"></div>
+                    </h3>
                     <div>
-                        <a href="#">To-dos | </a>
-                        <a href="#">Milestones | </a>
-                        <a href="#">Test Runs | </a>
-                        <a href="#">Reports</a>
+                        <a routerLinkActive="active" routerLink="/test-cases">Test Cases | </a>
+                        <a routerLinkActive="active" routerLink="/milestones">Milestones | </a>
+                        <a routerLinkActive="active" routerLink="/test-runs">Test Runs</a>
                     </div>
-                    <p>Contains <strong>2</strong> test suites, <strong>2</strong> active test runs and <strong>1</strong> active milestone.</p>
+                    <p>Contains <strong>2</strong> test suites, <strong>2</strong> active test runs and
+                        <strong>1</strong> active milestone.</p>
                 </div>
-                <div class="add-edit-project"><a href=""></a></div>
+                <div class="add-edit-project" (click)="navigateProjectOverview(project.projectId)"><a routerLinkActive="active"></a></div>
             </section>
         </div>
 
