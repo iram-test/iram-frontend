@@ -1,3 +1,3 @@
 export class AppSettings {
-    public static AUTH_ENDPOINT = 'https://localhost:3002/auth/';
+    public static AUTH_ENDPOINT = 'http://localhost:3002/api/auth/';
 }

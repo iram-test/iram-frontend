@@ -6,6 +6,7 @@ import { AddTestRunComponent } from './add-test-run/add-test-run.component';
 import { CoreModule } from '../../../core/core.module';
 import { SharedModule } from '../../../shared/shared.module';
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -19,6 +20,8 @@ import { HttpClientModule } from '@angular/common/http';
     HttpClientModule,
     CoreModule,
     SharedModule,
+    FormsModule,
+    ReactiveFormsModule,
     TestRunsRoutingModule
   ]
 })

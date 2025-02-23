@@ -1,3 +1,4 @@
+/* test-runs.component.less */
 h2 {
   font-family: 'Dosis';
   font-style: normal;
@@ -296,6 +297,7 @@ li {
 .test-runs-section h2 {
   padding-left: 0;
   padding-bottom: 2px;
+  margin-bottom: 40px;
   margin-left: 25px;
   width: 52px;
   font-weight: 600;
@@ -304,4 +306,111 @@ li {
   border-bottom: 3px solid #595858;
 
   color: #000000;
+}
+
+.select-all {
+  margin-left: 50px;
+}
+
+input[type='checkbox'] {
+  width: 20px;
+  height: 20px;
+  margin-right: 20px;
+}
+
+.select-all label {
+  font-family: 'Dosis';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 23px;
+  color: #000000;
+}
+
+.test-run-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 1450px;
+  margin: 20px;
+
+  background: #F3F3FB;
+  border-radius: 5px;
+}
+
+.left-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 25px;
+}
+
+.right-section {
+  display: flex;
+  gap: 50px;
+}
+
+.test-run-details-img {
+  width: 40px;
+  height: 40px;
+  background-image: url('/assets/test-run-details-img.svg');
+  background-size: 40px 40px;
+}
+
+.left-section input {
+  margin-right: 0;
+}
+
+.test-run-details {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.results-line {
+  font-family: 'Dosis';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 23px;
+
+  color: #575757;
+}
+
+.left-section h3 {
+  font-family: 'Dosis';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 22px;
+  line-height: 28px;
+  color: #000000;
+}
+
+.details-line {
+  font-family: 'Dosis';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 23px;
+
+  color: #000000;
+}
+
+.results-line span {
+  font-weight: 700;
+}
+
+.remove-button {
+  font-family: 'Dosis';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 35px;
+  background-color: inherit;
+  border: none;
+  text-align: center;
+  color: #FF0000;
+}
+
+.remove-button:hover {
+  cursor: pointer;
 }

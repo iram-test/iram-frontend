@@ -1,11 +1,18 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component } from '@angular/core';
 import { PopupService } from '../../../core/services/popup.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthenticationService } from '../../../core/services/authentication.service';
-import { User } from '../../../core/models/user-entity';
-import { UserRole } from '../../../core/models/enums/user-role';
+import { LoginWithUsernameDTO, LoginWithEmailDTO } from '../../../core/models/auth-dto';
 import { HttpErrorResponse } from '@angular/common/http';
+
+interface AuthResponseDto {
+  isAuthSuccessful: boolean;
+  token: string;
+  errorMessage?: string;
+  is2StepVerificationRequired?: boolean;
+  provider?: string;
+}
 
 @Component({
   selector: 'app-login',
@@ -20,14 +27,14 @@ export class LoginComponent {
   showError: boolean = false;
 
   constructor(private readonly authService: AuthenticationService,
-    private readonly fb: FormBuilder,
-    private readonly router: Router,
-    private readonly route: ActivatedRoute,
-    public popupService: PopupService) { }
+              private readonly fb: FormBuilder,
+              private readonly router: Router,
+              private readonly route: ActivatedRoute,
+              public popupService: PopupService) { }
 
   ngOnInit(): void {
     this.loginForm = this.fb.group({
-      email: ['', [Validators.required]],
+      email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]]
     });
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
@@ -35,19 +42,20 @@ export class LoginComponent {
 
   login(data: any): void {
     this.showError = false;
-    let login = { ...data };
-    const userForAuth: User = new User(login.email, login.password);
+    if (this.loginForm.invalid) {
+      return;
+    }
 
-    this.authService.loginUser('/login', userForAuth).subscribe({
+    const loginDto: LoginWithEmailDTO = {
+      email: this.loginForm.value.email,
+      password: this.loginForm.value.password
+    };
+
+    this.authService.loginUserWithEmail(loginDto).subscribe({
       next: (response: AuthResponseDto) => {
-        // if (response.is2StepVerificationRequired) {
-        //   this.router.navigate(['/authentication/twostepverification'], { queryParams: { returnUrl: this.returnUrl, provider: response.provider, email: userForAuth.email } });
-        // }
-        // else {
-          localStorage.setItem("token", response.token);
-          this.authService.sendAuthStateChangeNotification(response.isAuthSuccessful);
-          this.router.navigate([this.returnUrl]);
-        // }
+        localStorage.setItem("token", response.token);
+        this.authService.sendAuthStateChangeNotification(response.isAuthSuccessful);
+        this.router.navigate([this.returnUrl]);
       },
       error: (error: HttpErrorResponse) => {
         this.errorMessage = error.message;

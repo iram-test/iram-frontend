@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { PopupService } from '../../services/popup.service';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { AuthenticationService } from '../../services/authentication.service';
 
 @Component({
   selector: 'app-landing-page',
@@ -8,7 +10,28 @@ import { Router } from '@angular/router';
   styleUrl: './landing-page.component.less'
 })
 export class LandingPageComponent {
-  constructor(public popupService: PopupService, private router: Router) { }
+
+  isAuthenticated: boolean = false;
+  authSubscription: Subscription;
+
+  constructor(public popupService: PopupService,
+    private authService: AuthenticationService,
+    private router: Router) { }
+
+  ngOnInit(): void {
+    this.isAuthenticated = this.authService.isUserAuthenticated();
+
+    this.authSubscription = this.authService.authChanged
+      .subscribe(isAuthenticated => {
+        this.isAuthenticated = isAuthenticated;
+      });
+  }
+
+  ngOnDestroy(): void {
+    if (this.authSubscription) {
+      this.authSubscription.unsubscribe();
+    }
+  }
 
   openLoginPopup() {
     this.popupService.toggleLogin();

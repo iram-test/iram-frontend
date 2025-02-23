@@ -4,6 +4,7 @@
         <div class="header">
             <h2>Test Runs</h2>
         </div>
+
         <div class="content" *ngIf="isTestRunsEmpty()">
             <div class="info-box">
                 <div class="flx">
@@ -14,21 +15,56 @@
                     </div>
                 </div>
                 <div class="buttons">
-                    <button class="btn">+ Add Test Run</button>
+                    <button class="btn" (click)="onAddTestRun()">+ Add Test Run</button>
                 </div>
             </div>
         </div>
 
         <div class="test-runs-section" *ngIf="!isTestRunsEmpty()">
             <h2>Open</h2>
+            <div class="select-all">
+                <input type="checkbox" id="selectAll" (click)="selectAll()">
+                <label for="selectAll">Select all</label>
+            </div>
+            <div class="test-runs">
+                <div *ngFor="let testRun of testRuns" class="test-run-item">
+                    <div class="test-run-item">
+                        <div class="left-section">
+                            <input type="checkbox" class="test-run-checkbox">
+                            <div class="test-run-details-img"></div>
+                            <div class="test-run-details">
+                                <h3>{{testRun.name}} {{testRun.createdAt}}</h3>
+                                <p class="results-line"><span>{{calculatePassed(testRun)}}</span> Passed,
+                                    <span>{{calculateBlocked(testRun)}}</span> Blocked,
+                                    <span>{{calculateUntested(testRun)}}</span> Untested,
+                                    <span>{{calculateRetest(testRun)}}</span> Retest and
+                                    <span>{{calculateFailed(testRun)}}</span>
+                                    Failed.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="right-section">
+                            <div class="test-run-progress">
+                                <div class="progress-bar">
+                                    <div class="progress" style="width: 75%;"></div>
+                                </div>
+                                <!-- <span class="percentage">{{calculatePercentage(testRun)}}</span> -->
+                                <button class="remove-button">x</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div class="sidebar">
-            <button class="sidebar-btn">+ Add Test Run</button>
-            <p>There are no test runs.</p>
+            <button class="sidebar-btn" (click)="onAddTestRun()">+ Add Test Run</button>
+            <p *ngIf="isTestRunsEmpty()">There are no test runs.</p>
             <div class="order-by-attribute">
                 <label for="attribute">Order By</label>
-                <select name="attribute" id="attribute">
+                <select name="attribute" id="attribute" [(ngModel)]="selectedAttribute"
+                    (change)="onAttributeChange($event)">
                     <option value="date">Date</option>
                 </select>
             </div>

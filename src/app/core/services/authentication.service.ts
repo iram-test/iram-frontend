@@ -1,8 +1,17 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
-import { User } from '../models/user-entity';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable, Subject } from 'rxjs';
 import { AppSettings } from '../constants/AppSettings';
+import { RegisterDTO } from '../models/auth-dto'; // Import RegisterDTO
+import { LoginWithUsernameDTO, LoginWithEmailDTO } from '../models/auth-dto'; // Import Login DTOs
+
+interface AuthResponseDto {
+  isAuthSuccessful: boolean;
+  token: string;
+  errorMessage?: string;
+  is2StepVerificationRequired?: boolean;
+  provider?: string;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -13,26 +22,29 @@ export class AuthenticationService {
 
   constructor(private readonly http: HttpClient) { }
 
-  public registerUser = (route: string, user: User) => {
-    return this.http.post(`${AppSettings.AUTH_ENDPOINT}${route}`, user);
+  public registerUser(registerDto: RegisterDTO): Observable<AuthResponseDto> {
+    return this.http.post<AuthResponseDto>(`${AppSettings.AUTH_ENDPOINT}register`, registerDto);
   }
 
-  public loginUser = (route: string, user: User) => {
-    return this.http.post(`${AppSettings.AUTH_ENDPOINT}${route}`, user);
+  public loginUserWithUsername(loginDto: LoginWithUsernameDTO): Observable<AuthResponseDto> {
+    return this.http.post<AuthResponseDto>(`${AppSettings.AUTH_ENDPOINT}login/username`, loginDto);
   }
 
-  public logoutUser = () => {
-    localStorage.removeItem("token");
-    this.sendAuthStateChangeNotification(false);
+  public loginUserWithEmail(loginDto: LoginWithEmailDTO): Observable<AuthResponseDto> {
+    return this.http.post<AuthResponseDto>(`${AppSettings.AUTH_ENDPOINT}login/email`, loginDto);
   }
 
-  public isUserAuthenticated = () => {
+  public logoutUser(): Observable<AuthResponseDto> {
+    return this.http.post<AuthResponseDto>(`${AppSettings.AUTH_ENDPOINT}logout`, {});
+  }
+
+  public isUserAuthenticated = (): boolean => {
     const token = localStorage.getItem("token");
-    return token;
+    return !!token; // Returns true if token exists
   }
 
   public sendAuthStateChangeNotification = (isAuthenticated: boolean) => {
-    return this.authChangeSub.next(isAuthenticated);
+    this.authChangeSub.next(isAuthenticated);
   }
 
   // public isUserAdmin = (): boolean => {

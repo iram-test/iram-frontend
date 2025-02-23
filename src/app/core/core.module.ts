@@ -7,6 +7,7 @@ import { CoreRoutingModule } from './core-routing.module';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { AddEditProjectComponent } from './components/add-edit-project/add-edit-project.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { AuthenticationModule } from '../features/authentication/authentication.module';
 
 @NgModule({
   declarations: [
