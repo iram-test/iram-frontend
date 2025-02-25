@@ -58,11 +58,8 @@
 
         <div class="sidebar">
             <button class="sidebar-btn">+ Add test Case</button>
-            <p>Contains 1 sections and {{testCases.length}} cases. <a href="#">Edit</a></p>
-            <div class="sidebar-section" *ngIf="!isTestCasesEmpty()">
-                <h3 class="all-section">+ Add Section</h3>
-                <p>Product filtration</p>
-            </div>
+            <button class="sidebar-btn">+Add Section</button>
+            <button class="sidebar-btn">+Add Subsection</button>
         </div>
     </div>
     <footer *ngIf="isTestCasesEmpty()">

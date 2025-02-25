@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { TestCase } from '../../../../core/models/test-case-entity';
 import { HttpClient } from '@angular/common/http';
 import { TemplateType } from '../../../../core/models/enums/template-type';
 import { TestType } from '../../../../core/models/enums/test-type';
 import { Priority } from '../../../../core/models/enums/project-priority';
-import { Status } from '../../../../core/models/enums/status';
 import { TestCaseDTO } from '../../../../core/models/test-case-dto';
 
 @Component({

@@ -8,6 +8,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../../../shared/shared.module';
 import { SelectTestCasesComponent } from './select-test-cases/select-test-cases.component';
+import { AddEditSectionComponent } from './add-edit-section/add-edit-section.component';
+import { AddEditSubsectionComponent } from './add-edit-subsection/add-edit-subsection.component';
+import { TestCaseSectionsComponent } from './test-case-sections/test-case-sections.component';
 
 
 
@@ -15,7 +18,10 @@ import { SelectTestCasesComponent } from './select-test-cases/select-test-cases.
   declarations: [
     TestCasesComponent,
     AddTestCaseComponent,
-    SelectTestCasesComponent
+    SelectTestCasesComponent,
+    AddEditSectionComponent,
+    AddEditSubsectionComponent,
+    TestCaseSectionsComponent
   ],
   imports: [
     CommonModule,

@@ -67,4 +67,9 @@ export class MilestonesComponent implements OnInit {
       milestone.name.toLowerCase().includes(searchText.toLowerCase())
     );
   }
+
+  removeMilestone(id: string) {
+    this.milestones = this.milestones.filter(ms => ms.milestoneID !== id);
+    this.filteredMilestones = this.milestones;
+  }
 }

@@ -1,0 +1,37 @@
+<app-internal-menu></app-internal-menu>
+
+<main>
+    <div class="test-cases">
+        <div class="test-case" *ngFor="let testCase of testCases">
+            <input type="checkbox" />
+            <div>
+                <h2>{{testCase.title}}</h2>
+                <p>Test Case</p>
+            </div>
+        </div>
+    </div>
+    <div class="sections">
+        <div class="section" *ngFor="let section of sections">
+            <input type="checkbox" />
+            <div>
+                <h2>{{section.name}}</h2>
+                <p>Section</p>
+            </div>
+        </div>
+    </div>
+    <div class="subsections">
+        <div class="subsection" *ngFor="let subSection of subSections">
+            <input type="checkbox" />
+            <div>
+                <h2>{{subSection.name}}</h2>
+                <p>Subsection</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="buttons">
+        <button (click)="navigateAddTestCase()">Add Test Case</button>
+        <button (click)="navigateAddSection()">Add Section</button>
+        <button (click)="navigateAddSubsection()">Add Subsection</button>
+    </div>
+</main>

@@ -3,12 +3,13 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
-  selector: 'app-add-edit-project',
-  templateUrl: './add-edit-project.component.html',
-  styleUrl: './add-edit-project.component.less'
+  selector: 'app-add-edit-subsection',
+  templateUrl: './add-edit-subsection.component.html',
+  styleUrl: './add-edit-subsection.component.less'
 })
-export class AddEditProjectComponent {
-  projectForm: FormGroup;
+export class AddEditSubsectionComponent {
+
+  subSectionForm: FormGroup;
   id: number = 0;
 
   constructor(private readonly fb: FormBuilder,
@@ -18,9 +19,9 @@ export class AddEditProjectComponent {
   public ngOnInit(): void {
     this.id = Number.parseInt(this.route.snapshot.params['id']);
 
-    this.projectForm = this.fb.group({
+    this.subSectionForm = this.fb.group({
       name: ['', [Validators.required]],
-      announcement: ['']
+      description: ['']
     });
 
     if (this.id) {
@@ -30,22 +31,22 @@ export class AddEditProjectComponent {
 
   public sendData(data: any): void {
     if (!this.id)
-      this.createProject(data);
+      this.createSubsection(data);
     else
-      this.editProject(data);
+      this.editSubsection(data);
 
     this.router.navigate([`/dashboard`]);
   }
 
-  private createProject(data: any): void {
+  private createSubsection(data: any): void {
     this.id++;
     console.log(this.id);
-    let project = { id: this.id, ...data };
-    localStorage.setItem(this.id.toString(), JSON.stringify(project));
+    let subSection = { id: this.id, ...data };
+    localStorage.setItem(this.id.toString(), JSON.stringify(subSection));
   }
 
-  private editProject(data: any): void {
-    let project = { id: this.id, ...data };
-    localStorage.setItem(this.id.toString(), JSON.stringify(project));
+  private editSubsection(data: any): void {
+    let subSection = { id: this.id, ...data };
+    localStorage.setItem(this.id.toString(), JSON.stringify(subSection));
   }
 }
