@@ -45,11 +45,6 @@
                 </div>
 
                 <div>
-                    <label for="references">References</label>
-                    <input id="references" type="text" formControlName="references" placeholder="Enter references" />
-                </div>
-
-                <div>
                     <label for="automationType">Automation Type</label>
                     <select id="automationType" formControlName="automationType">
                         <option *ngFor="let automationType of automationTypes" [value]="automationType">
@@ -69,72 +64,38 @@
             </div>
         </div>
 
+        <button class="add-btn" (click)="addStep()">Add Step</button>
         <div class="steps-section" formArrayName="steps">
             <div *ngFor="let step of steps.controls; let i = index" [formGroupName]="i">
                 <div class="step">
-                    <div class="step-header">
-                        <div class="step-number">{{ i + 1 }}</div>
-                        <div class="step-title">Step {{ i + 1 }}</div>
+                    <div class="step-aside">
+                        <div class="step-number">{{i + 1}}</div>
                     </div>
                     <div class="step-content">
                         <div>
-                            <label for="steps">Step Description</label>
+                            <label for="steps">Steps:</label>
                             <app-contenteditable formControlName="steps"></app-contenteditable>
                         </div>
                         <div>
-                            <label for="expectedResults">Expected Result</label>
+                            <label for="expectedResults">Expected Results:</label>
                             <app-contenteditable formControlName="expectedResults"></app-contenteditable>
                         </div>
-
-                        <!-- Image Preview -->
                         <div *ngIf="stepImages[i]">
                             <img [src]="stepImages[i]" alt="Step image" class="uploaded-image" />
                         </div>
                     </div>
-                    <button type="button" (click)="removeStep(i)">Delete Step</button>
+
+                    <div class="step-actions">
+                        <button class="up-btn" (click)="moveStepUp(i)">Up</button>
+                        <button class="down-btn" (click)="moveStepDown(i)">Down</button>
+                        <button class="delete-btn" (click)="removeStep(i)">Delete</button>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <button type="button" (click)="addStep()">Add Step</button>
-
-
-        <button type="button" (click)="addStep()">Add Step</button>
-
-
-
-
-        <!-- <div class="steps-section">
-            <div class="step">
-                <div class="step-header">
-                    <div class="step-number">1</div>
-                    <div class="step-title">To push on gaming laptop category</div>
-                </div>
-                <div class="step-content">
-                    <div class="step-image">
-                        <div class="image-drop-zone" contenteditable="true">
-                            <span>Paste image here</span>
-                        </div>
-                    </div>
-                    <div class="step-result">
-                        <div class="image-drop-zone" contenteditable="true">
-                            <span>Paste image here</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="step-actions">
-                    <button class="share-btn">Share</button>
-                    <button class="import-btn">Import</button>
-                    <button class="up-btn">Up</button>
-                    <button class="down-btn">Down</button>
-                    <button class="delete-btn">Delete</button>
-                    <button class="add-btn">Add</button>
-                </div>
-            </div>
-        </div> -->
-
         <div class="form-actions">
-            <button type="submit">Save</button>
+            <button type="submit">Add Test Case</button>
             <button type="reset" (click)="resetForm()">Clear</button>
         </div>
     </form>

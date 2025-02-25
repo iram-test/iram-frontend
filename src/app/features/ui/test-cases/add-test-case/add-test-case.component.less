@@ -119,6 +119,10 @@
 }
 
 .step {
+  position: relative;
+  margin-left: 20px;
+  width: 1415px;
+  min-height: 240px;
   border: 1px solid #d6d9e0;
   border-radius: 8px;
   background-color: #f9fbfe;
@@ -129,12 +133,9 @@
   gap: 16px;
 }
 
-.step-header {
-  display: flex;
-  align-items: center;
-  font-size: 16px;
-  font-weight: bold;
-  color: #34495e;
+.step-aside {
+  position: absolute;
+  left: -50px;
 }
 
 .step-number {
@@ -155,6 +156,17 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 16px;
+}
+
+.step-content label {
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 25px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+
+  color: #000000;
 }
 
 .image-drop-zone img {
@@ -215,14 +227,6 @@ section {
   cursor: pointer;
 }
 
-.step-actions .share-btn {
-  background-color: #3498db;
-}
-
-.step-actions .import-btn {
-  background-color: #8e44ad;
-}
-
 .step-actions .up-btn {
   background-color: #27ae60;
 }
@@ -235,25 +239,54 @@ section {
   background-color: #e74c3c;
 }
 
-.step-actions .add-btn {
+.add-btn {
   background-color: #2ecc71;
+  border: none;
+  border-radius: 12px;
+  padding: 8px;
+  width: 120px;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 23px;
+  color: #FFFFFF;
 }
-
 
 .form-actions {
   display: flex;
-  justify-content: space-between;
+  gap: 10px;
 }
 
-button {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  padding: 10px 16px;
-  border-radius: 4px;
-  cursor: pointer;
+button[type='submit'], button[type='reset'], .add-btn {
+  transition: all 1.2s ease;
+}
+
+button[type='submit'] {
+  width: 120px;
+  height: 40px;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 23px;
+  color: #FFFFFF;
+  background: #4CB04C;
+  border: 1px solid #4CB04C;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 12px;
+}
+
+button[type='reset'] {
+  width: 120px;
+  height: 40px;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 23px;
+  color: #C0481E;
+  border: 1px solid #C0481E;
+  background-color: inherit;
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  border-radius: 12px;
 }
 
 button:hover {
-  background-color: #0056b3;
+  cursor: pointer;
+  transform: scale(1.2);
 }

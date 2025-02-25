@@ -42,12 +42,48 @@ export class AddTestCaseComponent {
       expectedResults: ['']
     });
     this.steps.push(stepGroup);
-    this.stepImages.push(''); // Add an empty string to stepImages to track each step's image
+    this.stepImages.push('');
+  }
+
+  moveStepUp(index: number) {
+    if (index > 0) {
+      const stepsArray = this.steps as FormArray;
+      const currentStep = stepsArray.at(index);
+      const previousStep = stepsArray.at(index - 1);
+
+      stepsArray.removeAt(index);
+      stepsArray.removeAt(index - 1);
+
+      stepsArray.insert(index - 1, currentStep);
+      stepsArray.insert(index, previousStep);
+
+      const currentImage = this.stepImages[index];
+      this.stepImages[index] = this.stepImages[index - 1];
+      this.stepImages[index - 1] = currentImage;
+    }
+  }
+
+  moveStepDown(index: number) {
+    if (index < this.steps.length - 1) {
+      const stepsArray = this.steps as FormArray;
+      const currentStep = stepsArray.at(index);
+      const nextStep = stepsArray.at(index + 1);
+
+      stepsArray.removeAt(index + 1);
+      stepsArray.removeAt(index);
+
+      stepsArray.insert(index, nextStep);
+      stepsArray.insert(index + 1, currentStep);
+
+      const currentImage = this.stepImages[index];
+      this.stepImages[index] = this.stepImages[index + 1];
+      this.stepImages[index + 1] = currentImage;
+    }
   }
 
   removeStep(index: number) {
     this.steps.removeAt(index);
-    this.stepImages.splice(index, 1); // Remove the corresponding image entry
+    this.stepImages.splice(index, 1);
   }
 
   onPaste(event: ClipboardEvent, index: number) {

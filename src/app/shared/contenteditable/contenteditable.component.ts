@@ -3,7 +3,8 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
   selector: 'app-contenteditable',
-  template: `<div #editableContent contenteditable="true" (input)="onInput($event)" [innerHTML]="value"></div>`,
+  templateUrl: './contenteditable.component.html',
+  styleUrl:  './contenteditable.component.less',
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
