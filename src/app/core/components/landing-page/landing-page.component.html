@@ -5,8 +5,10 @@
             <h2>Effortless Testing, Streamlined Success.</h2>
             <p>Simplify your testing process with a user-friendly tool for managing test cases. </p>
             <div class="buttons">
-                <div class="sign-in"><a (click)="openLoginPopup()">Sign in</a></div>
-                <div class="sign-up-btn"><a (click)="openRegisterPopup()">Sign Up</a></div>
+                <div class="sign-in" *ngIf="!isAuthenticated"><a (click)="openLoginPopup()">Sign in</a></div>
+                <div class="sign-up-btn" *ngIf="!isAuthenticated"><a (click)="openRegisterPopup()">Sign Up</a></div>
+                <!-- Corrected:  Use a single logout button -->
+                <div class="sign-up-btn" *ngIf="isAuthenticated"><a (click)="logout()">Log Out</a></div>
             </div>
         </article>
         <article>

@@ -43,15 +43,6 @@
                     <label for="estimate">Estimate</label>
                     <input id="estimate" type="text" formControlName="estimate" placeholder="Enter estimate" />
                 </div>
-
-                <div>
-                    <label for="automationType">Automation Type</label>
-                    <select id="automationType" formControlName="automationType">
-                        <option *ngFor="let automationType of automationTypes" [value]="automationType">
-                            {{ automationType }}
-                        </option>
-                    </select>
-                </div>
             </div>
         </div>
 

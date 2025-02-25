@@ -9,6 +9,8 @@ import { AddEditProjectComponent } from './components/add-edit-project/add-edit-
 import { ReactiveFormsModule } from '@angular/forms';
 import { AuthenticationModule } from '../features/authentication/authentication.module';
 import { ProjectOverviewComponent } from './components/project-overview/project-overview.component';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from './interceptors/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -22,6 +24,13 @@ import { ProjectOverviewComponent } from './components/project-overview/project-
     CommonModule,
     ReactiveFormsModule,
     CoreRoutingModule
+  ],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
   ],
   exports: [NavMenuComponent, InternalMenuComponent, LandingPageComponent, DashboardComponent]
 })

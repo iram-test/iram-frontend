@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { PopupService } from '../../services/popup.service';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -9,7 +9,7 @@ import { AuthenticationService } from '../../services/authentication.service';
   templateUrl: './landing-page.component.html',
   styleUrl: './landing-page.component.less'
 })
-export class LandingPageComponent {
+export class LandingPageComponent implements OnInit, OnDestroy {
 
   isAuthenticated: boolean = false;
   authSubscription: Subscription;
@@ -45,6 +45,19 @@ export class LandingPageComponent {
     if (this.popupService.isRegisterVisible()) {
       this.router.navigate(['/register']);
     }
+  }
+  
+  logout() {
+    this.authService.logoutUser().subscribe({
+      next: () => {
+        localStorage.removeItem("token");
+        this.authService.sendAuthStateChangeNotification(false);
+        this.router.navigate(['/home']);
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    })
   }
 
   state = 0;

@@ -1,70 +1,122 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, Subject } from 'rxjs';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { Observable, of, Subject, throwError } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
 import { AppSettings } from '../constants/AppSettings';
-import { RegisterDTO } from '../models/auth-dto'; // Import RegisterDTO
-import { LoginWithUsernameDTO, LoginWithEmailDTO } from '../models/auth-dto'; // Import Login DTOs
+import {
+  LoginWithEmailDTO,
+  LoginWithUsernameDTO,
+  RegisterDTO,
+} from '../models/auth-dto';
 import { AuthResult } from '../models/AuthResult';
+import { User } from '../models/user-entity'; // Імпортуємо User
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthenticationService {
   private readonly authChangeSub = new Subject<boolean>();
   public authChanged = this.authChangeSub.asObservable();
+  private currentUser: User | null = null; // Додаємо змінну для зберігання поточного користувача
 
   constructor(private readonly http: HttpClient) { }
 
   public registerUser(registerDto: RegisterDTO): Observable<AuthResult> {
-    return this.http.post<AuthResult>(`${AppSettings.AUTH_ENDPOINT}register`, registerDto);
+    return this.http
+      .post<AuthResult>(`${AppSettings.AUTH_ENDPOINT}register`, registerDto)
+      .pipe(catchError(this.handleError));
   }
 
-  public loginUserWithUsername(loginDto: LoginWithUsernameDTO): Observable<AuthResult> {
-    return this.http.post<AuthResult>(`${AppSettings.AUTH_ENDPOINT}login/username`, loginDto);
+  public loginUserWithUsername(
+    loginDto: LoginWithUsernameDTO,
+  ): Observable<AuthResult> {
+    return this.http
+      .post<AuthResult>(`${AppSettings.AUTH_ENDPOINT}login/username`, loginDto)
+      .pipe(
+        tap((res) => {
+          localStorage.setItem('accessToken', res.accessToken); // Зберігаємо accessToken
+          localStorage.setItem('refreshToken', res.refreshToken); // Зберігаємо refreshToken
+          this.sendAuthStateChangeNotification(true);
+        }),
+        catchError(this.handleError),
+      );
   }
 
   public loginUserWithEmail(loginDto: LoginWithEmailDTO): Observable<AuthResult> {
-    return this.http.post<AuthResult>(`${AppSettings.AUTH_ENDPOINT}login/email`, loginDto);
+    return this.http
+      .post<AuthResult>(`${AppSettings.AUTH_ENDPOINT}login/email`, loginDto)
+      .pipe(
+        tap((res) => {
+          localStorage.setItem('accessToken', res.accessToken); // Зберігаємо accessToken
+          localStorage.setItem('refreshToken', res.refreshToken); // Зберігаємо refreshToken
+          this.sendAuthStateChangeNotification(true);
+        }),
+        catchError(this.handleError),
+      );
   }
 
-  public logoutUser(): Observable<AuthResult> {
-    return this.http.post<AuthResult>(`${AppSettings.AUTH_ENDPOINT}logout`, {});
+  public logoutUser(): Observable<void> {
+    const refreshToken = localStorage.getItem('refreshToken');
+
+    if (!refreshToken) {
+      this.sendAuthStateChangeNotification(false);
+      this.currentUser = null;
+      return of(void 0);
+    }
+
+    const headers = new HttpHeaders({
+      'x-refresh-token': refreshToken,
+      'Content-Type': 'application/json'
+    });
+
+    return this.http.post<void>(`${AppSettings.AUTH_ENDPOINT}logout`, {}, { headers }).pipe(
+      tap(() => {
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('refreshToken');
+        this.sendAuthStateChangeNotification(false);
+        this.currentUser = null;
+      }),
+      catchError(this.handleError),
+    );
   }
+
 
   public isUserAuthenticated = (): boolean => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem('accessToken'); // Перевіряємо accessToken
     return !!token; // Returns true if token exists
-  }
+  };
 
   public sendAuthStateChangeNotification = (isAuthenticated: boolean) => {
     this.authChangeSub.next(isAuthenticated);
+  };
+
+  public getCurrentUser(): User | null {
+    return this.currentUser;
   }
 
-  // public isUserAdmin = (): boolean => {
-  //   const token = localStorage.getItem("token");
-  //   const decodedToken = this.jwtHelper.decodeToken(token);
-  //   const role = decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
+  public refreshToken(refreshToken: string): Observable<AuthResult> {
+    const headers = new HttpHeaders({
+      'x-refresh-token': refreshToken,
+      'Content-Type': 'application/json'
+    });
 
-  //   return role === "Administrator";
-  // }
+    return this.http.post<AuthResult>(`${AppSettings.AUTH_ENDPOINT}refresh`, {}, { headers })
+      .pipe(
+        catchError(this.handleError) // Ensure error handling
+      );
+  }
 
-  // public forgorPassword = (route: string, body: ForgotPasswordDto) => {
-  //   return this.http.post(`${AppSettings.API_ENDPOINT}${route}`, body);
-  // }
-
-  // public resetPassword = (route: string, body: ResetPasswordDto) => {
-  //   return this.http.post(`${AppSettings.API_ENDPOINT}${route}`, body);
-  // }
-
-  // public confirmEmail = (route: string, token: string, email: string) => {
-  //   let params = new HttpParams({ encoder: new CustomEncoder() });
-  //   params = params.append('token', token);
-  //   params = params.append('email', email);
-
-  //   return this.http.get(`${AppSettings.API_ENDPOINT}${route}`, { params: params });
-  // }
-
-  // public twoStepLogin = (route: string, body: TwoFactorDto) => {
-  //   return this.http.post<AuthResponseDto>(`${AppSettings.API_ENDPOINT}${route}`, body);
-  // }
+  // Обробка помилок (можна винести в BaseService)
+  private handleError(error: HttpErrorResponse) {
+    if (error.error instanceof ErrorEvent) {
+      console.error('An error occurred:', error.error.message);
+    } else {
+      console.error(
+        `Backend returned code ${error.status}, ` + `body was: ${error.error}`,
+      );
+    }
+    return throwError(
+      () => new Error('Something bad happened; please try again later.'),
+    );
+  }
 }

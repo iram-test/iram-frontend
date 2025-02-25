@@ -1,9 +1,10 @@
 <header>
-    <h1 class="logo">iram</h1>
+    <h1 class="logo"><a routerLink="/home">iram</a></h1>
     <ul>
-        <li><a href="#">Integrations</a></li>
-        <li><a href="#">Contacts</a></li>
-        <li><a href="#">Help</a></li>
-        <li class="sign-in-btn"><a (click)="openLoginPopup()">Sign in</a></li>
+        <li><a routerLink="/integrations" routerLinkActive="active">Integrations</a></li>
+        <li><a routerLink="/contacts" routerLinkActive="active">Contacts</a></li>
+        <li><a routerLink="/help" routerLinkActive="active">Help</a></li>
+        <li class="sign-in-btn" *ngIf="!isAuthenticated"><a (click)="openLoginPopup()">Sign in</a></li>
+        <li class="sign-in-btn" *ngIf="isAuthenticated"><a (click)="logout()">Log out</a></li>
     </ul>
 </header>
