@@ -7,13 +7,15 @@ import { CoreModule } from '../../../core/core.module';
 import { SharedModule } from '../../../shared/shared.module';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { TestRunDetailsComponent } from './test-run-details/test-run-details.component';
 
 
 
 @NgModule({
   declarations: [
     TestRunsComponent,
-    AddTestRunComponent
+    AddTestRunComponent,
+    TestRunDetailsComponent
   ],
   imports: [
     CommonModule,

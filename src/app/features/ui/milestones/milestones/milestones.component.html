@@ -24,7 +24,7 @@
                 <div class="case-list">
                     <div class="case-item" *ngFor="let milestone of filteredMilestones">
                         <div class="drag-handle">☰</div>
-                        <div class="case-id">{{milestone.milestoneID}}</div>
+                        <div class="case-id">{{milestone.milestoneID.slice(0, 2)}}</div>
                         <div class="case-title">{{milestone.name}}</div>
                     </div>
                 </div>

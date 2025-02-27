@@ -56,7 +56,7 @@ export class MilestonesComponent implements OnInit {
   }
 
   navigateAddMilestone() {
-    this.router.navigate(['add-milestone']);
+    this.router.navigate(['add-milestone'], { relativeTo: this.route });
   }
 
   filterMilestones(event: Event) {

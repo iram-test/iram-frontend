@@ -1,0 +1,196 @@
+.test-run-summary {
+  font-family: 'Dosis';
+  font-style: normal;
+  padding: 32px 15px;
+  display: flex;
+  align-items: center;
+  gap: 40px;
+
+  .chart-details {
+    padding: 50px;
+    display: flex;
+    width: 1200px;
+    height: 318px;
+    background: #F6F7FF;
+    border: 1px solid #1B3687;
+    border-radius: 10px;
+  }
+
+  .chart-container {
+    width: 205px;
+    height: 205px;
+    margin-right: 20px;
+  }
+
+  .summary-details {
+    display: flex;
+    margin-right: 20px;
+
+    .legend {
+      display: flex;
+      flex-direction: column;
+      margin-left: 10px;
+      align-items: center;
+      justify-content: center;
+      align-content: center;
+
+      .legend-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 5px;
+
+        .legend-color {
+          width: 20px;
+          height: 20px;
+          border-radius: 50%;
+          margin-right: 10px;
+
+          &.passed {
+            background-color: #4CAF50; // Зеленый
+          }
+
+          &.retest {
+            background-color: #FFEB3B; // Желтый
+          }
+
+          &.failed {
+            background-color: #F44336; // Красный
+          }
+        }
+
+        .legend-text {
+          display: flex;
+          flex-direction: column;
+
+          .count {
+            font-size: 1em;
+            font-weight: 500;
+          }
+
+          .percentage {
+            font-size: 0.8em;
+            color: #666;
+          }
+        }
+      }
+    }
+  }
+
+  .percentage-summary {
+    align-content: center;
+    width: 372px;
+    height: 318px;
+    left: 1233px;
+    top: 257px;
+
+    background: #F6F7FF;
+    border: 1px solid #1B3687;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    .value {
+      font-family: 'Dosis';
+      font-style: normal;
+      font-weight: 500;
+      font-size: 96px;
+
+      color: #000000;
+    }
+
+    .label {
+      font-weight: 500;
+      font-size: 48px;
+      color: #515151;
+    }
+
+    .untested {
+      font-weight: 500;
+      font-size: 24px;
+      line-height: 30px;
+
+      color: #515151;
+    }
+  }
+}
+
+.product-filtration-table {
+  width: 100%;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #fff;
+  font-family: sans-serif;
+  margin-top: 20px;
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    border-bottom: 1px solid #ddd;
+
+    .title {
+      font-size: 1.2em;
+      font-weight: 500;
+
+      span {
+        background-color: #f0f0f0;
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-size: 0.8em;
+        margin-left: 5px;
+      }
+    }
+
+    .sort-button {
+      background-color: #e0f7fa;
+      border: 1px solid #b2ebf2;
+      border-radius: 4px;
+      padding: 5px 10px;
+      cursor: pointer;
+      font-size: 0.9em;
+    }
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+
+    th,
+    td {
+      padding: 10px 20px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #f9f9f9;
+      font-weight: 500;
+    }
+
+    tbody tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+    .status {
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 0.8em;
+      color: #fff;
+
+      &.passed {
+        background-color: #4CAF50;
+      }
+
+      &.failed {
+        background-color: #F44336;
+      }
+
+      &.untested {
+        background-color: #9E9E9E;
+      }
+    }
+  }
+}
