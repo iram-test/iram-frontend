@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TestRun } from '../../../../core/models/test-run-entity';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-test-run',
@@ -9,12 +9,13 @@ import { Router } from '@angular/router';
   styleUrl: './add-test-run.component.less'
 })
 export class AddTestRunComponent {
+  projectId: string | null;
   users = ['User 1', 'User 2', 'User 3'];
   milestones = ['Milestone 1', 'Milestone 2', 'Milestone 3'];
   testRunForm: FormGroup;
   testRun: TestRun;
 
-  constructor(private fb: FormBuilder, private router: Router) {
+  constructor(private route: ActivatedRoute, private fb: FormBuilder, private router: Router) {
     this.testRunForm = this.fb.group({
       name: ['', Validators.required],
       assignTo: [''],
@@ -23,8 +24,15 @@ export class AddTestRunComponent {
     });
   }
 
+  ngOnInit(): void {
+    this.route.parent?.parent?.paramMap.subscribe(params => {
+      this.projectId = params.get('projectId');
+    });
+  }
+
   selectSpecificCases() {
-    this.router.navigate(['/select-cases']);
+    console.log(`/project-overview/${this.projectId}/test-cases/select-cases`);
+    this.router.navigate([`/project-overview/${this.projectId}/test-cases/select-cases`]);
   }
 
   onSubmit() {

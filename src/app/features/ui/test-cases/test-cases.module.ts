@@ -7,11 +7,11 @@ import { CoreModule } from '../../../core/core.module';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../../../shared/shared.module';
-import { SelectTestCasesComponent } from './select-test-cases/select-test-cases.component';
 import { AddEditSectionComponent } from './add-edit-section/add-edit-section.component';
 import { AddEditSubsectionComponent } from './add-edit-subsection/add-edit-subsection.component';
 import { TestCaseSectionsComponent } from './test-case-sections/test-case-sections.component';
 import { HierarchyItemComponent } from './hierarchy-item/hierarchy-item.component';
+import { SelectCasesComponent } from './select-cases/select-cases.component';
 
 
 
@@ -19,11 +19,12 @@ import { HierarchyItemComponent } from './hierarchy-item/hierarchy-item.componen
   declarations: [
     TestCasesComponent,
     AddTestCaseComponent,
-    SelectTestCasesComponent,
+    SelectCasesComponent,
     AddEditSectionComponent,
     AddEditSubsectionComponent,
     TestCaseSectionsComponent,
-    HierarchyItemComponent
+    HierarchyItemComponent,
+    SelectCasesComponent
   ],
   imports: [
     CommonModule,

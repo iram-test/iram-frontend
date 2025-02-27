@@ -2,11 +2,11 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { AddTestCaseComponent } from './add-test-case/add-test-case.component';
-import { SelectTestCasesComponent } from './select-test-cases/select-test-cases.component';
 import { AuthGuard } from '../../../core/guards/auth.guard';
 import { AddEditSectionComponent } from './add-edit-section/add-edit-section.component';
 import { AddEditSubsectionComponent } from './add-edit-subsection/add-edit-subsection.component';
 import { TestCaseSectionsComponent } from './test-case-sections/test-case-sections.component';
+import { SelectCasesComponent } from './select-cases/select-cases.component';
 
 const routes: Routes = [
   {
@@ -17,11 +17,6 @@ const routes: Routes = [
   {
     path: 'add-test-case',
     component: AddTestCaseComponent,
-    canActivate: [AuthGuard]
-  },
-  {
-    path: 'select-case',
-    component: SelectTestCasesComponent,
     canActivate: [AuthGuard]
   },
   {
@@ -44,6 +39,11 @@ const routes: Routes = [
     component: AddEditSubsectionComponent,
     canActivate: [AuthGuard]
   },
+  {
+    path: 'select-cases',
+    component: SelectCasesComponent,
+    canActivate: [AuthGuard]
+  }
 ];
 
 @NgModule({

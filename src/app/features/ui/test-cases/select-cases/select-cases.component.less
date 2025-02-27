@@ -1,0 +1,129 @@
+main {
+  font-family: 'Dosis';
+  font-style: normal;
+}
+
+h2 {
+  padding: 24px;
+  background: #1B3687;
+  margin-bottom: 24px;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 30px;
+
+  color: #FFFFFF;
+}
+
+.product-filtering-list {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #fff;
+  font-family: sans-serif;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.header {
+  padding: 10px 15px;
+  border-bottom: 1px solid #ddd;
+}
+
+.select-all-none {
+  margin-bottom: 30px;
+  padding: 5px;
+
+  background: #FFFFFF;
+  border: 1px solid #1B3687;
+  border-radius: 8px;
+}
+
+.list {
+  width: 400px;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  list-style: none;
+  padding-left: 0;
+}
+
+.list-item {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+}
+
+.list-item:last-child {
+  border-bottom: none;
+}
+
+.list-item:hover {
+  background-color: #f9f9f9;
+}
+
+.list-item input[type="checkbox"] {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #3f51b5;
+  border-radius: 4px;
+  margin-right: 10px;
+  cursor: pointer;
+  position: relative;
+}
+
+.list-item input[type="checkbox"]:checked::before {
+  content: '\2713';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #3f51b5;
+  font-size: 16px;
+}
+
+.list-item input[type="checkbox"]:focus {
+  outline: none;
+  box-shadow: 0 0 5px rgba(63, 81, 181, 0.5);
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+button {
+  margin: 10px;
+}
+
+.ok {
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 23px;
+  color: #FFFFFF;
+  width: 120px;
+  height: 40px;
+
+  background: #4CB04C;
+  border: 1px solid #4CB04C;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 12px;
+}
+
+.cancel {
+  width: 120px;
+  height: 40px;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 23px;
+  color: #C0481E;
+  border: 1px solid #C0481E;
+  background-color: inherit;
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  border-radius: 12px;
+}
