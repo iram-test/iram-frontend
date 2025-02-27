@@ -9,7 +9,7 @@ import {
   RegisterDTO,
 } from '../models/auth-dto';
 import { AuthResult } from '../models/AuthResult';
-import { User } from '../models/user-entity'; // Імпортуємо User
+import { User } from '../models/user-entity';
 
 @Injectable({
   providedIn: 'root',
@@ -17,7 +17,7 @@ import { User } from '../models/user-entity'; // Імпортуємо User
 export class AuthenticationService {
   private readonly authChangeSub = new Subject<boolean>();
   public authChanged = this.authChangeSub.asObservable();
-  private currentUser: User | null = null; // Додаємо змінну для зберігання поточного користувача
+  private currentUser: User | null = null;
 
   constructor(private readonly http: HttpClient) { }
 
@@ -34,8 +34,8 @@ export class AuthenticationService {
       .post<AuthResult>(`${AppSettings.AUTH_ENDPOINT}login/username`, loginDto)
       .pipe(
         tap((res) => {
-          localStorage.setItem('accessToken', res.accessToken); // Зберігаємо accessToken
-          localStorage.setItem('refreshToken', res.refreshToken); // Зберігаємо refreshToken
+          localStorage.setItem('accessToken', res.accessToken);
+          localStorage.setItem('refreshToken', res.refreshToken);
           this.sendAuthStateChangeNotification(true);
         }),
         catchError(this.handleError),
@@ -47,8 +47,8 @@ export class AuthenticationService {
       .post<AuthResult>(`${AppSettings.AUTH_ENDPOINT}login/email`, loginDto)
       .pipe(
         tap((res) => {
-          localStorage.setItem('accessToken', res.accessToken); // Зберігаємо accessToken
-          localStorage.setItem('refreshToken', res.refreshToken); // Зберігаємо refreshToken
+          localStorage.setItem('accessToken', res.accessToken);
+          localStorage.setItem('refreshToken', res.refreshToken);
           this.sendAuthStateChangeNotification(true);
         }),
         catchError(this.handleError),
@@ -82,8 +82,8 @@ export class AuthenticationService {
 
 
   public isUserAuthenticated = (): boolean => {
-    const token = localStorage.getItem('accessToken'); // Перевіряємо accessToken
-    return !!token; // Returns true if token exists
+    const token = localStorage.getItem('accessToken');
+    return !!token;
   };
 
   public sendAuthStateChangeNotification = (isAuthenticated: boolean) => {
@@ -102,11 +102,10 @@ export class AuthenticationService {
 
     return this.http.post<AuthResult>(`${AppSettings.AUTH_ENDPOINT}refresh`, {}, { headers })
       .pipe(
-        catchError(this.handleError) // Ensure error handling
+        catchError(this.handleError)
       );
   }
 
-  // Обробка помилок (можна винести в BaseService)
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
       console.error('An error occurred:', error.error.message);

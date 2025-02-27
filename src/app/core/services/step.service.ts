@@ -5,10 +5,9 @@ import { StepDTO, CreateStepDTO, UpdateStepDTO } from '../models/step-dto';
 import { BaseService } from './base.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class StepService extends BaseService {
-
   private readonly stepsUrl = 'steps';
 
   constructor(http: HttpClient) {
@@ -23,8 +22,14 @@ export class StepService extends BaseService {
     return this.get<StepDTO>(`${this.stepsUrl}/${id}`);
   }
 
-  createStep(step: CreateStepDTO, testCaseId: string): Observable<StepDTO> {
-    return this.post<StepDTO>(`test-cases/${testCaseId}/steps`, step);
+  createStep(
+    step: CreateStepDTO,
+    testCaseId: string,
+  ): Observable<StepDTO> {
+    return this.post<StepDTO>(
+      `/test-cases/${testCaseId}/steps`,
+      step,
+    );
   }
 
   updateStep(id: string, step: UpdateStepDTO): Observable<StepDTO> {
@@ -33,5 +38,9 @@ export class StepService extends BaseService {
 
   deleteStep(id: string): Observable<void> {
     return this.delete<void>(`${this.stepsUrl}/${id}`);
+  }
+
+  getStepsByTestCaseId(testCaseId: string): Observable<StepDTO[]> {
+    return this.get<StepDTO[]>(`/test-cases/${testCaseId}/steps`);
   }
 }

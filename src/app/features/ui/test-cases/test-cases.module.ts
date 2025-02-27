@@ -11,6 +11,7 @@ import { SelectTestCasesComponent } from './select-test-cases/select-test-cases.
 import { AddEditSectionComponent } from './add-edit-section/add-edit-section.component';
 import { AddEditSubsectionComponent } from './add-edit-subsection/add-edit-subsection.component';
 import { TestCaseSectionsComponent } from './test-case-sections/test-case-sections.component';
+import { HierarchyItemComponent } from './hierarchy-item/hierarchy-item.component';
 
 
 
@@ -21,7 +22,8 @@ import { TestCaseSectionsComponent } from './test-case-sections/test-case-sectio
     SelectTestCasesComponent,
     AddEditSectionComponent,
     AddEditSubsectionComponent,
-    TestCaseSectionsComponent
+    TestCaseSectionsComponent,
+    HierarchyItemComponent
   ],
   imports: [
     CommonModule,

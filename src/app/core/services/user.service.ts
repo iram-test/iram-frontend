@@ -5,10 +5,9 @@ import { UserDTO, CreateUserDTO, UpdateUserDTO } from '../models/user-dto';
 import { BaseService } from './base.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UserService extends BaseService {
-
   private readonly usersUrl = 'users';
 
   constructor(http: HttpClient) {

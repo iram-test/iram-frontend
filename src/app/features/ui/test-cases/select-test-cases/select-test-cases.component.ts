@@ -20,11 +20,8 @@ interface CaseSection {
   styleUrls: ['./select-test-cases.component.less']
 })
 export class SelectTestCasesComponent implements OnInit {
-
-  // Inject FormBuilder
   private fb = inject(FormBuilder);
 
-  // Signals for state management
   isLoading = signal(false);
   errorMessage = signal<string | null>(null);
   caseSections = signal<CaseSection[]>([

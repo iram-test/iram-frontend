@@ -1,14 +1,17 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { ProjectDTO, CreateProjectDTO, UpdateProjectDTO } from '../models/project-dto';
+import {
+  ProjectDTO,
+  CreateProjectDTO,
+  UpdateProjectDTO,
+} from '../models/project-dto';
 import { BaseService } from './base.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ProjectService extends BaseService {
-
   private readonly projectsUrl = 'projects';
 
   constructor(http: HttpClient) {
@@ -33,5 +36,18 @@ export class ProjectService extends BaseService {
 
   deleteProject(id: string): Observable<void> {
     return this.delete<void>(`${this.projectsUrl}/${id}`);
+  }
+
+  addUserToProject(projectId: string, userId: string): Observable<ProjectDTO> {
+    return this.post<ProjectDTO>(
+      `${this.projectsUrl}/${projectId}/users`,
+      { userId },
+    );
+  }
+
+  removeUserFromProject(projectId: string, userId: string): Observable<ProjectDTO> {
+    return this.delete<ProjectDTO>(`${this.projectsUrl}/${projectId}/users`, {
+      body: { userId }
+    });
   }
 }

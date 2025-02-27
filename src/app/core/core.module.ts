@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
 import { InternalMenuComponent } from './components/internal-menu/internal-menu.component';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
-import { CoreRoutingModule } from './core-routing.module';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { AddEditProjectComponent } from './components/add-edit-project/add-edit-project.component';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -11,6 +10,7 @@ import { AuthenticationModule } from '../features/authentication/authentication.
 import { ProjectOverviewComponent } from './components/project-overview/project-overview.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
+import { RouterLink, RouterLinkActive, RouterOutlet } from "@angular/router";
 
 @NgModule({
   declarations: [
@@ -23,7 +23,9 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    CoreRoutingModule
+    RouterOutlet,
+    RouterLink,
+    RouterLinkActive
   ],
   providers: [
     {

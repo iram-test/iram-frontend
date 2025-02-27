@@ -1,9 +1,10 @@
+<!-- dashboard.component.html -->
+<app-nav-menu></app-nav-menu>
 <div class="page-wrapper">
     <div class="hero-section">
-        <h1>iram</h1>
         <div class="flx">
             <ul class="flx">
-                <li><a href="#">Dashboard</a></li>
+                <li><a routerLink="/dashboard" routerLinkActive="active">Dashboard</a></li>
             </ul>
         </div>
     </div>
@@ -35,14 +36,20 @@
                     <h3>{{project.name}} <div class="pencil" (click)="navigateEditProject(project.projectId)"></div>
                     </h3>
                     <div>
-                        <a routerLinkActive="active" routerLink="/test-case-sections">Test Cases | </a>
-                        <a routerLinkActive="active" routerLink="/milestones">Milestones | </a>
-                        <a routerLinkActive="active" routerLink="/test-runs">Test Runs</a>
+                        <!-- Correct routerLink usage with projectId -->
+                        <a [routerLink]="['/project-overview', project.projectId, 'test-cases']"
+                            routerLinkActive="active">Test Cases | </a>
+                        <a [routerLink]="['/project-overview', project.projectId, 'milestones']"
+                            routerLinkActive="active">Milestones | </a>
+                        <a [routerLink]="['/project-overview', project.projectId, 'test-runs']"
+                            routerLinkActive="active">Test Runs</a>
                     </div>
                     <p>Contains <strong>2</strong> test suites, <strong>2</strong> active test runs and
-                        <strong>1</strong> active milestone.</p>
+                        <strong>1</strong> active milestone.
+                    </p>
                 </div>
-                <div class="add-edit-project" (click)="navigateProjectOverview(project.projectId)"><a routerLinkActive="active"></a></div>
+                <!-- Correct routerLink usage with projectId -->
+                <div class="add-edit-project" (click)="navigateProjectOverview(project.projectId)"><a></a></div>
             </section>
         </div>
 

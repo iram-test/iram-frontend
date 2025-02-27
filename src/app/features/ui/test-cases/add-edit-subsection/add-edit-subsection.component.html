@@ -2,20 +2,28 @@
 <h2 *ngIf="!id">Add Subsection</h2>
 <h2 *ngIf="id">Edit Subsection</h2>
 <main>
-    <form method="post" [formGroup]="subSectionForm" (ngSubmit)="sendData(subSectionForm.value)">
+    <form method="post" [formGroup]="subSectionForm" (ngSubmit)="onSubmit()">
         <fieldset>
             <div class="form-group">
                 <label for="name">Name*</label><br />
                 <input id="name" class="name" type="text" formControlName="name" placeholder="Some name" />
+                <div *ngIf="subSectionForm.get('name')?.invalid && (subSectionForm.get('name')?.dirty || subSectionForm.get('name')?.touched)"
+                    class="error-message">
+                    <div *ngIf="subSectionForm.get('name')?.errors?.['required']">Name is required.</div>
+                </div>
             </div>
             <div class="form-group">
-                <label for="announcement">Description</label><br />
+                <label for="description">Description</label><br />
                 <textarea id="description" formControlName="description"></textarea>
             </div>
         </fieldset>
         <div class="btns">
-            <button type="submit" class="add-btn">Add Subsection</button>
-            <button class="cancel-btn">Cancel</button>
+            <button type="submit" class="add-btn" [disabled]="subSectionForm.invalid || loading">
+                <span *ngIf="!loading">{{ id ? 'Save Changes' : 'Add Subsection' }}</span>
+                <span *ngIf="loading">Loading...</span>
+            </button>
+            <button class="cancel-btn" type="button" (click)="onCancel()">Cancel</button>
         </div>
     </form>
+    <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
 </main>

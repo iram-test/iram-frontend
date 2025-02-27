@@ -15,10 +15,21 @@
 
             <div class="dropdown-group">
                 <div>
-                    <label for="section">Section*</label>
-                    <select id="section" formControlName="section">
-                        <option *ngFor="let section of sections" [value]="section">{{ section }}</option>
+                    <label for="sectionId">Section/Subsection</label>
+                    <select id="sectionId" formControlName="sectionId">
+                        <option [ngValue]="null">-</option>
+                        <optgroup label="Sections">
+                            <option *ngFor="let section of sections" [ngValue]="section.sectionId">
+                                {{ section.name }}
+                            </option>
+                        </optgroup>
+                        <optgroup label="Subsections">
+                            <option *ngFor="let subsection of subsections" [ngValue]="subsection.subsectionId">
+                                {{ subsection.name }}
+                            </option>
+                        </optgroup>
                     </select>
+
                 </div>
                 <div>
                     <label for="template">Template*</label>
@@ -55,7 +66,7 @@
             </div>
         </div>
 
-        <button class="add-btn" (click)="addStep()">Add Step</button>
+        <button type="button" class="add-btn" (click)="addStep()">Add Step</button>
         <div class="steps-section" formArrayName="steps">
             <div *ngFor="let step of steps.controls; let i = index" [formGroupName]="i">
                 <div class="step">
@@ -77,17 +88,21 @@
                     </div>
 
                     <div class="step-actions">
-                        <button class="up-btn" (click)="moveStepUp(i)">Up</button>
-                        <button class="down-btn" (click)="moveStepDown(i)">Down</button>
-                        <button class="delete-btn" (click)="removeStep(i)">Delete</button>
+                        <button type="button" class="up-btn" (click)="moveStepUp(i)">Up</button>
+                        <button type="button" class="down-btn" (click)="moveStepDown(i)">Down</button>
+                        <button type="button" class="delete-btn" (click)="removeStep(i)">Delete</button>
                     </div>
                 </div>
             </div>
         </div>
 
         <div class="form-actions">
-            <button type="submit">Add Test Case</button>
+            <button type="submit" [disabled]="testCaseForm.invalid || loading">
+                <span *ngIf="!loading">Add Test Case</span>
+                <span *ngIf="loading">Adding...</span>
+            </button>
             <button type="reset" (click)="resetForm()">Clear</button>
         </div>
+        <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
     </form>
 </div>

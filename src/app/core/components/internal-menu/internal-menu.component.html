@@ -1,10 +1,13 @@
+<!-- internal-menu.component.html -->
 <h1>iram</h1>
 <div class="flx">
     <ul class="flx">
-        <li><a routerLinkActive="active" routerLink="project-overview">Overview</a></li>
-        <li><a routerLinkActive="active" routerLink="/milestones">Milestones</a></li>
-        <li><a routerLinkActive="active" routerLink="/test-runs">Tests</a></li>
-        <li><a routerLinkActive="active" routerLink="/test-cases">Test Cases</a></li>
+        <li><a routerLinkActive="active" [routerLink]="['/project-overview', projectId]">Overview</a></li>
+        <li><a routerLinkActive="active" [routerLink]="['/project-overview', projectId, 'milestones']">Milestones</a>
+        </li>
+        <li><a routerLinkActive="active" [routerLink]="['/project-overview', projectId, 'test-runs']">Tests</a></li>
+        <li><a routerLinkActive="active" [routerLink]="['/project-overview', projectId, 'test-cases']">Test Cases</a>
+        </li>
     </ul>
     <div><a href="#">Administration</a></div>
 </div>

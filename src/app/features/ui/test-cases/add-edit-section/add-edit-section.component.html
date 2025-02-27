@@ -2,20 +2,28 @@
 <h2 *ngIf="!id">Add Section</h2>
 <h2 *ngIf="id">Edit Section</h2>
 <main>
-    <form method="post" [formGroup]="sectionForm" (ngSubmit)="sendData(sectionForm.value)">
+    <form method="post" [formGroup]="sectionForm" (ngSubmit)="onSubmit()">
         <fieldset>
             <div class="form-group">
                 <label for="name">Name*</label><br />
                 <input id="name" class="name" type="text" formControlName="name" placeholder="Some name" />
+                <div *ngIf="sectionForm.get('name')?.invalid && (sectionForm.get('name')?.dirty || sectionForm.get('name')?.touched)"
+                    class="error-message">
+                    <div *ngIf="sectionForm.get('name')?.errors?.['required']">Name is required.</div>
+                </div>
             </div>
             <div class="form-group">
-                <label for="announcement">Description</label><br />
+                <label for="description">Description</label><br />
                 <textarea id="description" formControlName="description"></textarea>
             </div>
         </fieldset>
         <div class="btns">
-            <button type="submit" class="add-btn">Add Section</button>
-            <button class="cancel-btn">Cancel</button>
+            <button type="submit" class="add-btn" [disabled]="sectionForm.invalid || loading">
+                <span *ngIf="!loading">{{ id ? 'Save Changes' : 'Add Section' }}</span>
+                <span *ngIf="loading">Loading...</span>
+            </button>
+            <button class="cancel-btn" type="button" (click)="onCancel()">Cancel</button>
         </div>
     </form>
+    <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
 </main>

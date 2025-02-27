@@ -1,53 +1,49 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Project } from '../../models/project-entity';
-import { Language } from '../../models/enums/language';
-import { Location } from '../../models/enums/location';
+import { ProjectService } from '../../services/project.service';
+import { catchError } from 'rxjs/operators';
+import { of } from 'rxjs';
+import { Project } from "../../models/project-entity";
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.less'
 })
-export class DashboardComponent {
-  projects: Project[];
+export class DashboardComponent implements OnInit {
+  projects: Project[] = [];
+  loading = false;
+  errorMessage: string | null = null;
 
-  constructor(private readonly router: Router) { }
+  constructor(private readonly router: Router, private projectService: ProjectService) { }
 
   ngOnInit(): void {
-    this.projects = [
-      {
-        projectId: '1',
-        name: 'Laptop Shop',
-        language: Language.ENGLISH,
-        location: Location.UK,
-        description: 'Description for first project',
-        managerId: '',
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-        users: ['admin']
-      },
-      {
+    this.loadProjects();
+  }
 
-        projectId: '2',
-        name: 'Volvo Inc.',
-        language: Language.POLISH,
-        location: Location.PL,
-        description: 'Description for Volvo project',
-        managerId: '',
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-        users: ['admin', 'oleh02']
-      }
-    ];
+  loadProjects() {
+    this.loading = true;
+    this.errorMessage = null;
+    this.projectService.getProjects()
+      .pipe(
+        catchError(err => {
+          this.errorMessage = err.message || 'Failed to load projects';
+          this.loading = false;
+          return of([]);
+        })
+      )
+      .subscribe(projects => {
+        this.projects = projects;
+        this.loading = false;
+      });
   }
 
   navigateProjectOverview(projectId: string) {
-    this.router.navigate(['/project-overview', projectId])
+    this.router.navigate(['/project-overview', projectId]);
   }
 
   navigateEditProject(projectId: string) {
-    this.router.navigate(['/edit-project', projectId])
+    this.router.navigate(['/edit-project', projectId]);
   }
 
   addProject() {

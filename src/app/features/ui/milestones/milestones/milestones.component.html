@@ -22,13 +22,10 @@
         <div class="section-container" *ngIf="!isMilestonesEmpty()">
             <div class="product-filtration">
                 <div class="case-list">
-                    <div class="case-item" *ngFor="let milestone of filteredMilestones; let i = index">
-                        <div class="case-item-group">
-                            <div class="drag-handle">☰</div>
-                            <div class="case-id">{{milestone.milestoneID.slice(0, 2)}}</div>
-                            <div class="case-title">{{milestone.name}}</div>
-                        </div>
-                        <div class="case-delete" (click)="removeMilestone(milestone.milestoneID)">Delete</div>
+                    <div class="case-item" *ngFor="let milestone of filteredMilestones">
+                        <div class="drag-handle">☰</div>
+                        <div class="case-id">{{milestone.milestoneID}}</div>
+                        <div class="case-title">{{milestone.name}}</div>
                     </div>
                 </div>
             </div>

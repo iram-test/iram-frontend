@@ -1,14 +1,17 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { SectionDTO, CreateSectionDTO, UpdateSectionDTO } from '../models/section-dto';
+import {
+  SectionDTO,
+  CreateSectionDTO,
+  UpdateSectionDTO,
+} from '../models/section-dto';
 import { BaseService } from './base.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SectionService extends BaseService {
-
   private readonly sectionsUrl = 'sections';
 
   constructor(http: HttpClient) {
@@ -23,8 +26,14 @@ export class SectionService extends BaseService {
     return this.get<SectionDTO>(`${this.sectionsUrl}/${id}`);
   }
 
-  createSection(section: CreateSectionDTO, projectId: string): Observable<SectionDTO> {
-    return this.post<SectionDTO>(`projects/${projectId}/sections`, section);
+  createSection(
+    section: CreateSectionDTO,
+    projectId: string,
+  ): Observable<SectionDTO> {
+    return this.post<SectionDTO>(
+      `projects/${projectId}/sections`,
+      section,
+    );
   }
 
   updateSection(id: string, section: UpdateSectionDTO): Observable<SectionDTO> {
@@ -33,5 +42,9 @@ export class SectionService extends BaseService {
 
   deleteSection(id: string): Observable<void> {
     return this.delete<void>(`${this.sectionsUrl}/${id}`);
+  }
+
+  getSectionsByProjectId(projectId: string): Observable<SectionDTO[]> {
+    return this.get<SectionDTO[]>(`projects/${projectId}/sections`);
   }
 }

@@ -1,0 +1,106 @@
+/* hierarchy-item.component.less */
+.hierarchy-item {
+  margin-left: 15px;
+  padding: 5px;
+  border-left: 2px solid #1c3c88;
+
+  &.expanded {
+    .children {
+      display: block;
+    }
+  }
+}
+
+.item-header {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px; // Чуть меньше отступа
+  padding: 10px; // Уменьшен внутренний отступ
+  font-size: 20px; // Чуть меньше шрифт
+  background-color: #1c3c88;
+  color: white;
+  border-radius: 6px;
+
+  &:hover {
+    background-color: #142c6e;
+  }
+}
+
+.expand-icon {
+  width: 22px; // Чуть меньше иконка
+  text-align: center;
+  color: white;
+}
+
+.children {
+  display: none;
+}
+
+/* Style for sections */
+.section-item {
+  .section-header {
+    background-color: #1c3c88;
+    color: white;
+    padding: 10px;
+    font-size: 20px; // Чуть меньше шрифт
+    border-radius: 6px;
+
+    .expand-icon {
+      color: white;
+    }
+
+    input[type="radio"] {
+      accent-color: white;
+      width: 20px; // Уменьшена радиокнопка
+      height: 20px;
+    }
+
+    span.section {
+      color: white;
+      font-weight: bold;
+    }
+  }
+}
+
+/* Style for subsections */
+.subsection-item {
+  .subsection-header {
+    background-color: #142c6e;
+    color: white;
+    padding: 10px;
+    font-size: 19px; // Чуть меньше шрифт
+    border-radius: 6px;
+
+    .expand-icon {
+      color: white;
+    }
+
+    input[type="radio"] {
+      accent-color: white;
+      width: 20px;
+      height: 20px;
+    }
+
+    span.subsection {
+      color: white;
+      font-style: italic;
+    }
+  }
+}
+
+.test-cases-container {
+  padding-left: 15px;
+}
+
+.test-case-item {
+  background-color: #1c3c88;
+  color: white;
+  padding: 6px; // Чуть меньше отступ
+  margin: 3px;
+  font-size: 19px; // Чуть меньше шрифт
+  border-radius: 6px;
+  margin-left: 12px;
+  font-weight: bold;
+  text-align: center;
+}

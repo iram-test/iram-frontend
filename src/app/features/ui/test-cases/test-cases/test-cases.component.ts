@@ -14,9 +14,12 @@ export class TestCasesComponent implements OnInit {
   testCases: TestCaseDTO[];
   filteredTestCases: TestCaseDTO[];
 
-  constructor(private readonly http: HttpClient) { }
+  constructor(private readonly http: HttpClient) {
+    console.log('TestCasesComponent constructor');
+  }
 
   isTestCasesEmpty() {
+    console.log('isTestCasesEmpty called', this.testCases);
     return this.testCases.length === 0;
   }
 
@@ -57,6 +60,7 @@ export class TestCasesComponent implements OnInit {
     this.testCases = [testCase1, testCase2];
     this.filteredTestCases = [...this.testCases];
     // this.testCases = [];
+    console.log('TestCases initialized', this.testCases);
   }
 
   filterCases(event: Event) {
