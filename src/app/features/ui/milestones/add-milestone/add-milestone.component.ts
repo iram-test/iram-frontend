@@ -12,6 +12,7 @@ import { CreateMilestoneDTO } from "../../../../core/models/milestone-dto";
 })
 export class AddMilestoneComponent implements OnInit {
   milestoneForm: FormGroup;
+  id: string | null = null;
   loading = false;
   errorMessage: string | null = null;
   projectId: string | null = null;

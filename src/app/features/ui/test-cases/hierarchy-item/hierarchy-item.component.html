@@ -21,7 +21,7 @@
 
     <div *ngIf="item.expanded && item.testCases" class="test-cases-container">
         <div *ngFor="let testCase of item.testCases" class="test-case-item">
-            <span>{{ testCase.title }}</span>
+            <span (click)="navigateEditTestCase(testCase.testCaseId)">{{ testCase.title }}</span>
         </div>
     </div>
 </div>

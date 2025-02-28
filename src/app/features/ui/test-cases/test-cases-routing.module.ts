@@ -8,6 +8,7 @@ import { AddEditSubsectionComponent } from './add-edit-subsection/add-edit-subse
 import { TestCaseSectionsComponent } from './test-case-sections/test-case-sections.component';
 import { SelectCasesComponent } from './select-cases/select-cases.component';
 import { TestCaseDetailsComponent } from './test-case-details/test-case-details.component';
+import { AddEditTestCaseComponent } from './add-edit-test-case/add-edit-test-case.component';
 
 const routes: Routes = [
   {
@@ -18,6 +19,11 @@ const routes: Routes = [
   {
     path: 'add-test-case',
     component: AddTestCaseComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'edit-test-case/:id',
+    component: AddEditTestCaseComponent,
     canActivate: [AuthGuard]
   },
   {

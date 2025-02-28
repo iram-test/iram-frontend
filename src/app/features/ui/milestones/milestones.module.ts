@@ -5,13 +5,15 @@ import { AddMilestoneComponent } from './add-milestone/add-milestone.component';
 import { MilestonesRoutingModule } from './milestones-routing.module';
 import { CoreModule } from '../../../core/core.module';
 import { ReactiveFormsModule } from '@angular/forms';
+import { EditMilestoneComponent } from './edit-milestone/edit-milestone.component';
 
 
 
 @NgModule({
   declarations: [
     MilestonesComponent,
-    AddMilestoneComponent
+    AddMilestoneComponent,
+    EditMilestoneComponent
   ],
   imports: [
     CommonModule,

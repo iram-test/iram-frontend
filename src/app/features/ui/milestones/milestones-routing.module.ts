@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { MilestonesComponent } from './milestones/milestones.component';
 import { AddMilestoneComponent } from './add-milestone/add-milestone.component';
 import { AuthGuard } from '../../../core/guards/auth.guard';
+import { EditMilestoneComponent } from './edit-milestone/edit-milestone.component';
 
 const routes: Routes = [
   {
@@ -12,7 +13,12 @@ const routes: Routes = [
   },
   {
     path: 'add-milestone',
-    component: AddMilestoneComponent,
+    component: EditMilestoneComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: "edit-milestone/:id",
+    component: EditMilestoneComponent,
     canActivate: [AuthGuard]
   }
 ];

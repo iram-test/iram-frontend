@@ -35,4 +35,8 @@ export class HierarchyItemComponent {
       this.sectionSelected.emit(itemId);
     }
   }
+
+  navigateEditTestCase(id: string) {
+    this.router.navigate(['edit-test-case', id], { relativeTo: this.route });
+  }
 }

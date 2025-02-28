@@ -1,0 +1,108 @@
+<app-internal-menu></app-internal-menu>
+
+<div class="header">
+    <h2>Test Cases</h2>
+</div>
+
+<div class="test-case-form">
+    <form [formGroup]="testCaseForm" (ngSubmit)="onSubmit()">
+        <div class="form-section">
+            <div class="title-group">
+                <label for="title">Title*</label>
+                <input id="title" class="title" type="text" formControlName="title"
+                    placeholder="Enter test case title" />
+            </div>
+
+            <div class="dropdown-group">
+                <div>
+                    <label for="sectionId">Section/Subsection</label>
+                    <select id="sectionId" formControlName="sectionId">
+                        <option [ngValue]="null">-</option>
+                        <optgroup label="Sections">
+                            <option *ngFor="let section of sections" [ngValue]="section.sectionId">
+                                {{ section.name }}
+                            </option>
+                        </optgroup>
+                        <optgroup label="Subsections">
+                            <option *ngFor="let subsection of subsections" [ngValue]="subsection.subsectionId">
+                                {{ subsection.name }}
+                            </option>
+                        </optgroup>
+                    </select>
+
+                </div>
+                <div>
+                    <label for="template">Template*</label>
+                    <select id="template" formControlName="template">
+                        <option *ngFor="let template of templates" [value]="template">{{ template }}</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="type">Type*</label>
+                    <select id="type" formControlName="type">
+                        <option *ngFor="let type of types" [value]="type">{{ type }}</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="priority">Priority*</label>
+                    <select id="priority" formControlName="priority">
+                        <option *ngFor="let priority of priorities" [value]="priority">{{ priority }}</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="estimate">Estimate</label>
+                    <input id="estimate" type="text" formControlName="estimate" placeholder="Enter estimate" />
+                </div>
+            </div>
+        </div>
+
+        <div class="preconditions-group">
+            <div class="preconditions">
+                <label for="preconditions">Preconditions:</label>
+                <textarea id="preconditions" rows="4" formControlName="preconditions"
+                    placeholder="Enter preconditions"></textarea>
+                <div>The preconditions of this test case. Reference other test cases with [C#](e.g. [C17])</div>
+            </div>
+        </div>
+
+        <button type="button" class="add-btn" (click)="addStep()">Add Step</button>
+        <div class="steps-section" formArrayName="steps">
+            <div *ngFor="let step of steps.controls; let i = index" [formGroupName]="i">
+                <div class="step">
+                    <div class="step-aside">
+                        <div class="step-number">{{i + 1}}</div>
+                    </div>
+                    <div class="step-content">
+                        <div>
+                            <label for="steps">Steps:</label>
+                            <app-contenteditable formControlName="steps"></app-contenteditable>
+                        </div>
+                        <div>
+                            <label for="expectedResults">Expected Results:</label>
+                            <app-contenteditable formControlName="expectedResults"></app-contenteditable>
+                        </div>
+                        <div *ngIf="stepImages[i]">
+                            <img [src]="stepImages[i]" alt="Step image" class="uploaded-image" />
+                        </div>
+                    </div>
+
+                    <div class="step-actions">
+                        <button type="button" class="up-btn" (click)="moveStepUp(i)">Up</button>
+                        <button type="button" class="down-btn" (click)="moveStepDown(i)">Down</button>
+                        <button type="button" class="delete-btn" (click)="removeStep(i)">Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" [disabled]="testCaseForm.invalid || loading">
+                <span *ngIf="!loading">Add Test Case</span>
+                <span *ngIf="loading">Adding...</span>
+            </button>
+            <button type="reset" (click)="resetForm()">Clear</button>
+        </div>
+        <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+    </form>
+</div>

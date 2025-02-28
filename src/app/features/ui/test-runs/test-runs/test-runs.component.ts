@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TestRunDTO, TestRunResult } from '../../../../core/models/test-run-dto'; // Adjust the path if necessary
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-test-runs',
@@ -11,7 +11,7 @@ export class TestRunsComponent implements OnInit {
   testRuns: TestRunResult[] = [];
   selectedAttribute: string = 'date';
 
-  constructor(private readonly router: Router) { }
+  constructor(private route: ActivatedRoute, private readonly router: Router) { }
 
   ngOnInit(): void {
     this.testRuns = [
@@ -113,6 +113,10 @@ export class TestRunsComponent implements OnInit {
   onAttributeChange(event: any): void {
     this.selectedAttribute = event.target.value;
     console.log(`Order by attribute changed to: ${this.selectedAttribute}`);
+  }
+
+  navigateEditTestRun(id: string) {
+    this.router.navigate(['edit-test-run', id], { relativeTo: this.route });
   }
 
   getResultsLine(testRun: TestRunDTO): string {

@@ -4,6 +4,7 @@ import { TestRunsComponent } from './test-runs/test-runs.component';
 import { AddTestRunComponent } from './add-test-run/add-test-run.component';
 import { AuthGuard } from '../../../core/guards/auth.guard';
 import { TestRunDetailsComponent } from './test-run-details/test-run-details.component';
+import { AddEditTestRunComponent } from './add-edit-test-run/add-edit-test-run.component';
 
 const routes: Routes = [
   {
@@ -14,6 +15,11 @@ const routes: Routes = [
   {
     path: 'add-test-run',
     component: AddTestRunComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'edit-test-run/:id',
+    component: AddEditTestRunComponent,
     canActivate: [AuthGuard]
   },
   {

@@ -8,6 +8,7 @@ import { SharedModule } from '../../../shared/shared.module';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TestRunDetailsComponent } from './test-run-details/test-run-details.component';
+import { AddEditTestRunComponent } from './add-edit-test-run/add-edit-test-run.component';
 
 
 
@@ -15,7 +16,8 @@ import { TestRunDetailsComponent } from './test-run-details/test-run-details.com
   declarations: [
     TestRunsComponent,
     AddTestRunComponent,
-    TestRunDetailsComponent
+    TestRunDetailsComponent,
+    AddEditTestRunComponent
   ],
   imports: [
     CommonModule,

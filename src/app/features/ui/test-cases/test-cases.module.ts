@@ -14,6 +14,7 @@ import { HierarchyItemComponent } from './hierarchy-item/hierarchy-item.componen
 import { SelectCasesComponent } from './select-cases/select-cases.component';
 import { TestCaseDetailsComponent } from './test-case-details/test-case-details.component';
 import { StepDetailsComponent } from './step-details/step-details.component';
+import { AddEditTestCaseComponent } from './add-edit-test-case/add-edit-test-case.component';
 
 
 
@@ -28,7 +29,8 @@ import { StepDetailsComponent } from './step-details/step-details.component';
     HierarchyItemComponent,
     SelectCasesComponent,
     TestCaseDetailsComponent,
-    StepDetailsComponent
+    StepDetailsComponent,
+    AddEditTestCaseComponent
   ],
   imports: [
     CommonModule,

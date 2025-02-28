@@ -37,6 +37,10 @@ export class MilestonesComponent implements OnInit {
     return this.milestones.length === 0;
   }
 
+  navigateEditMilestone(id: string) {
+    this.router.navigate(['edit-milestone', id], { relativeTo: this.route })
+  }
+
   loadMilestones() {
     if (!this.projectId) return;
     this.loading = true;

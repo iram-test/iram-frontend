@@ -33,7 +33,7 @@
                             <input type="checkbox" class="test-run-checkbox">
                             <div class="test-run-details-img"></div>
                             <div class="test-run-details">
-                                <h3>{{testRun.name}} {{testRun.createdAt}}</h3>
+                                <h3><span (click)="navigateEditTestRun(testRun.testRunId)">{{testRun.name}}</span> {{testRun.createdAt}}</h3>
                                 <p class="results-line"><span>{{testRun.passed}}</span> Passed,
                                     <span>{{testRun.blocked}}</span> Blocked,
                                     <span>{{testRun.untested}}</span> Untested,

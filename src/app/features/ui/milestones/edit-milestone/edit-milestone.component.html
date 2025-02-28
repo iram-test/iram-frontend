@@ -1,0 +1,46 @@
+<app-internal-menu></app-internal-menu>
+<header>
+    <h2 *ngIf="!id">Add Milestone</h2>
+    <h2 *ngIf="id">Edit Milestone</h2>
+</header>
+<main>
+    <form method="post" [formGroup]="milestoneForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <label for="name">Name*</label><br />
+            <input id="name" class="name" type="text" formControlName="name" placeholder="Some name" />
+            <div *ngIf="milestoneForm.get('name')?.invalid && (milestoneForm.get('name')?.dirty || milestoneForm.get('name')?.touched)"
+                class="error-message">
+                <div *ngIf="milestoneForm.get('name')?.errors?.['required']">Name is required.</div>
+            </div>
+        </div>
+
+        <div class="row"></div>
+
+        <div class="description">
+            <label for="description">Description</label>
+            <textarea id="description" rows="4" formControlName="description"></textarea>
+        </div>
+
+        <div class="row"></div>
+
+        <div class="dates">
+            <div class="form-group">
+                <label for="start-date">Start Date</label>
+                <input type="date" name="startDate" id="start-date" formControlName="startDate" />
+            </div>
+
+            <div class="form-group">
+                <label for="end-date">End Date</label>
+                <input type="date" name="endDate" id="end-date" formControlName="endDate" />
+            </div>
+        </div>
+
+        <div class="row"></div>
+
+        <div class="form-actions">
+            <button type="submit">Add Milestone</button>
+            <button type="reset" (click)="onCancel()">Cancel</button>
+        </div>
+    </form>
+    <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+</main>
