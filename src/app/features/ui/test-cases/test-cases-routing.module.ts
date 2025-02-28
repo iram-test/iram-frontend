@@ -7,6 +7,7 @@ import { AddEditSectionComponent } from './add-edit-section/add-edit-section.com
 import { AddEditSubsectionComponent } from './add-edit-subsection/add-edit-subsection.component';
 import { TestCaseSectionsComponent } from './test-case-sections/test-case-sections.component';
 import { SelectCasesComponent } from './select-cases/select-cases.component';
+import { TestCaseDetailsComponent } from './test-case-details/test-case-details.component';
 
 const routes: Routes = [
   {

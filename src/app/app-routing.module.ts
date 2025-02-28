@@ -8,6 +8,7 @@ import { DashboardComponent } from "./core/components/dashboard/dashboard.compon
 import { AddEditProjectComponent } from "./core/components/add-edit-project/add-edit-project.component";
 import { ProjectOverviewComponent } from "./core/components/project-overview/project-overview.component";
 import { AuthGuard } from './core/guards/auth.guard';
+import { TestCaseDetailsComponent } from './features/ui/test-cases/test-case-details/test-case-details.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -28,6 +29,10 @@ const routes: Routes = [
       { path: 'test-runs', loadChildren: () => import('./features/ui/test-runs/test-runs.module').then(m => m.TestRunsModule) },
       { path: '', redirectTo: 'test-cases', pathMatch: 'full' },
     ]
+  },
+  {
+    path: 'test-case-details',
+    component: TestCaseDetailsComponent
   },
   { path: '**', redirectTo: '/home' }
 ];
