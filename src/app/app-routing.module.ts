@@ -9,6 +9,7 @@ import { AddEditProjectComponent } from "./core/components/add-edit-project/add-
 import { ProjectOverviewComponent } from "./core/components/project-overview/project-overview.component";
 import { AuthGuard } from './core/guards/auth.guard';
 import { TestCaseDetailsComponent } from './features/ui/test-cases/test-case-details/test-case-details.component';
+import { AddEditTestResultComponent } from './features/ui/test-runs/add-edit-test-result/add-edit-test-result.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -33,6 +34,17 @@ const routes: Routes = [
   {
     path: 'test-case-details',
     component: TestCaseDetailsComponent
+  },
+
+  {
+    path: 'add-test-result',
+    component: AddEditTestResultComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'edit-test-result/:id',
+    component: AddEditTestResultComponent,
+    canActivate: [AuthGuard]
   },
   { path: '**', redirectTo: '/home' }
 ];

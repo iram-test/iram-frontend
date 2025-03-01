@@ -5,6 +5,7 @@ import { AddTestRunComponent } from './add-test-run/add-test-run.component';
 import { AuthGuard } from '../../../core/guards/auth.guard';
 import { TestRunDetailsComponent } from './test-run-details/test-run-details.component';
 import { AddEditTestRunComponent } from './add-edit-test-run/add-edit-test-run.component';
+import { AddEditTestResultComponent } from './add-edit-test-result/add-edit-test-result.component';
 
 const routes: Routes = [
   {
@@ -26,7 +27,7 @@ const routes: Routes = [
     path: 'test-run-details',
     component: TestRunDetailsComponent,
     canActivate: [AuthGuard]
-  }
+  },
 ];
 
 @NgModule({

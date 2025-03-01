@@ -1,0 +1,289 @@
+.popup-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  width: 1200px;
+  z-index: 1000;
+  font-family: 'Dosis';
+  font-style: normal;
+  overflow: auto;
+}
+
+.flx {
+  display: flex;
+  justify-content: space-between;
+}
+
+.steps label {
+  display: inline-block;
+}
+
+.steps ul {
+  list-style-type: none;
+  display: flex;
+  gap: 15px;
+}
+
+.steps ul li {
+  border-radius: 50%;
+  width: 21px;
+  height: 21px;
+  text-align: center;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 23px;
+  color: #FFFFFF;
+}
+
+.steps ul li:nth-child(1) {
+  background-color: #418C5E;
+}
+
+.steps ul li:nth-child(2) {
+  background-color: #7A7A78;
+}
+
+.steps ul li:nth-child(3) {
+  background-color: #AF970B;
+}
+
+.steps ul li:nth-child(4) {
+  background-color: #AF093E;
+}
+
+.steps ul li:nth-child(5) {
+  background-color: #4B4B4B;
+}
+
+label {
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 25px;
+  color: #000000;
+}
+
+.comment-group p,
+.assign-to-group p,
+.status-group p,
+.elapsed-group p {
+  padding-left: 10px;
+  font-family: 'Inter';
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 15px;
+  color: #939598;
+}
+
+#status {
+  width: 450px;
+  padding-left: 25px;
+  font-family: 'Inter';
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  color: #3A3A3A;
+  background: #F3F3FB;
+  border: 1px solid #1B3687;
+  border-radius: 16px;
+}
+
+.popup-content {
+  margin: 20px;
+}
+
+.popup-header {
+  padding: 10px 36px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 600;
+  font-size: 32px;
+  line-height: 40px;
+  color: #FFFFFF;
+}
+
+#comment {
+  padding: 10px;
+  font-family: 'Dosis';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  color: #3A3A3A;
+  width: 450px;
+  height: 122px;
+  background: #F3F3FB;
+  border: 1px solid #1B3687;
+  border-radius: 16px;
+}
+
+.popup-header h2 {
+  margin: 0;
+}
+
+.popup-header button {
+  background: none;
+  border: none;
+  font-size: 1.5em;
+  cursor: pointer;
+}
+
+.close-popup {
+  rotate: 45deg;
+  font-weight: 400;
+  font-size: 64px;
+  line-height: 81px;
+  text-align: center;
+  color: #FFFFFF;
+  transform: rotate(45.98deg);
+}
+
+.popup-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  width: calc(100% - 12px);
+  /* Учитываем рамку */
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+#assign-to {
+  padding: 10px;
+  width: 271px;
+  height: 25px;
+
+  background: #FFFFFF;
+  border: 1px solid #1B3687;
+  border-radius: 16px;
+}
+
+.form-group textarea {
+  resize: vertical;
+}
+
+.steps {
+  border: 1px solid #eee;
+  padding: 10px;
+  border-radius: 3px;
+}
+
+.step {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.right-column {}
+
+.assign-to-group {
+  margin-bottom: 20px;
+}
+
+.elapsed-group label {
+  display: flex;
+  justify-content: space-between;
+}
+
+a {
+  font-family: 'Inter';
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  color: #2E94F2;
+}
+
+.steps {
+  width: 850px;
+  border: 1px solid #eee;
+  padding: 10px;
+  border-radius: 3px;
+}
+
+.step {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.step-content {
+  flex-grow: 1;
+  padding-right: 10px;
+}
+
+.step-options {
+  flex-shrink: 0;
+}
+
+.step-options select {
+  width: 140px;
+  background: #F3F3FB;
+  border: 1px solid #1B3687;
+  border-radius: 16px;
+  padding: 3px;
+}
+
+.step-content img {
+  max-width: 100px;
+  height: auto;
+  margin-bottom: 5px;
+}
+
+.step-options select {
+  padding: 3px;
+}
+
+button[type='submit'],
+button[type='reset'] {
+  width: 120px;
+  height: 40px;
+  font-family: 'Dosis';
+  font-style: normal;
+  cursor: pointer;
+  transition: all 1.2s ease;
+  margin: 12px;
+}
+
+button[type='submit']:hover,
+button[type='reset']:hover {
+  transform: scale(1.2);
+}
+
+button[type='submit'] {
+  background-color: #4CB04C;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 23px;
+  color: #FFFFFF;
+}
+
+button[type='reset'] {
+  background-color: inherit;
+  border: 1px solid #C0481E;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 23px;
+  color: #C0481E;
+}

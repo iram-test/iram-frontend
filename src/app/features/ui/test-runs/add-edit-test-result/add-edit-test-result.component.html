@@ -1,0 +1,74 @@
+<form [formGroup]="testResultForm" (ngSubmit)="onSubmit()">
+    <div class="popup-container">
+        <div class="popup-header" [style.backgroundColor]="getHeaderColor()">
+            <h2>Add Result</h2>
+            <button class="close-popup">×</button>
+        </div>
+        <div class="popup-content">
+            <div class="left-column">
+                <div class="form-group status-group">
+                    <label for="status">Status*</label>
+                    <select id="status" name="status" formControlName="status" (change)="getHeaderColor()">
+                        <option value="passed">Passed</option>
+                        <option value="failed">Failed</option>
+                        <option value="blocked">Blocked</option>
+                        <option value="retest">Retest</option>
+                        <option value="untested">Untested</option>
+                    </select>
+                    <p>Set the test status (passed, failed, etc.).</p>
+                </div>
+                <div class="form-group comment-group">
+                    <label for="comment">Comment</label>
+                    <textarea id="comment" name="comment" formControlName="comment"></textarea>
+                    <p>Describe your test result.</p>
+                </div>
+                <div class="form-group steps">
+                    <div class="flx">
+                        <label>Steps</label>
+                        <ul>
+                            <li>P</li>
+                            <li>U</li>
+                            <li>R</li>
+                            <li>F</li>
+                            <li>B</li>
+                        </ul>
+                    </div>
+                    <div *ngFor="let step of steps; let i = index" class="step">
+                        <div class="step-content">
+                            <p>{{ i + 1 }}. <app-contenteditable [(ngModel)]="step.description"></app-contenteditable>
+                            </p>
+                        </div>
+                        <div class="step-options">
+                            <select [(ngModel)]="step.status">
+                                <option value="untested">Untested</option>
+                                <option value="passed">Passed</option>
+                                <option value="failed">Failed</option>
+                                <option value="blocked">Blocked</option>
+                                <option value="retest">Retest</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button (click)="addStep()">Add Step</button>
+                </div>
+            </div>
+            <div class="right-column">
+                <div class="form-group">
+                    <div class="assign-to-group">
+                        <label for="assign-to">Assign To</label>
+                        <input type="text" id="assign-to" name="assignTo" formControlName="assignTo">
+                        <p>Assign to another team member.</p>
+                    </div>
+                    <div class="elapsed-group">
+                        <label for="elapsed">Elapsed <a href="#">Start</a></label>
+                        <input type="text" id="elapsed" name="elapsed" formControlName="elapsed">
+                        <p>How long the test took.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="popup-buttons">
+            <button type="submit">Add Result</button>
+            <button type="reset">Cancel</button>
+        </div>
+    </div>
+</form>

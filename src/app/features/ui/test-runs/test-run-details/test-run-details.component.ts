@@ -1,4 +1,5 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Chart, registerables } from 'chart.js';
 
 Chart.register(...registerables);
@@ -11,13 +12,17 @@ Chart.register(...registerables);
 export class TestRunDetailsComponent implements OnInit, AfterViewInit {
   chart: any;
 
-  constructor() { }
+  constructor(private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
   }
 
   ngAfterViewInit(): void {
     this.createChart();
+  }
+
+  navigateAddTestResult() {
+    this.router.navigate(['add-test-result']);
   }
 
   createChart() {
