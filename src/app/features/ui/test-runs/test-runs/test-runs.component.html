@@ -1,73 +1,76 @@
 <div class="page-wrapper">
-    <app-internal-menu></app-internal-menu>
-    <div class="container">
-        <div class="header">
-            <h2>Test Runs</h2>
-        </div>
-
-        <div class="content" *ngIf="isTestRunsEmpty()">
-            <div class="info-box">
-                <div class="flx">
-                    <div class="info"></div>
-                    <div>
-                        <p><strong>There are not any test runs, yet.</strong></p>
-                        <p>Use the following buttons to create test run.</p>
-                    </div>
-                </div>
-                <div class="buttons">
-                    <button class="btn" (click)="onAddTestRun()">+ Add Test Run</button>
-                </div>
-            </div>
-        </div>
-
-        <div class="test-runs-section" *ngIf="!isTestRunsEmpty()">
-            <h2>Open</h2>
-            <div class="select-all">
-                <input type="checkbox" id="selectAll" (click)="selectAll()">
-                <label for="selectAll">Select all</label>
-            </div>
-            <div class="test-runs">
-                <div *ngFor="let testRun of testRuns" class="test-run-item">
-                    <div class="test-run-item">
-                        <div class="left-section">
-                            <input type="checkbox" class="test-run-checkbox">
-                            <div class="test-run-details-img"></div>
-                            <div class="test-run-details">
-                                <h3><span (click)="navigateEditTestRun(testRun.testRunId)">{{testRun.name}}</span> {{testRun.createdAt}}</h3>
-                                <p class="results-line"><span>{{testRun.passed}}</span> Passed,
-                                    <span>{{testRun.blocked}}</span> Blocked,
-                                    <span>{{testRun.untested}}</span> Untested,
-                                    <span>{{testRun.retested}}</span> Retest and
-                                    <span>{{testRun.failed}}</span>
-                                    Failed.
-                                </p>
-                            </div>
-                        </div>
-
-                        <div class="right-section">
-                            <div class="test-run-progress">
-                                <div class="progress-bar">
-                                    <div class="progress" style="width: 75%;"></div>
-                                </div>
-                                <!-- <span class="percentage">{{calculatePercentage(testRun)}}</span> -->
-                                <button class="remove-button" (click)="onRemoveTestRun(testRun.testRunId)">x</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="sidebar">
-            <button class="sidebar-btn" (click)="onAddTestRun()">+ Add Test Run</button>
-            <p *ngIf="isTestRunsEmpty()">There are no test runs.</p>
-            <div class="order-by-attribute">
-                <label for="attribute">Order By</label>
-                <select name="attribute" id="attribute" [(ngModel)]="selectedAttribute"
-                    (change)="onAttributeChange($event)">
-                    <option value="date">Date</option>
-                </select>
-            </div>
-        </div>
+  <app-internal-menu></app-internal-menu>
+  <div class="container">
+    <div class="header">
+      <h2>Test Runs</h2>
     </div>
+
+    <div class="content" *ngIf="testRuns.length === 0">
+      <div class="info-box">
+        <div class="flx">
+          <div class="info"></div>
+          <div>
+            <p><strong>There are not any test runs, yet.</strong></p>
+            <p>Use the following buttons to create test run.</p>
+          </div>
+        </div>
+        <div class="buttons">
+          <button class="btn" (click)="onAddTestRun()">+ Add Test Run</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="test-runs-section" *ngIf="testRuns.length > 0">
+      <h2>Open</h2>
+      <div class="select-all">
+        <input type="checkbox" id="selectAll" (click)="selectAll()">
+        <label for="selectAll">Select all</label>
+      </div>
+      <div class="test-runs">
+        <div *ngFor="let testRun of testRuns" class="test-run-item" (click)="goToTestRunDetails(testRun.testRunId)">
+          <div class="test-run-item">
+            <div class="left-section">
+              <input type="checkbox" class="test-run-checkbox">
+              <div class="test-run-details-img"></div>
+              <div class="test-run-details">
+                <h3>{{testRun.name}} {{testRun.createdAt | date:'medium'}}</h3>
+                <p class="results-line"><span>{{testRun.passed}}</span> Passed,
+                  <span>{{testRun.blocked}}</span> Blocked,
+                  <span>{{testRun.untested}}</span> Untested,
+                  <span>{{testRun.retested}}</span> Retest and
+                  <span>{{testRun.failed}}</span>
+                  Failed.
+                </p>
+              </div>
+            </div>
+
+            <div class="right-section">
+              <div class="test-run-progress">
+                <div class="progress-bar">
+                  <div class="progress" [style.width.%]="calculatePercentage(testRun)"></div>
+                </div>
+                <span class="percentage">{{calculatePercentage(testRun)}}%</span>
+                <button class="remove-button" (click)="onRemoveTestRun(testRun.testRunId)">x</button>
+                <!-- Add Edit button -->
+                <button class="edit-button" (click)="onEditTestRun(testRun.testRunId, $event)">Edit</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sidebar">
+      <button class="sidebar-btn" (click)="onAddTestRun()">+ Add Test Run</button>
+      <p *ngIf="testRuns.length === 0">There are no test runs.</p>
+      <div class="order-by-attribute">
+        <label for="attribute">Order By</label>
+        <select name="attribute" id="attribute" [(ngModel)]="selectedAttribute"
+                (change)="onAttributeChange($event)">
+          <option value="date">Date</option>
+          <!-- Add other sorting options if needed -->
+        </select>
+      </div>
+    </div>
+  </div>
 </div>

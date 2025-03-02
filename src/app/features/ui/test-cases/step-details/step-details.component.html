@@ -1,47 +1,83 @@
 <div class="popup-overlay">
-    <div class="popup-content">
-        <div class="header">
-            <span class="title">Attachment details:</span>
-            <button class="close-btn" (click)="onDoneClick()">X</button>
-        </div>
-        <div class="content">
-            <div class="image-section">
-                <img [src]="imageUrl" alt="Attachment Image" class="attachment-image">
-                <button class="full-resolution-btn" (click)="onFullResolutionClick()">
-                    <i class="fas fa-expand-arrows-alt"></i> Full resolution
-                </button>
-            </div>
-            <div class="details-section">
-                <div class="file-name">
-                    <span>{{ fileName }}</span>
-                    <i class="fas fa-pencil-alt"></i>
-                </div>
-                <div class="file-info">
-                    <div class="info-item">
-                        <span>File Type:</span> <br />
-                        <span>{{ fileType }}</span>
-                    </div>
-                    <div class="info-item">
-                        <span>Size:</span><br />
-                        <span>{{ fileSize }}</span>
-                    </div>
-                    <div class="info-item">
-                        <span>Uploaded on:</span><br />
-                        <span>{{ uploadedOn }}</span>
-                    </div>
-                    <div class="info-item">
-                        <span>URL:</span><br />
-                        <span>{{ fileUrl }}</span>
-                    </div>
-                </div>
-                <div class="actions">
-                    <button class="delete-btn" (click)="onDeleteClick()">Delete</button>
-                    <button class="replace-btn" (click)="onReplaceClick($event)">Replace</button>
-                </div>
-            </div>
-        </div>
-        <div class="footer">
-            <button class="done-btn" (click)="onDoneClick()">Done</button>
-        </div>
+  <div class="popup-content">
+    <div class="header">
+      <span class="title">Attachment details:</span>
+      <button class="close-btn" (click)="onDoneClick()">X</button>
     </div>
+    <div class="content">
+      <!-- Section for Step Images -->
+      <div class="image-section">
+        <h3>Step Images</h3>
+        <div *ngIf="imageUrls && imageUrls.length > 0">
+          <img *ngFor="let img of imageUrls; let i = index"
+               [src]="img"
+               alt="Attachment Image {{i + 1}}"
+               class="attachment-image">
+        </div>
+        <div *ngIf="(!imageUrls || imageUrls.length === 0) && !loading"
+             class="upload-area"
+             (click)="fileInput.click()"
+             (dragover)="onDragOver($event)"
+             (dragleave)="onDragLeave($event)"
+             (drop)="onDrop($event)">
+          <i class="fas fa-cloud-upload-alt upload-icon"></i>
+          <p>Drag & Drop or Click to Upload</p>
+          <input type="file" #fileInput (change)="onFileSelected($event)" style="display: none;" accept="image/*" multiple>
+        </div>
+        <div *ngIf="loading" class="loading-spinner">
+          <i class="fas fa-spinner fa-spin"></i>
+        </div>
+        <button *ngIf="imageUrls && imageUrls.length > 0"
+                class="full-resolution-btn"
+                (click)="onFullResolutionClick()">
+          <i class="fas fa-expand-arrows-alt"></i> Full resolution
+        </button>
+      </div>
+      <!-- Section for Expected Images -->
+      <div class="image-section" *ngIf="expectedImageUrls && expectedImageUrls.length > 0">
+        <h3>Expected Images</h3>
+        <div>
+          <img *ngFor="let img of expectedImageUrls; let i = index"
+               [src]="img"
+               alt="Expected Image {{i + 1}}"
+               class="attachment-image">
+        </div>
+        <button class="full-resolution-btn" (click)="onFullResolutionClick()">
+          <i class="fas fa-expand-arrows-alt"></i> Full resolution
+        </button>
+      </div>
+      <div class="details-section">
+        <div class="file-name">
+          <span>{{ fileName }}</span>
+          <i class="fas fa-pencil-alt"></i>
+        </div>
+        <div class="file-info">
+          <div class="info-item">
+            <span>File Type:</span> <br />
+            <span>{{ fileType }}</span>
+          </div>
+          <div class="info-item">
+            <span>Size:</span><br />
+            <span>{{ fileSize }}</span>
+          </div>
+          <div class="info-item">
+            <span>Uploaded on:</span><br />
+            <span>{{ uploadedOn }}</span>
+          </div>
+          <div class="info-item">
+            <span>URL:</span><br />
+            <span>{{ fileUrl }}</span>
+          </div>
+        </div>
+        <div class="actions">
+          <button class="delete-btn" (click)="onDeleteClick()">Delete</button>
+          <button class="replace-btn" (click)="fileInput.click()">Replace</button>
+          <input type="file" #fileInput (change)="onFileSelected($event)" style="display: none;" accept="image/*" multiple>
+        </div>
+      </div>
+    </div>
+    <div class="footer">
+      <button class="done-btn" (click)="onDoneClick()">Done</button>
+    </div>
+  </div>
 </div>

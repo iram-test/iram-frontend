@@ -1,7 +1,7 @@
 import { MilestoneStatus } from "./enums/milestone-status";
 
 export interface MilestoneDTO {
-  milestoneID: string;
+  milestoneId: string; // Corrected to lowercase 'id'
   name: string;
   parentId: string | null;
   description: string;
@@ -27,7 +27,7 @@ export interface CreateMilestoneDTO {
 }
 
 export interface UpdateMilestoneDTO {
-  milestoneID: string;
+  milestoneId: string; // Corrected to lowercase 'id'
   name?: string;
   parentId?: string | null;
   description?: string;

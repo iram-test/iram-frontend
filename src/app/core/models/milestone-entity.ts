@@ -2,7 +2,7 @@ import { MilestoneStatus } from "./enums/milestone-status";
 
 export class Milestone {
   constructor(
-    public milestoneID: string,
+    public milestoneId: string, // Corrected to lowercase 'id'
     public name: string,
     public parentId: string | null,
     public description: string,

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TestCasesComponent } from './test-cases/test-cases.component';
+//import { TestCasesComponent } from './test-cases/test-cases.component';
 import { TestCasesRoutingModule } from './test-cases-routing.module';
 import { AddTestCaseComponent } from './add-test-case/add-test-case.component';
 import { CoreModule } from '../../../core/core.module';
@@ -20,7 +20,7 @@ import { AddEditTestCaseComponent } from './add-edit-test-case/add-edit-test-cas
 
 @NgModule({
   declarations: [
-    TestCasesComponent,
+    //TestCasesComponent,
     AddTestCaseComponent,
     SelectCasesComponent,
     AddEditSectionComponent,
@@ -40,6 +40,9 @@ import { AddEditTestCaseComponent } from './add-edit-test-case/add-edit-test-cas
     FormsModule,
     ReactiveFormsModule,
     TestCasesRoutingModule
+  ],
+  exports: [
+    SelectCasesComponent,
   ]
 })
 export class TestCasesModule { }

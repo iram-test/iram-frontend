@@ -1,50 +1,51 @@
 <div class="page-wrapper">
-    <app-internal-menu></app-internal-menu>
-    <div class="container">
-        <div class="header">
-            <h2>Milestones</h2>
-        </div>
-        <div class="content" *ngIf="isMilestonesEmpty()">
-            <div class="info-box">
-                <div class="flx">
-                    <div class="info"></div>
-                    <div>
-                        <p><strong>There are no milestones, yet.</strong></p>
-                        <p>Use the following buttons to create a milestone.</p>
-                    </div>
-                </div>
-                <div class="buttons">
-                    <button class="btn" (click)="navigateAddMilestone()">+ Add Milestone</button>
-                </div>
-            </div>
-        </div>
-
-        <div class="section-container" *ngIf="!isMilestonesEmpty()">
-            <div class="product-filtration">
-                <div class="case-list">
-                    <div class="case-item" *ngFor="let milestone of filteredMilestones">
-                        <div class="drag-handle">☰</div>
-                        <div class="case-id">{{milestone.milestoneID.slice(0, 2)}}</div>
-                        <div class="case-title"><span (click)="navigateEditMilestone(milestone.milestoneID)">{{milestone.name}}</span></div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="case-actions">
-                <label for="case-title">Milestone:</label>
-                <input type="text" id="case-title" (input)="filterMilestones($event)" />
-            </div>
-        </div>
-
-        <div class="sidebar">
-            <button class="sidebar-btn" (click)="navigateAddMilestone()">+ Add Milestone</button>
-            <p *ngIf=" isMilestonesEmpty()">There are no milestones.</p>
-            <p *ngIf="!isMilestonesEmpty()">There are {{milestones.length}} milestones.</p>
-            <div class="sidebar-section" *ngIf="!isMilestonesEmpty()">
-                <div *ngFor="let milestone of milestones">
-                    <p>{{milestone.name}}</p>
-                </div>
-            </div>
-        </div>
+  <app-internal-menu></app-internal-menu>
+  <div class="container">
+    <div class="header">
+      <h2>Milestones</h2>
     </div>
+    <div class="content" *ngIf="isMilestonesEmpty()">
+      <div class="info-box">
+        <div class="flx">
+          <div class="info"></div>
+          <div>
+            <p><strong>There are no milestones, yet.</strong></p>
+            <p>Use the following buttons to create a milestone.</p>
+          </div>
+        </div>
+        <div class="buttons">
+          <button class="btn" (click)="navigateAddMilestone()">+ Add Milestone</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-container" *ngIf="!isMilestonesEmpty()">
+      <div class="product-filtration">
+        <div class="case-list">
+          <div class="case-item" *ngFor="let milestone of filteredMilestones">
+            <div class="drag-handle">☰</div>
+            <div class="case-id">{{milestone.milestoneId?.slice(0, 2) || ''}}</div>
+            <div class="case-title"><span (click)="navigateEditMilestone(milestone.milestoneId)">{{milestone.name}}</span></div>
+            <button class="remove-button" (click)="onDeleteMilestone(milestone)">×</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="case-actions">
+        <label for="case-title">Milestone:</label>
+        <input type="text" id="case-title" (input)="filterMilestones($event)" />
+      </div>
+    </div>
+
+    <div class="sidebar">
+      <button class="sidebar-btn" (click)="navigateAddMilestone()">+ Add Milestone</button>
+      <p *ngIf=" isMilestonesEmpty()">There are no milestones.</p>
+      <p *ngIf="!isMilestonesEmpty()">There are {{milestones.length}} milestones.</p>
+      <div class="sidebar-section" *ngIf="!isMilestonesEmpty()">
+        <div *ngFor="let milestone of milestones">
+          <p>{{milestone.name}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

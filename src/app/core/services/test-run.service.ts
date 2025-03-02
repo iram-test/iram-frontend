@@ -31,7 +31,7 @@ export class TestRunService extends BaseService {
     projectId: string,
   ): Observable<TestRunDTO> {
     return this.post<TestRunDTO>(
-      `/projects/${projectId}/test-runs`,
+      `projects/${projectId}/test-runs`,
       testRun,
     );
   }
@@ -45,14 +45,14 @@ export class TestRunService extends BaseService {
   }
 
   getTestRunByProjectId(projectId: string): Observable<TestRunDTO[]> {
-    return this.get<TestRunDTO[]>(`/projects/${projectId}/test-runs`);
+    return this.get<TestRunDTO[]>(`projects/${projectId}/test-runs`);
   }
 
   getTestRunByUserId(userId: string): Observable<TestRunDTO[]> {
-    return this.get<TestRunDTO[]>(`/users/${userId}/test-runs`);
+    return this.get<TestRunDTO[]>(`users/${userId}/test-runs`);
   }
 
   getTestRunByTestReportId(testReportId: string): Observable<TestRunDTO[]> {
-    return this.get<TestRunDTO[]>(`/test-reports/${testReportId}/test-runs`);
+    return this.get<TestRunDTO[]>(`test-reports/${testReportId}/test-runs`);
   }
 }

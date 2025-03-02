@@ -19,15 +19,23 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path: 'edit-test-run/:id',
+    path: 'edit-test-run/:id', // Add this route
     component: AddEditTestRunComponent,
     canActivate: [AuthGuard]
   },
   {
-    path: 'test-run-details',
+    path: 'test-run-details/:id',
     component: TestRunDetailsComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
+    children: [  // Add children here
+      {
+        path: 'add-test-result/:testCaseId', //Nested Route, REMOVE ProjectID
+        component: AddEditTestResultComponent,
+        canActivate: [AuthGuard]
+      },
+    ]
   },
+
 ];
 
 @NgModule({

@@ -10,6 +10,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TestRunDetailsComponent } from './test-run-details/test-run-details.component';
 import { AddEditTestRunComponent } from './add-edit-test-run/add-edit-test-run.component';
 import { AddEditTestResultComponent } from './add-edit-test-result/add-edit-test-result.component';
+import {TestCasesModule} from "../test-cases/test-cases.module";
 
 
 
@@ -28,7 +29,8 @@ import { AddEditTestResultComponent } from './add-edit-test-result/add-edit-test
     SharedModule,
     FormsModule,
     ReactiveFormsModule,
-    TestRunsRoutingModule
-  ]
+    TestRunsRoutingModule,
+    TestCasesModule
+  ],
 })
 export class TestRunsModule { }

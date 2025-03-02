@@ -46,9 +46,14 @@ const routes: Routes = [
     component: AddEditSubsectionComponent,
     canActivate: [AuthGuard]
   },
+  // {
+  //   path: 'select-cases',
+  //   component: SelectCasesComponent,
+  //   canActivate: [AuthGuard]
+  // },
   {
-    path: 'select-cases',
-    component: SelectCasesComponent,
+    path: ':testCaseId',
+    component: TestCaseDetailsComponent,
     canActivate: [AuthGuard]
   }
 ];

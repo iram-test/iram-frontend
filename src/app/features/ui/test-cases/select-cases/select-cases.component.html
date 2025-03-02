@@ -1,23 +1,23 @@
 <main>
-    <h2>Select cases</h2>
+  <h2>Select cases</h2>
 
-    <div class="product-filtering-list">
-        <div class="header">
-            <div class="select-all-none">
-                Select <a href="#">All</a> | <a href="#">None</a>
-            </div>
-            <div class="title">Product Filtering</div>
-        </div>
-        <ul class="list">
-            <li *ngFor="let item of items; let i = index" class="list-item">
-                <input type="checkbox" [checked]="item.checked" (change)="toggleItem(i)">
-                <span class="text">{{ item.text }}</span>
-            </li>
-        </ul>
-
-        <div class="buttons">
-            <button class="ok">Ok</button>
-            <button class=cancel>Cancel</button>
-        </div>
+  <div class="product-filtering-list">
+    <div class="header">
+      <div class="select-all-none">
+        Select <a (click)="selectAll()">All</a> | <a (click)="selectNone()">None</a>
+      </div>
+      <div class="title">Product Filtering</div>
     </div>
+    <ul class="list">
+      <li *ngFor="let item of items; let i = index" class="list-item">
+        <input type="checkbox" [checked]="item.checked" (change)="toggleItem(i)">
+        <span class="text">{{ item.title }}</span>
+      </li>
+    </ul>
+
+    <div class="buttons">
+      <button class="ok" (click)="confirmSelection()">Ok</button>
+      <button class="cancel" (click)="cancelSelection()">Cancel</button>
+    </div>
+  </div>
 </main>

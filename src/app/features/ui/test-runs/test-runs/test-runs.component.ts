@@ -1,6 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { TestRunDTO, TestRunResult } from '../../../../core/models/test-run-dto'; // Adjust the path if necessary
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+import { TestRunService } from '../../../../core/services/test-run.service';
+import { TestRunDTO, TestRunResult } from '../../../../core/models/test-run-dto';
+import { forkJoin, Observable } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
+import {TestCaseService} from "../../../../core/services/test-case.service";
+import {TestCaseDTO} from "../../../../core/models/test-case-dto";
+import {Status} from "../../../../core/models/enums/status";
+
 
 @Component({
   selector: 'app-test-runs',
@@ -10,122 +17,134 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class TestRunsComponent implements OnInit {
   testRuns: TestRunResult[] = [];
   selectedAttribute: string = 'date';
+  projectId: string;
+  allTestCases: TestCaseDTO[] = []; // Store all test cases
 
-  constructor(private route: ActivatedRoute, private readonly router: Router) { }
+  constructor(
+    private readonly router: Router,
+    private route: ActivatedRoute,
+    private testRunService: TestRunService,
+    private testCaseService: TestCaseService
+  ) { }
 
   ngOnInit(): void {
-    this.testRuns = [
-      {
-        testRunId: '1',
-        name: 'Test Run Result 1',
-        createdAt: Date.now().toString(),
-        passed: 3,
-        failed: 1,
-        blocked: 0,
-        untested: 0,
-        retested: 0
-      },
-      {
-        testRunId: '2',
-        name: 'Test Run Result 2',
-        createdAt: Date.now().toString(),
-        passed: 4,
-        failed: 5,
-        blocked: 0,
-        untested: 0,
-        retested: 0
+    this.route.parent.parent.params.pipe(
+      switchMap(params => {
+        this.projectId = params['projectId'];
+        // Fetch test cases and test runs in parallel
+        return forkJoin([
+          this.testCaseService.getTestCasesByProjectId(this.projectId),
+          this.testRunService.getTestRunByProjectId(this.projectId)
+        ]);
+      })
+    ).subscribe(([testCases, testRuns]) => {
+      this.allTestCases = testCases;
+      this.testRuns = this.mapTestRunsToResults(testRuns);
+      this.sortTestRuns();
+    });
+  }
+
+
+  private mapTestRunsToResults(testRuns: TestRunDTO[]): TestRunResult[] {
+    return testRuns.map(testRun => {
+      const results = this.calculateTestRunResults(testRun);
+      return {
+        testRunId: testRun.testRunId,
+        name: testRun.name,
+        createdAt: testRun.createdAt,
+        ...results
+      };
+    });
+  }
+
+  private calculateTestRunResults(testRun: TestRunDTO): { passed: number; failed: number; blocked: number; untested: number; retested: number; } {
+    let passed = 0;
+    let failed = 0;
+    let blocked = 0;
+    let untested = 0;
+    let retested = 0;
+
+    // Filter the relevant test cases for this test run
+    const relevantTestCases = this.allTestCases.filter(tc => testRun.testCaseIds.includes(tc.testCaseId));
+
+    for (const testCase of relevantTestCases) {
+      switch (testCase.status) {
+        case Status.PASSED:
+          passed++;
+          break;
+        case Status.FAILED:
+          failed++;
+          break;
+        case Status.BLOCKED:
+          blocked++;
+          break;
+        case Status.UNTESTED:
+          untested++;
+          break;
+        case Status.RETEST:
+          retested++;
+          break;
       }
-    ];
+    }
+    return { passed, failed, blocked, untested, retested };
   }
 
-  isTestRunsEmpty(): boolean {
-    return this.testRuns.length === 0;
-  }
 
-  state = 0;
+
   selectAll(): void {
-    const checkboxes: NodeListOf<HTMLInputElement> = document.querySelectorAll("input[type='checkbox']");
-    if (this.state === 0) {
-      checkboxes.forEach(checkbox => checkbox.checked = true);
-      this.state = 1;
+    const checkboxes: NodeListOf<HTMLInputElement> = document.querySelectorAll(".test-run-checkbox");
+    const allChecked = Array.from(checkboxes).every(checkbox => checkbox.checked);
+
+    checkboxes.forEach(checkbox => checkbox.checked = !allChecked);
+  }
+
+
+  calculatePercentage(testRun: TestRunResult): number {
+    const total = testRun.passed + testRun.failed + testRun.blocked + testRun.untested + testRun.retested;
+    if (total === 0) {
+      return 0;
     }
-    else {
-      checkboxes.forEach(checkbox => checkbox.checked = false);
-      this.state = 0;
+    return Math.round((testRun.passed / total) * 100);
+  }
+
+
+  onRemoveTestRun(testRunId: string | undefined): void {
+    if (!testRunId) {
+      console.error("Test Run ID is undefined. Cannot delete.");
+      return;
     }
-  }
 
-  calculatePassed(testRun: TestRunDTO): number {
-    // return Math.floor(Math.random() * testRun.testCaseIds.length);
-    return 3;
-  }
-
-  calculateBlocked(testRun: TestRunDTO): number {
-    // const passed = this.calculatePassed(testRun);
-    // return Math.floor(Math.random() * (testRun.testCaseIds.length - passed));
-    return 0;
-  }
-
-  calculateUntested(testRun: TestRunDTO): number {
-    // const passed = this.calculatePassed(testRun);
-    // const blocked = this.calculateBlocked(testRun);
-    // return Math.floor(Math.random() * (testRun.testCaseIds.length - passed - blocked));
-    return 0;
-  }
-
-  calculateRetest(testRun: TestRunDTO): number {
-    // const passed = this.calculatePassed(testRun);
-    // const blocked = this.calculateBlocked(testRun);
-    // const untested = this.calculateUntested(testRun);
-    // return Math.floor(Math.random() * (testRun.testCaseIds.length - passed - blocked - untested));
-    return 0;
-  }
-
-  calculateFailed(testRun: TestRunDTO): number {
-    // const passed = this.calculatePassed(testRun);
-    // const blocked = this.calculateBlocked(testRun);
-    // const untested = this.calculateUntested(testRun);
-    // const retest = this.calculateRetest(testRun);
-    // return testRun.testCaseIds.length - passed - blocked - untested - retest;
-    return 1;
-  }
-
-  calculatePercentage(testRun: TestRunDTO): number {
-    const totalTestCases = testRun.testCaseIds.length;
-    if (totalTestCases === 0) return 0;
-    const passed = this.calculatePassed(testRun);
-    return Math.round((passed / totalTestCases) * 100);
-  }
-
-  onEditTestRun(testRunId: string): void {
-    console.log(`Edit clicked for testRunId: ${testRunId}`);
-  }
-
-  onRemoveTestRun(testRunId: string): void {
-    console.log(`Remove clicked for testRunId: ${testRunId}`);
-    this.testRuns = this.testRuns.filter(tr => tr.testRunId !== testRunId);
+    this.testRunService.deleteTestRun(testRunId).subscribe({
+      next: () => {
+        // Оновлюємо список тестів після успішного видалення
+        this.testRuns = this.testRuns.filter(tr => tr.testRunId !== testRunId);
+      },
+      error: (error) => console.error("Error deleting test run:", error)
+    });
   }
 
   onAddTestRun(): void {
-    this.router.navigate(['add-test-run']);
+    this.router.navigate(['add-test-run'], {relativeTo: this.route.parent});
   }
 
   onAttributeChange(event: any): void {
     this.selectedAttribute = event.target.value;
-    console.log(`Order by attribute changed to: ${this.selectedAttribute}`);
+    this.sortTestRuns();
   }
 
-  navigateEditTestRun(id: string) {
-    this.router.navigate(['edit-test-run', id], { relativeTo: this.route });
+  private sortTestRuns(): void {
+    if (this.selectedAttribute === 'date') {
+      this.testRuns.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+    }
+    // Add more sorting options here
   }
 
-  getResultsLine(testRun: TestRunDTO): string {
-    const passed = this.calculatePassed(testRun);
-    const blocked = this.calculateBlocked(testRun);
-    const untested = this.calculateUntested(testRun);
-    const retest = this.calculateRetest(testRun);
-    const failed = this.calculateFailed(testRun);
+  goToTestRunDetails(testRunId: string): void {
+    this.router.navigate(['test-run-details', testRunId], {relativeTo: this.route});
+  }
 
-    return `${passed} Passed, ${blocked} Blocked, ${untested} Untested, ${retest} Retest and ${failed} Failed.`;
+  onEditTestRun(testRunId: string, event: Event): void {
+    event.stopPropagation(); // Prevent navigation to details page
+    this.router.navigate(['edit-test-run', testRunId], { relativeTo: this.route.parent });
   }
 }

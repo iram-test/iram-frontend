@@ -296,3 +296,87 @@ button:hover {
   cursor: pointer;
   transform: scale(1.2);
 }
+
+.success-message {
+  padding: 4px 15px;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 19px;
+  color: #1E9DC0;
+  background: #F6F7FF;
+  border: 1px dashed #1E9DC0;
+  border-radius: 12px;
+  margin-bottom: 35px;
+}
+
+/* New styles for image upload */
+.image-input {
+  display: none; /* Hide the actual file input */
+}
+
+.image-upload-label {
+  display: inline-block;
+  padding: 8px 12px;
+  background-color: #3498db;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: center;
+  width: 120px; /* Or whatever width you want */
+  box-sizing: border-box; /* Include padding and border in the width */
+}
+
+.image-upload-label:hover {
+  background-color: #2980b9;
+}
+
+.uploaded-image {
+  max-width: 150px; /* Limit the preview size */
+  max-height: 150px;
+  margin-top: 5px;
+  margin-right: 5px;
+  border-radius: 4px;
+  display: inline-block; /* Important for proper spacing */
+}
+
+.image-upload-container {
+  margin-top: 5px; /* Add some space between textarea and upload */
+}
+.step-input-group {
+  display: flex;
+  flex-direction: column;
+
+}
+
+.step-textarea {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  resize: vertical; /* Allow vertical resizing */
+  min-height: 60px; /* Set a minimum height */
+}
+
+.image-preview {
+  display: inline-block;
+  margin-right: 5px;
+  position: relative;
+}
+
+.remove-image-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+

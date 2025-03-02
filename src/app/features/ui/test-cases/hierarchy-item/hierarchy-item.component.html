@@ -1,27 +1,31 @@
 <div class="hierarchy-item"
-    [ngClass]="{'expanded': item.expanded, 'section-item': item.type === 'section', 'subsection-item': item.type === 'subsection'}">
-    <div class="item-header"
-        [ngClass]="{'section-header': item.type === 'section', 'subsection-header': item.type === 'subsection'}">
+     [ngClass]="{'expanded': item.expanded, 'section-item': item.type === 'section', 'subsection-item': item.type === 'subsection'}">
+  <div class="item-header"
+       [ngClass]="{'section-header': item.type === 'section', 'subsection-header': item.type === 'subsection'}">
         <span *ngIf="item.type !== 'testCase'" class="expand-icon" (click)="toggleExpanded()">
             {{ item.expanded ? '▼' : '►' }}
         </span>
-        <input type="radio" *ngIf="item.type === 'section' || item.type === 'subsection'"
-            [name]="item.type === 'section' ? 'sectionGroup' : 'subsectionGroup'" [value]="item.id"
-            (change)="onSectionSelect(item.id, $event)" [checked]="selectedSectionId === item.id" />
+    <input type="radio" *ngIf="item.type === 'section' || item.type === 'subsection'"
+           [name]="item.type === 'section' ? 'sectionGroup' : 'subsectionGroup'" [value]="item.id"
+           (change)="onSectionSelect(item.id, $event)" [checked]="selectedSectionId === item.id"/>
 
-        <span [ngClass]="item.type">
+    <span [ngClass]="item.type">
             {{ isRoot ? 'Root' : item.name }}
         </span>
-    </div>
+  </div>
 
-    <div class="children" *ngIf="item.expanded && item.children">
-        <app-hierarchy-item *ngFor="let child of item.children" [item]="child" [selectedSectionId]="selectedSectionId"
-            [isRoot]="false" (sectionSelected)="sectionSelected.emit($event)"></app-hierarchy-item>
-    </div>
+  <div class="children" *ngIf="item.expanded && item.children">
+    <app-hierarchy-item *ngFor="let child of item.children" [item]="child"
+                        [selectedSectionId]="selectedSectionId"
+                        [isRoot]="false" (sectionSelected)="sectionSelected.emit($event)"></app-hierarchy-item>
+  </div>
 
-    <div *ngIf="item.expanded && item.testCases" class="test-cases-container">
-        <div *ngFor="let testCase of item.testCases" class="test-case-item">
-            <span (click)="navigateEditTestCase(testCase.testCaseId)">{{ testCase.title }}</span>
-        </div>
+  <div *ngIf="item.expanded && item.testCases" class="test-cases-container">
+    <div *ngFor="let testCase of item.testCases" class="test-case-item">
+      <span class="test-case-title" (click)="navigateToTestCaseDetails(testCase.testCaseId)">
+        {{ testCase.title }}
+      </span>
+      <button class="edit-button" (click)="navigateEditTestCase(testCase.testCaseId)">Edit</button>
     </div>
+  </div>
 </div>

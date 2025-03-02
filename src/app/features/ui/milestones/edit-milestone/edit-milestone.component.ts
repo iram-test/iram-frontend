@@ -127,7 +127,7 @@ export class EditMilestoneComponent {
 
   private updateMilestone(data: any): void {
     const updateDto: UpdateMilestoneDTO = {
-      milestoneID: this.id!,
+      milestoneId: this.id!,
       name: data.name,
       description: data.description,
       startDate: data.startDate,

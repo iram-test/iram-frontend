@@ -69,4 +69,26 @@ export class MilestonesComponent implements OnInit {
       milestone.name.toLowerCase().includes(searchText.toLowerCase())
     );
   }
+
+  onDeleteMilestone(milestone: Milestone) {
+    if (!milestone || !milestone.milestoneId) {
+      console.error('Milestone or Milestone ID is undefined. Cannot delete.');
+      return;
+    }
+
+    this.deleteMilestone(milestone.milestoneId);
+  }
+
+  deleteMilestone(milestoneId: string) {
+    this.milestoneService.deleteMilestone(milestoneId).subscribe({
+      next: () => {
+        console.log('Milestone deleted successfully');
+        this.loadMilestones(); // Refresh the list after deletion
+      },
+      error: error => {
+        console.error('Error deleting milestone', error);
+        // Optionally display an error message to the user
+      }
+    });
+  }
 }

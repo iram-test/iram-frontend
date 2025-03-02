@@ -1,69 +1,93 @@
 <app-internal-menu></app-internal-menu>
 
-<div class="test-case-container">
-    <div class="header">
-        <div class="initials">CI</div>
-        <div class="title">Iram test cases</div>
-    </div>
-    <div class="subtitle">Laptops filtration</div>
-    <div class="success-message">The test case updated successfully</div>
-    <div class="details">
-        <div class="detail-item">
-            <div class="detail-label">Type:</div>
-            <div class="detail-value">Other</div>
-        </div>
-        <div class="detail-item">
-            <div class="detail-label">Priority:</div>
-            <div class="detail-value">Medium</div>
-        </div>
-        <div class="detail-item">
-            <div class="detail-label">Estimate:</div>
-            <div class="detail-value">5 minutes</div>
-        </div>
-        <div class="detail-item">
-            <div class="detail-label">References:</div>
-            <div class="detail-value">None</div>
-        </div>
-    </div>
-    <div class="preconditions-container">
-        <div class="preconditions-header">Preconditions:</div>
-        <div class="preconditions-content">
-            <div class="precondition-item">
-                to open site https://rozetka.com.ua/ua
-            </div>
-            <div class="precondition-item">
-                at web page should be at least 18+ laptops from category "Gaming laptops"
-            </div>
-        </div>
-    </div>
-    <div class="preconditions-header">Steps:</div>
-    <div class="steps-results-container">
-        <div class="steps-section">
-            <div *ngFor="let step of steps; let i = index" class="step">
-                <div class="step-aside">
-                    <div class="step-number">{{i + 1}}</div>
-                </div>
-                <div class="step-content">
-                    <div>
-                        <label for="stepDescription">Steps:</label>
-                        <div>{{ step.stepDescription }}</div>
-                        <div *ngIf="step.image && step.image.length > 0">
-                            <img [src]="step.image[0]" alt="Step image" class="uploaded-image"
-                                (click)="openPopup(step.image[0])" style="cursor: pointer;" />
-                        </div>
-                    </div>
-                    <div>
-                        <label for="expectedResult">Expected Results:</label>
-                        <div>{{ step.expectedResult }}</div>
-                        <div *ngIf="step.image && step.image.length > 0">
-                            <img [src]="step.image[1]" alt="Step image" class="uploaded-image"
-                                (click)="openPopup(step.image[1])" style="cursor: pointer;" />
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+<div class="test-case-container" *ngIf="testCase">
+  <div class="header">
+    <div class="initials"
+         [style.background-color]="testCase.color"
+    *ngIf="testCase.testCaseId">
+    {{testCase.testCaseId.substring(0, 2).toUpperCase()}}
+  </div>
+  <div class="title">{{testCase.title}}</div>
 </div>
+  <div class="subtitle">Description</div>
+  <div class="details">
+    <div class="detail-item">
+      <div class="detail-label">Type:</div>
+      <div class="detail-value">{{testCase.testType}}</div>
+    </div>
+    <div class="detail-item">
+      <div class="detail-label">Priority:</div>
+      <div class="detail-value">{{testCase.priority}}</div>
+    </div>
+    <div class="detail-item">
+      <div class="detail-label">Estimate:</div>
+      <div class="detail-value">{{testCase.timeEstimation}}</div>
+    </div>
+    <div class="detail-item">
+      <div class="detail-label">References:</div>
+      <div class="detail-value">None</div>
+    </div>
+  </div>
+  <!-- Replace static preconditions content with the description from the test case -->
+  <div class="preconditions-container">
+    <div class="preconditions-header">Preconditions:</div>
+    <div class="preconditions-content">
+      <!-- Displaying the description field from the test case -->
+      <div class="precondition-item" *ngIf="testCase.description">
+        {{ testCase.description }}
+      </div>
+    </div>
+  </div>
 
-<app-step-details *ngIf="showPopup" [imageUrl]="selectedImageUrl" (close)="closePopup()"></app-step-details>
+  <div class="preconditions-header">Steps:</div>
+  <div class="steps-results-container">
+    <div class="steps-section">
+      <div *ngFor="let step of steps; let i = index" class="step">
+        <div class="step-aside">
+          <div class="step-number">{{i + 1}}</div>
+        </div>
+        <div class="step-content">
+          <!-- Step Description and Image Section -->
+          <div class="step-section">
+            <div class="step-description">
+              <div>{{ step.stepDescription }}</div>
+            </div>
+            <div class="step-images" *ngIf="step.image && step.image.length > 0">
+              <img *ngFor="let img of step.image"
+                   [src]="img"
+                   alt="Step image"
+                   class="uploaded-image"
+                   (click)="openPopup(step, step.image, step.expectedImage)"
+                   style="cursor: pointer;"/>
+            </div>
+          </div>
+
+          <!-- Expected Result and Expected Image Section -->
+          <div class="expected-section">
+            <div>{{ step.expectedResult }}</div>
+            <div class="expected-images" *ngIf="step.expectedImage && step.expectedImage.length > 0">
+              <img *ngFor="let img of step.expectedImage"
+                   [src]="img"
+                   alt="Expected image"
+                   class="uploaded-image"
+                   (click)="openPopup(step, step.image, step.expectedImage)"
+                   style="cursor: pointer;"/>
+            </div>
+          </div>
+        </div>
+        <!-- Popup з деталями кроку -->
+        <app-step-details
+          *ngIf="selectedStep === step"
+          [imageUrls]="selectedStep.image"
+          [expectedImageUrls]="selectedStep.expectedImage"
+          [stepId]="step.stepId"
+          [index]="i"
+          (close)="closePopup()"
+          (imageDeleted)="onImageDeleted(i)"
+          (imageUploaded)="onImageUploaded($event)"
+          (stepUpdated)="onStepUpdated($event)"
+        ></app-step-details>
+      </div>
+    </div>
+  </div>
+</div>

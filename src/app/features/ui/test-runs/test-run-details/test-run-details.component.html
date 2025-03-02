@@ -1,100 +1,78 @@
 <app-internal-menu></app-internal-menu>
 
 <div class="test-run-summary">
-    <div class="chart-details">
-        <div class="chart-container">
-            <canvas id="testRunSummaryChart"></canvas>
-        </div>
-        <div class="summary-details">
-            <div class="legend">
-                <div class="legend-item">
-                    <div class="legend-color passed"></div>
-                    <div class="legend-text">
-                        <span class="count">3 Passed</span>
-                        <span class="percentage">60% set to Passed</span>
-                    </div>
-                </div>
-                <div class="legend-item">
-                    <div class="legend-color retest"></div>
-                    <div class="legend-text">
-                        <span class="count">5 Retest</span>
-                        <span class="percentage">80% set to Retest</span>
-                    </div>
-                </div>
-                <div class="legend-item">
-                    <div class="legend-color failed"></div>
-                    <div class="legend-text">
-                        <span class="count">1 Failed</span>
-                        <span class="percentage">20% set to Failed</span>
-                    </div>
-                </div>
-            </div>
-        </div>
+  <div class="chart-details">
+    <div class="chart-container">
+      <canvas id="testRunSummaryChart"></canvas>
     </div>
-    <div class="percentage-summary">
-        <div class="value">80%</div>
-        <div class="label">passed</div>
-        <div class="untested">1 / 5 untested (20%)</div>
+    <div class="summary-details">
+      <div class="legend">
+        <div class="legend-item">
+          <div class="legend-color passed"></div>
+          <div class="legend-text">
+            <span class="count">{{getCount('Passed')}} Passed</span>
+            <span class="percentage">{{getPercentageText('Passed')}}</span>
+          </div>
+        </div>
+        <div class="legend-item">
+          <div class="legend-color retest"></div>
+          <div class="legend-text">
+            <span class="count">{{getCount('Retest')}} Retest</span>
+            <span class="percentage">{{getPercentageText('Retest')}}</span>
+          </div>
+        </div>
+        <div class="legend-item">
+          <div class="legend-color failed"></div>
+          <div class="legend-text">
+            <span class="count">{{getCount('Failed')}} Failed</span>
+            <span class="percentage">{{getPercentageText('Failed')}}</span>
+          </div>
+        </div>
+        <div class="legend-item">
+          <div class="legend-color untested"></div>
+          <div class="legend-text">
+            <span class="count">{{getCount('Untested')}} Untested</span>
+            <span class="percentage">{{getPercentageText('Untested')}}</span>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
+  <div class="percentage-summary">
+    <div class="value">{{passedPercentage.toFixed(0)}}%</div>
+    <div class="label">passed</div>
+    <div class="untested">{{untestedCount}} / {{totalTests}} untested ({{ totalTests > 0 ? ((untestedCount / totalTests) * 100).toFixed(0) : '0' }}%)</div>
+  </div>
 </div>
 
 <div class="product-filtration-table">
-    <div class="header">
-        <div class="title">Product filtration <span>5</span></div>
-        <button class="sort-button">Sort: Selection</button>
-    </div>
-    <table>
-        <thead>
-            <tr>
-                <th></th>
-                <th>ID</th>
-                <th>Title</th>
-                <th></th>
-                <th>Assigned To</th>
-                <th>Status</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td><input type="checkbox"></td>
-                <td>T1</td>
-                <td>Check filter headers</td>
-                <td><button (click)="navigateAddTestResult()">Add Test Result</button></td>
-                <td>Yelyzaveta K</td>
-                <td><span class="status passed">Passed</span></td>
-            </tr>
-            <tr>
-                <td><input type="checkbox"></td>
-                <td>T2</td>
-                <td>Check filtering by seller</td>
-                <td><button (click)="navigateAddTestResult()">Add Test Result</button></td>
-                <td>Yelyzaveta K</td>
-                <td><span class="status failed">Failed</span></td>
-            </tr>
-            <tr>
-                <td><input type="checkbox"></td>
-                <td>T3</td>
-                <td>Check price filtering - positive test with a valid price range</td>
-                <td><button (click)="navigateAddTestResult()">Add Test Result</button></td>
-                <td>Yelyzaveta K</td>
-                <td><span class="status passed">Passed</span></td>
-            </tr>
-            <tr>
-                <td><input type="checkbox"></td>
-                <td>T4</td>
-                <td>Enter letters into the price field for the price filter</td>
-                <td><button (click)="navigateAddTestResult()">Add Test Result</button></td>
-                <td>Yelyzaveta K</td>
-                <td><span class="status passed">Passed</span></td>
-            </tr>
-            <tr>
-                <td><input type="checkbox"></td>
-                <td>T5</td>
-                <td>Filter product by price using the slider</td>
-                <td><button (click)="navigateAddTestResult()">Add Test Result</button></td>
-                <td>Yelyzaveta K</td>
-                <td><span class="status untested">Untested</span></td>
-            </tr>
-        </tbody>
-    </table>
+  <div class="header">
+    <div class="title">Product filtration <span>{{testCases.length}}</span></div>
+    <button class="sort-button" (click)="onSortClick()">Sort: Title ({{ sortDirection === 'asc' ? 'Asc' : 'Desc' }})</button>
+  </div>
+  <table>
+    <thead>
+    <tr>
+      <th></th>
+      <th>ID</th>
+      <th>Title</th>
+      <th>Assigned To</th>
+      <th>Status</th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let testCase of testCases">
+      <td><input type="checkbox"></td>
+      <td>{{testCase.testCaseId}}</td>
+      <td>{{testCase.title}}</td>
+      <td>{{testCase.assignedToName}}</td>
+      <td><span [className]="getStatusClass(testCase.status)">{{testCase.status}}</span></td>
+      <td>
+        <button (click)="navigateAddTestResult(testCase.testCaseId)">Add Test Result</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
 </div>
+<router-outlet></router-outlet>

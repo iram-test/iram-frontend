@@ -11,6 +11,7 @@ import { ProjectOverviewComponent } from './components/project-overview/project-
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { RouterLink, RouterLinkActive, RouterOutlet } from "@angular/router";
+import { ProjectDetailsComponent } from './components/project-details/project-details.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { RouterLink, RouterLinkActive, RouterOutlet } from "@angular/router";
     LandingPageComponent,
     DashboardComponent,
     AddEditProjectComponent,
+    ProjectDetailsComponent,
     ProjectOverviewComponent],
   imports: [
     CommonModule,

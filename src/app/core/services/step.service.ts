@@ -22,14 +22,8 @@ export class StepService extends BaseService {
     return this.get<StepDTO>(`${this.stepsUrl}/${id}`);
   }
 
-  createStep(
-    step: CreateStepDTO,
-    testCaseId: string,
-  ): Observable<StepDTO> {
-    return this.post<StepDTO>(
-      `/test-cases/${testCaseId}/steps`,
-      step,
-    );
+  createStep(step: CreateStepDTO, testCaseId: string): Observable<StepDTO> {
+    return this.post<StepDTO>(`test-cases/${testCaseId}/steps`, step);
   }
 
   updateStep(id: string, step: UpdateStepDTO): Observable<StepDTO> {
@@ -41,6 +35,22 @@ export class StepService extends BaseService {
   }
 
   getStepsByTestCaseId(testCaseId: string): Observable<StepDTO[]> {
-    return this.get<StepDTO[]>(`/test-cases/${testCaseId}/steps`);
+    return this.get<StepDTO[]>(`test-cases/${testCaseId}/steps`);
+  }
+
+  // Endpoint для завантаження зображень для звичайних Steps
+  uploadImage(projectId: string, stepId: string, file: File): Observable<any> {
+    const formData = new FormData();
+    formData.append('file', file, file.name);
+    const url = `http://localhost:3002/api/test-cases/${projectId}/steps/${stepId}/upload-image`;
+    return this.http.post(url, formData);
+  }
+
+  // Endpoint для завантаження expected images (Expected Results)
+  uploadExpectedImage(projectId: string, stepId: string, file: File): Observable<any> {
+    const formData = new FormData();
+    formData.append('file', file, file.name);
+    const url = `http://localhost:3002/api/test-cases/${projectId}/steps/${stepId}/upload-expected-image`;
+    return this.http.post(url, formData);
   }
 }

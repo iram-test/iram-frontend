@@ -13,11 +13,12 @@ export class TestCase {
     public templateType: TemplateType,
     public testType: TestType,
     public priority: Priority,
-    public status: Status,
+    public status: Status = Status.UNTESTED,
     public timeEstimation: string,
     public description: string,
     public stepIds: string[] | null,
     public createdAt: string,
     public updatedAt: string,
+    public color: string | null
   ) { }
 }
