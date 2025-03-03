@@ -1,60 +1,58 @@
-<!-- dashboard.component.html -->
 <app-nav-menu></app-nav-menu>
 <div class="page-wrapper">
-    <div class="hero-section">
+  <div class="hero-section">
+    <div class="flx">
+      <ul class="flx">
+        <li><a routerLink="/dashboard" routerLinkActive="active">Dashboard</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="container">
+    <div class="header">
+      <h2>All projects</h2>
+    </div>
+    <div class="content">
+      <div class="info-box">
         <div class="flx">
-            <ul class="flx">
-                <li><a routerLink="/dashboard" routerLinkActive="active">Dashboard</a></li>
-            </ul>
+          <div class="info"></div>
+          <div>
+            <p><strong>Add your first project to Iram</strong></p>
+            <p>Welcome! This dashboard shows an overview of available projects and recent activity, but
+              there aren't any projects yet. This is a good time to add your first project to TestRail</p>
+          </div>
         </div>
+        <div class="buttons">
+          <button class="btn" (click)="addProject()">+ Add Project</button>
+        </div>
+      </div>
     </div>
-    <div class="container">
-        <div class="header">
-            <h2>All projects</h2>
-        </div>
-        <div class="content">
-            <div class="info-box">
-                <div class="flx">
-                    <div class="info"></div>
-                    <div>
-                        <p><strong>Add your first project to Iram</strong></p>
-                        <p>Welcome! This dashboard shows an overview of available projects and recent activity, but
-                            there aren't any projects yet. This is a good time to add your first project to TestRail</p>
-                    </div>
-                </div>
-                <div class="buttons">
-                    <button class="btn" (click)="addProject()">+ Add Project</button>
-                </div>
-            </div>
-        </div>
 
-        <div class="projects">
-            <h2><span>Proje</span>cts</h2>
-            <section class="project-details" *ngFor="let project of projects">
-                <div class="case"></div>
-                <div>
-                    <h3>{{project.name}} <div class="pencil" (click)="navigateEditProject(project.projectId)"></div>
-                    </h3>
-                    <div>
-                        <!-- Correct routerLink usage with projectId -->
-                        <a [routerLink]="['/project-overview', project.projectId, 'test-cases']"
-                            routerLinkActive="active">Test Cases | </a>
-                        <a [routerLink]="['/project-overview', project.projectId, 'milestones']"
-                            routerLinkActive="active">Milestones | </a>
-                        <a [routerLink]="['/project-overview', project.projectId, 'test-runs']"
-                            routerLinkActive="active">Test Runs</a>
-                    </div>
-                    <p>Contains <strong>2</strong> test suites, <strong>2</strong> active test runs and
-                        <strong>1</strong> active milestone.
-                    </p>
-                </div>
-                <div class="add-edit-project" (click)="navigateProjectOverview(project.projectId)"><a></a></div>
-            </section>
+    <div class="projects">
+      <h2><span>Proje</span>cts</h2>
+      <section class="project-details" *ngFor="let project of projects">
+        <div class="case"></div>
+        <div>
+          <!-- Clickable h3 to navigate to project details -->
+          <h3 (click)="navigateToProjectDetails(project.projectId)" style="cursor: pointer;">
+            {{project.name}}
+            <div class="pencil" (click)="navigateEditProject(project.projectId)"></div>
+          </h3>
+          <div>
+            <!-- Links now go to project-overview, and then the specific section -->
+            <a [routerLink]="['/project-overview', project.projectId, 'test-cases']" routerLinkActive="active">Test Cases | </a>
+            <a [routerLink]="['/project-overview', project.projectId, 'milestones']" routerLinkActive="active">Milestones | </a>
+            <a [routerLink]="['/project-overview', project.projectId, 'test-runs']" routerLinkActive="active">Test Runs</a>
+          </div>
+          <p>Contains <strong>2</strong> test suites, <strong>2</strong> active test runs and
+            <strong>1</strong> active milestone.
+          </p>
         </div>
-
-        <div class="sidebar">
-            <button class="sidebar-btn" (click)="addProject()">+ Add project</button>
-            <p>0 active and 0 completed projects</p>
-        </div>
+      </section>
     </div>
+
+    <div class="sidebar">
+      <button class="sidebar-btn" (click)="addProject()">+ Add project</button>
+      <p>0 active and 0 completed projects</p>
+    </div>
+  </div>
 </div>

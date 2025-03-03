@@ -1,6 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { HierarchyItem } from '../../../../core/models/hierarchy-item';
 import { Router, ActivatedRoute } from '@angular/router';
+import { TestCaseService } from '../../../../core/services/test-case.service'; // Шлях до сервісу може відрізнятися
 
 @Component({
   selector: 'app-hierarchy-item',
@@ -13,7 +14,11 @@ export class HierarchyItemComponent {
   @Input() isRoot = false;
   @Output() sectionSelected = new EventEmitter<string>();
 
-  constructor(private router: Router, private route: ActivatedRoute) { }
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private testCaseService: TestCaseService
+  ) { }
 
   toggleExpanded() {
     if (this.item.type !== 'testCase') {
@@ -42,5 +47,20 @@ export class HierarchyItemComponent {
 
   navigateEditTestCase(id: string) {
     this.router.navigate(['edit-test-case', id], { relativeTo: this.route });
+  }
+
+  // Новий метод для видалення тест кейсу
+  deleteTestCase(testCaseId: string) {
+      this.testCaseService.deleteTestCase(testCaseId).subscribe({
+        next: () => {
+          // Оновлюємо локальний список тест кейсів
+          if (this.item.testCases) {
+            this.item.testCases = this.item.testCases.filter(tc => tc.testCaseId !== testCaseId);
+          }
+        },
+        error: err => {
+          console.error('Не вдалося видалити тест кейс:', err);
+        }
+      });
   }
 }

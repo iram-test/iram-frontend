@@ -1,56 +1,81 @@
-<div class="page-wrapper">
-    <app-internal-menu></app-internal-menu>
-    <div class="container">
-        <div class="header">
-            <h2>Iram test</h2>
+<app-internal-menu></app-internal-menu>
+<div class="container">
+  <div class="header">
+    <h2>Project Details: {{ projectId }}</h2>
+  </div>
+
+  <main class="section-container">
+    <section class="milestones">
+      <h2><span class="underline">Milest</span>ones</h2>
+      <div *ngIf="milestones.length === 0; else milestonesList">
+        <p>There are no active milestones, yet.</p>
+      </div>
+      <ng-template #milestonesList>
+        <div *ngFor="let milestone of milestones">
+          <div>
+            <h3>{{ milestone.name }}</h3>
+            <p>{{ milestone.description }}</p>
+            <p>Status: {{ milestone.status }}</p>
+            <p>Start Date: {{ milestone.startDate | date }}</p>
+            <p>End Date: {{ milestone.endDate | date }}</p>
+          </div>
         </div>
+      </ng-template>
+      <button [routerLink]="['/project-overview', projectId, 'milestones', 'add-milestone']">+Add Milestone</button>
+    </section>
 
-        <main class="section-container">
-            <section class="milestones">
-                <h2><span class="underline">Milest</span>ones</h2>
-                <p>There are no active milestones, yet.</p>
-                <button>+Add Milestone</button>
-            </section>
-
-
-            <section class="test-runs">
-                <h2><span class="underline">Test R</span>uns</h2>
-                <div>
-                    <div class="test-run"></div>
-                    <div>
-                        <h3>Test Run 1/5/2025</h3>
-                        <p>By Rostyslav Z. on 1/5/2025</p>
-                    </div>
-                </div>
-                <button>+Add Test Run</button>
-            </section>
-        </main>
-
-        <div class="sidebar">
-            <h2><span class="underline">Actio</span>ns</h2>
-            <ol>
-                <li>
-                    <div class="milestone"></div>
-                    <div>
-                        <h3>Milestones</h3>
-                        <p><a href="">Add</a>|<a href="">View All</a></p>
-                    </div>
-                </li>
-                <li>
-                    <div class="test-run"></div>
-                    <div>
-                        <h3>Test Runs</h3>
-                        <p><a href="">Add</a>|<a href="">View All</a></p>
-                    </div>
-                </li>
-                <li>
-                    <div class="test-case"></div>
-                    <div>
-                        <h3>Test Cases</h3>
-                        <p><a href="">Add</a>|<a href="">View All</a></p>
-                    </div>
-                </li>
-            </ol>
+    <section class="test-runs">
+      <h2><span class="underline">Test R</span>uns</h2>
+      <div *ngIf="testRuns.length === 0; else testRunsList">
+        <p>There are no test runs, yet.</p>
+      </div>
+      <ng-template #testRunsList>
+        <div *ngFor="let testRun of testRuns">
+          <div class="test-run"></div>
+          <div>
+            <h3>{{ testRun.name }}</h3>
+            <p>Created At: {{ testRun.createdAt | date }}</p>
+            <p>Description: {{ testRun.description }}</p>
+          </div>
         </div>
-    </div>
+      </ng-template>
+      <button [routerLink]="['/project-overview', projectId, 'test-runs', 'add-test-run']">+Add Test Run</button>
+    </section>
+  </main>
+
+  <div class="sidebar">
+    <h2><span class="underline">Actio</span>ns</h2>
+    <ol>
+      <li>
+        <div class="milestone"></div>
+        <div>
+          <h3>Milestones</h3>
+          <p>
+            <a [routerLink]="['/project-overview', projectId, 'milestones', 'add-milestone']">Add</a> |
+            <a [routerLink]="['/project-overview', projectId, 'milestones']">View All</a>
+          </p>
+        </div>
+      </li>
+      <li>
+        <div class="test-run"></div>
+        <div>
+          <h3>Test Runs</h3>
+          <p>
+            <a [routerLink]="['/project-overview', projectId, 'test-runs', 'add-test-run']">Add</a> |
+            <a [routerLink]="['/project-overview', projectId, 'test-runs']">View All</a>
+          </p>
+        </div>
+      </li>
+      <li>
+        <div class="test-case"></div>
+        <div>
+          <h3>Test Cases</h3>
+          <p>
+            <a [routerLink]="['/project-overview', projectId, 'test-cases', 'add-test-case']">Add</a> |
+            <a [routerLink]="['/project-overview', projectId, 'test-cases']">View All</a>
+          </p>
+        </div>
+      </li>
+    </ol>
+  </div>
 </div>

@@ -1,3 +1,4 @@
+// dashboard.component.ts
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ProjectService } from '../../services/project.service';
@@ -38,8 +39,9 @@ export class DashboardComponent implements OnInit {
       });
   }
 
-  navigateProjectOverview(projectId: string) {
-    this.router.navigate(['/project-overview', projectId]);
+  navigateToProjectDetails(projectId: string) {
+    // Navigate *directly* to ProjectDetailsComponent
+    this.router.navigate(['/project-details', projectId]);
   }
 
   navigateEditProject(projectId: string) {
