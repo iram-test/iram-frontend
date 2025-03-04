@@ -4,11 +4,6 @@
         <li><a routerLink="/integrations" routerLinkActive="active">Integrations</a></li>
         <li><a routerLink="/contacts" routerLinkActive="active">Contacts</a></li>
         <li><a routerLink="/help" routerLinkActive="active">Help</a></li>
-        <li>
-            <select id="location">
-                <option *ngFor="let location of locations" [value]="location">{{ location }}</option>
-              </select>
-        </li>
         <li class="sign-in-btn" *ngIf="!isAuthenticated"><a (click)="openLoginPopup()">Sign in</a></li>
         <li class="sign-in-btn" *ngIf="isAuthenticated"><a (click)="logout()">Sign out</a></li>
     </ul>

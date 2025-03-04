@@ -1,3 +1,4 @@
+<!-- dashboard.component.html -->
 <app-nav-menu></app-nav-menu>
 <div class="page-wrapper">
   <div class="hero-section">
@@ -11,7 +12,8 @@
     <div class="header">
       <h2>All projects</h2>
     </div>
-    <div class="content">
+    <!-- Conditionally show the "Add Project" info box -->
+    <div class="content" *ngIf="totalProjects === 0">
       <div class="info-box">
         <div class="flx">
           <div class="info"></div>
@@ -21,7 +23,8 @@
               there aren't any projects yet. This is a good time to add your first project to TestRail</p>
           </div>
         </div>
-        <div class="buttons">
+        <!-- Conditionally show the "Add Project" button -->
+        <div class="buttons" *ngIf="hasRequiredRole()">
           <button class="btn" (click)="addProject()">+ Add Project</button>
         </div>
       </div>
@@ -35,7 +38,10 @@
           <!-- Clickable h3 to navigate to project details -->
           <h3 (click)="navigateToProjectDetails(project.projectId)" style="cursor: pointer;">
             {{project.name}}
-            <div class="pencil" (click)="navigateEditProject(project.projectId)"></div>
+            <!-- Edit button (conditionally displayed) -->
+            <div class="pencil" *ngIf="hasRequiredRole()" (click)="navigateEditProject(project.projectId)">✏️</div> <!-- Added a pencil icon -->
+            <!-- Delete button (conditionally displayed)-->
+            <button *ngIf="hasRequiredRole()" (click)="deleteProject(project.projectId)" class="delete-button">❌</button> <!-- Added an X icon -->
           </h3>
           <div>
             <!-- Links now go to project-overview, and then the specific section -->
@@ -43,16 +49,20 @@
             <a [routerLink]="['/project-overview', project.projectId, 'milestones']" routerLinkActive="active">Milestones | </a>
             <a [routerLink]="['/project-overview', project.projectId, 'test-runs']" routerLinkActive="active">Test Runs</a>
           </div>
-          <p>Contains <strong>2</strong> test suites, <strong>2</strong> active test runs and
-            <strong>1</strong> active milestone.
+          <!-- Display dynamic project statistics -->
+          <p *ngIf="projectStats[project.projectId]">
+            Contains <strong>{{ projectStats[project.projectId].testSuiteCount }}</strong> test cases,
+            <strong>{{ projectStats[project.projectId].activeTestRunCount }}</strong> active test runs and
+            <strong>{{ projectStats[project.projectId].activeMilestoneCount }}</strong> active milestone.
           </p>
         </div>
       </section>
     </div>
 
     <div class="sidebar">
-      <button class="sidebar-btn" (click)="addProject()">+ Add project</button>
-      <p>0 active and 0 completed projects</p>
+      <!-- Conditionally show the sidebar "Add Project" button -->
+      <button class="sidebar-btn" (click)="addProject()" *ngIf="hasRequiredRole()">+ Add project</button>
+      <p>{{activeProjects}} active and {{completedProjects}} completed projects</p>
     </div>
   </div>
 </div>

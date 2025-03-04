@@ -3,7 +3,6 @@ import { PopupService } from '../../services/popup.service';
 import { Router } from '@angular/router';
 import { AuthenticationService } from "../../services/authentication.service";
 import { Subscription } from 'rxjs';
-import { Location } from '../../models/enums/location';
 
 @Component({
   selector: 'app-nav-menu',
@@ -11,7 +10,7 @@ import { Location } from '../../models/enums/location';
   styleUrl: './nav-menu.component.less'
 })
 export class NavMenuComponent implements OnInit, OnDestroy {
-  locations = Object.values(Location);
+
   isAuthenticated: boolean = false;
   authSubscription: Subscription;
   constructor(public popupService: PopupService,

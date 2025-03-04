@@ -1,32 +1,66 @@
+<!-- add-edit-project.component.html -->
 <div class="hero-section">
-    <h1>iram</h1>
-    <div class="flx">
-        <ul class="flx">
-            <li><a routerLink="/dashboard" routerLinkActive="active">Dashboard</a></li>
-        </ul>
-    </div>
+  <h1>iram</h1>
+  <div class="flx">
+    <ul class="flx">
+      <li><a routerLink="/dashboard" routerLinkActive="active">Dashboard</a></li>
+    </ul>
+  </div>
 </div>
 <h2 *ngIf="!id">Add Project</h2>
 <h2 *ngIf="id">Edit Project</h2>
 <main>
-    <form method="post" [formGroup]="projectForm" (ngSubmit)="sendData(projectForm.value)">
-        <fieldset>
-            <div class="form-group">
-                <label for="name">Name*</label><br />
-                <input id="name" class="name" type="text" formControlName="name" placeholder="Some name" />
-            </div>
-            <div class="form-group">
-                <label for="user-id">User ID*</label><br />
-                <input id="user-id" class="name" type="text" formControlName="user-id" placeholder="user id" />
-            </div>
-            <div class="form-group">
-                <label for="announcement">Announcement</label><br />
-                <textarea id="announcement" formControlName="description"></textarea>
-            </div>
-        </fieldset>
-        <div class="btns">
-            <button type="submit" class="add-btn">Add Project</button>
-            <button class="cancel-btn" type="button" (click)="cancel()">Cancel</button>
+  <form method="post" [formGroup]="projectForm" (ngSubmit)="sendData(projectForm.value)">
+    <fieldset>
+      <div class="form-group">
+        <label for="name">Name*</label><br />
+        <input id="name" class="name" type="text" formControlName="name" placeholder="Some name" />
+        <div *ngIf="projectForm.get('name')?.invalid && (projectForm.get('name')?.dirty || projectForm.get('name')?.touched)" class="error-message">
+          <div *ngIf="projectForm.get('name')?.errors?.['required']">Name is required.</div>
         </div>
-    </form>
+      </div>
+
+      <!-- User ID field (conditionally required) -->
+      <div class="form-group">
+        <label for="user-id">User ID{{ id ? '' : '*' }}</label><br />
+        <input id="user-id" class="name" type="text" formControlName="user-id" placeholder="user id" />
+        <div *ngIf="projectForm.get('user-id')?.invalid && (projectForm.get('user-id')?.dirty || projectForm.get('user-id')?.touched)" class="error-message">
+          <div *ngIf="projectForm.get('user-id')?.errors?.['required']">User ID is required.</div>
+        </div>
+      </div>
+
+      <!-- Display project users (read-only) -->
+      <div class="form-group" *ngIf="id && projectUsers.length > 0">
+        <label>Project Users:</label>
+        <div class="user-list">
+          <ul class="user-scrollable-list">
+            <li *ngFor="let userId of projectUsers">
+              {{ userNames[userId] || 'Loading...' }} ({{ userId }})
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="location">Location*</label><br>
+        <select id="location" formControlName="location">
+          <option *ngFor="let location of locations" [value]="location">{{ location }}</option>
+        </select>
+        <div *ngIf="projectForm.get('location')?.invalid && (projectForm.get('location')?.dirty || projectForm.get('location')?.touched)" class="error-message">
+          <div *ngIf="projectForm.get('location')?.errors?.['required']">Location is required.</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="announcement">Announcement</label><br />
+        <textarea id="announcement" formControlName="description"></textarea>
+      </div>
+    </fieldset>
+    <div class="btns">
+      <button type="submit" class="add-btn">Add Project</button>
+      <button class="cancel-btn" type="button" (click)="cancel()">Cancel</button>
+    </div>
+  </form>
+  <div *ngIf="errorMessage" class="error-message">
+    {{ errorMessage }}
+  </div>
 </main>

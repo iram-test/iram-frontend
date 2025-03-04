@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { Observable, of, Subject, throwError } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
+import { Observable, of, Subject, throwError, BehaviorSubject } from 'rxjs';
+import { catchError, tap, map } from 'rxjs/operators';
 import { AppSettings } from '../constants/AppSettings';
 import {
   LoginWithEmailDTO,
@@ -17,50 +17,79 @@ import { User } from '../models/user-entity';
 export class AuthenticationService {
   private readonly authChangeSub = new Subject<boolean>();
   public authChanged = this.authChangeSub.asObservable();
-  private currentUser: User | null = null;
+  private currentUserSubject = new BehaviorSubject<User | null>(null);
+  public currentUser$ = this.currentUserSubject.asObservable();
 
-  constructor(private readonly http: HttpClient) { }
+  constructor(private readonly http: HttpClient) {
+    this.loadCurrentUser();
+  }
+
+  private loadCurrentUser() {
+    const userString = localStorage.getItem('currentUser');
+    if (userString) {
+      const user: User = JSON.parse(userString);
+      this.currentUserSubject.next(user);
+    }
+  }
 
   public registerUser(registerDto: RegisterDTO): Observable<AuthResult> {
-    return this.http
-      .post<AuthResult>(`${AppSettings.AUTH_ENDPOINT}register`, registerDto)
-      .pipe(catchError(this.handleError));
+    return this.http.post<AuthResult>(`${AppSettings.AUTH_ENDPOINT}register`, registerDto)
+      .pipe(
+        // Perform login after successful registration
+        tap((res: AuthResult) => {
+          localStorage.setItem('accessToken', res.accessToken);
+          localStorage.setItem('refreshToken', res.refreshToken);
+          this.sendAuthStateChangeNotification(true);
+
+          const user = this.extractUserFromToken(res.accessToken);
+          if (user) {
+            localStorage.setItem('currentUser', JSON.stringify(user));
+            this.currentUserSubject.next(user);
+          }
+        }),
+        catchError(this.handleError)
+      );
   }
+
 
   public loginUserWithUsername(
     loginDto: LoginWithUsernameDTO,
   ): Observable<AuthResult> {
-    return this.http
-      .post<AuthResult>(`${AppSettings.AUTH_ENDPOINT}login/username`, loginDto)
-      .pipe(
-        tap((res) => {
-          localStorage.setItem('accessToken', res.accessToken);
-          localStorage.setItem('refreshToken', res.refreshToken);
-          this.sendAuthStateChangeNotification(true);
-        }),
-        catchError(this.handleError),
-      );
+    return this.login(loginDto, `${AppSettings.AUTH_ENDPOINT}login/username`);
   }
 
   public loginUserWithEmail(loginDto: LoginWithEmailDTO): Observable<AuthResult> {
-    return this.http
-      .post<AuthResult>(`${AppSettings.AUTH_ENDPOINT}login/email`, loginDto)
-      .pipe(
-        tap((res) => {
-          localStorage.setItem('accessToken', res.accessToken);
-          localStorage.setItem('refreshToken', res.refreshToken);
-          this.sendAuthStateChangeNotification(true);
-        }),
-        catchError(this.handleError),
-      );
+    return this.login(loginDto, `${AppSettings.AUTH_ENDPOINT}login/email`);
   }
+
+  private login(loginDto: any, url: string): Observable<AuthResult> {
+    return this.http.post<AuthResult>(url, loginDto).pipe(
+      tap((res) => {
+        localStorage.setItem('accessToken', res.accessToken);
+        localStorage.setItem('refreshToken', res.refreshToken);
+        this.sendAuthStateChangeNotification(true);
+      }),
+      map(res => {
+        const user = this.extractUserFromToken(res.accessToken);
+        if (user) {
+          localStorage.setItem('currentUser', JSON.stringify(user));
+          this.currentUserSubject.next(user);
+        }
+        return res;
+      }),
+      catchError(this.handleError),
+    );
+  }
+
+
 
   public logoutUser(): Observable<void> {
     const refreshToken = localStorage.getItem('refreshToken');
 
     if (!refreshToken) {
       this.sendAuthStateChangeNotification(false);
-      this.currentUser = null;
+      this.currentUserSubject.next(null);
+      localStorage.removeItem('currentUser');
       return of(void 0);
     }
 
@@ -73,8 +102,9 @@ export class AuthenticationService {
       tap(() => {
         localStorage.removeItem('accessToken');
         localStorage.removeItem('refreshToken');
+        localStorage.removeItem('currentUser');
         this.sendAuthStateChangeNotification(false);
-        this.currentUser = null;
+        this.currentUserSubject.next(null);
       }),
       catchError(this.handleError),
     );
@@ -91,8 +121,37 @@ export class AuthenticationService {
   };
 
   public getCurrentUser(): User | null {
-    return this.currentUser;
+    return this.currentUserSubject.value;
   }
+
+  extractUserFromToken(token: string): User | null {
+    try {
+      const payloadBase64 = token.split('.')[1];
+      const payloadJson = atob(payloadBase64);
+      const payload = JSON.parse(payloadJson);
+
+      const user = new User(
+        payload.userId,
+        payload.firstName,
+        payload.lastName,
+        payload.username,
+        payload.email,
+        "",
+        payload.isVerified,
+        payload.createdAt,
+        payload.updatedAt,
+        payload.lastLoginAt,
+        null,
+        payload.role
+      );
+      return user;
+
+    } catch (error) {
+      console.error("Error decoding token:", error);
+      return null;
+    }
+  }
+
 
   public refreshToken(refreshToken: string): Observable<AuthResult> {
     const headers = new HttpHeaders({

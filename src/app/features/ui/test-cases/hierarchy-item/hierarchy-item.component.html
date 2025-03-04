@@ -1,3 +1,4 @@
+<!-- hierarchy-item.component.html -->
 <div class="hierarchy-item"
      [ngClass]="{'expanded': item.expanded, 'section-item': item.type === 'section', 'subsection-item': item.type === 'subsection'}">
   <div class="item-header"
@@ -17,11 +18,19 @@
   <div class="children" *ngIf="item.expanded && item.children">
     <app-hierarchy-item *ngFor="let child of item.children" [item]="child"
                         [selectedSectionId]="selectedSectionId"
-                        [isRoot]="false" (sectionSelected)="sectionSelected.emit($event)"></app-hierarchy-item>
+                        [selectedTestCases]="selectedTestCases"
+                        [isRoot]="false" (sectionSelected)="sectionSelected.emit($event)"
+                        (testCaseSelected)="testCaseSelected.emit($event)"
+    ></app-hierarchy-item>
   </div>
 
   <div *ngIf="item.expanded && item.testCases" class="test-cases-container">
     <div *ngFor="let testCase of item.testCases" class="test-case-item">
+      <!-- Checkbox for test case selection -->
+      <input type="checkbox"
+             [checked]="isSelected(testCase.testCaseId)"
+             (change)="onTestCaseSelect(testCase.testCaseId)"
+      />
       <span class="test-case-title" (click)="navigateToTestCaseDetails(testCase.testCaseId)">
         {{ testCase.title }}
       </span>

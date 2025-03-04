@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { HierarchyItem } from '../../../../core/models/hierarchy-item';
 import { Router, ActivatedRoute } from '@angular/router';
-import { TestCaseService } from '../../../../core/services/test-case.service'; // Шлях до сервісу може відрізнятися
+import { TestCaseService } from '../../../../core/services/test-case.service';
 
 @Component({
   selector: 'app-hierarchy-item',
@@ -13,6 +13,9 @@ export class HierarchyItemComponent {
   @Input() selectedSectionId: string | null = null;
   @Input() isRoot = false;
   @Output() sectionSelected = new EventEmitter<string>();
+  @Output() testCaseSelected = new EventEmitter<string>(); // For checkbox selection
+  @Input() selectedTestCases: string[] = [];
+
 
   constructor(
     private router: Router,
@@ -49,18 +52,29 @@ export class HierarchyItemComponent {
     this.router.navigate(['edit-test-case', id], { relativeTo: this.route });
   }
 
-  // Новий метод для видалення тест кейсу
   deleteTestCase(testCaseId: string) {
-      this.testCaseService.deleteTestCase(testCaseId).subscribe({
-        next: () => {
-          // Оновлюємо локальний список тест кейсів
-          if (this.item.testCases) {
-            this.item.testCases = this.item.testCases.filter(tc => tc.testCaseId !== testCaseId);
-          }
-        },
-        error: err => {
-          console.error('Не вдалося видалити тест кейс:', err);
+    this.testCaseService.deleteTestCase(testCaseId).subscribe({
+      next: () => {
+        if (this.item.testCases) {
+          this.item.testCases = this.item.testCases.filter(tc => tc.testCaseId !== testCaseId);
         }
-      });
+      },
+      error: err => {
+        console.error('Failed to delete test case:', err);
+      }
+    });
+  }
+
+  onTestCaseSelect(testCaseId: string) {
+    if (this.selectedTestCases.includes(testCaseId)) {
+      this.selectedTestCases = this.selectedTestCases.filter(id => id !== testCaseId);
+    } else {
+      this.selectedTestCases = [...this.selectedTestCases, testCaseId];
+    }
+    this.testCaseSelected.emit(testCaseId); // Emit the event
+  }
+
+  isSelected(testCaseId: string): boolean {
+    return this.selectedTestCases.includes(testCaseId);
   }
 }

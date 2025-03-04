@@ -1,4 +1,4 @@
-import { UserRole } from "./enums/user-role";
+import {UserRoleString} from "./enums/user-role";
 
 export class User {
   constructor(
@@ -13,6 +13,6 @@ export class User {
     public updatedAt: string,
     public lastLoginAt: string | null,
     public refreshToken: string | null,
-    public role: UserRole,
+    public role: UserRoleString,
   ) { }
 }

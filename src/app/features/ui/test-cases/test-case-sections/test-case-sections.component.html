@@ -1,12 +1,28 @@
+<!-- test-case-sections.component.html -->
 <app-internal-menu></app-internal-menu>
 
 <main>
-    <app-hierarchy-item *ngFor="let item of hierarchy" [item]="item" [selectedSectionId]="selectedSectionId"
-        [isRoot]="item.type === 'project'" (sectionSelected)="handleSectionSelected($event)"></app-hierarchy-item>
+  <app-hierarchy-item *ngFor="let item of hierarchy" [item]="item" [selectedSectionId]="selectedSectionId"
+                      [selectedTestCases]="selectedTestCases"
+                      [isRoot]="item.type === 'project'" (sectionSelected)="handleSectionSelected($event)"
+                      (testCaseSelected)="handleTestCaseSelected($event)"
+  ></app-hierarchy-item>
 
-    <div class="buttons">
-        <button (click)="navigateAddTestCase()">Add Test Case</button>
-        <button (click)="navigateAddSection()">Add Section</button>
-        <button (click)="navigateAddSubsection()">Add Subsection</button>
-    </div>
+  <div class="buttons">
+    <button (click)="navigateAddTestCase()">Add Test Case</button>
+    <button (click)="navigateAddSection()">Add Section</button>
+    <button (click)="navigateAddSubsection()">Add Subsection</button>
+
+    <!-- File Import Buttons -->
+    <input type="file" id="importJson" (change)="onFileSelected($event, 'json')" accept=".json" style="display: none;">
+    <button (click)="document.getElementById('importJson').click()">Import from JSON</button>
+
+    <input type="file" id="importCsv" (change)="onFileSelected($event, 'csv')" accept=".csv" style="display: none;">
+    <button (click)="document.getElementById('importCsv').click()">Import from CSV</button>
+
+    <!-- Export Buttons -->
+    <button (click)="exportTestCases('json')">Export as JSON</button>
+    <button (click)="exportTestCases('csv')">Export as CSV</button>
+    <button (click)="exportTestCases('xml')">Export as XML</button>
+  </div>
 </main>

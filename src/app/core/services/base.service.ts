@@ -72,7 +72,7 @@ export class BaseService {
   }
 
 
-  private handleError(error: any) {
+  protected handleError(error: any) {
     console.error('API Error:', error);
     return throwError(() => new Error(error.message || 'Server error'));
   }

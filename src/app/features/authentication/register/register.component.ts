@@ -3,14 +3,10 @@ import { PopupService } from '../../../core/services/popup.service';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthenticationService } from '../../../core/services/authentication.service';
-import { RegisterDTO } from '../../../core/models/auth-dto'; // Import RegisterDTO
+import { RegisterDTO } from '../../../core/models/auth-dto';
 import { HttpErrorResponse } from '@angular/common/http';
-import { UserRole } from '../../../core/models/enums/user-role';
-
-interface AuthResponseDto {
-  accessToken: string;
-  refreshToken: string;
-}
+import {UserRole} from '../../../core/models/enums/user-role';
+import { AuthResult } from '../../../core/models/AuthResult'; // Import AuthResult
 
 @Component({
   selector: 'app-register-user',
@@ -23,7 +19,9 @@ export class RegisterComponent {
   showError: boolean = false;
   userRoles = Object.values(UserRole).filter(value => typeof value === 'string');
 
-  constructor(public popupService: PopupService, public router: Router, private readonly authService: AuthenticationService,
+  constructor(public popupService: PopupService,
+              public router: Router,
+              private readonly authService: AuthenticationService,
               private readonly fb: FormBuilder) {
     this.registerForm = this.fb.group({
       firstName: ['', [Validators.required]],
@@ -44,8 +42,10 @@ export class RegisterComponent {
     const registerDto: RegisterDTO = this.registerForm.value;
 
     this.authService.registerUser(registerDto).subscribe({
-      next: (response: AuthResponseDto) => {
-        this.router.navigate(['/login']);
+      next: (response: AuthResult) => { // Expect AuthResult, not AuthResponseDto
+        // No need to manually navigate to login. The tap operator in registerUser
+        // handles setting the tokens and user data, effectively logging them in.
+        this.router.navigate(['/dashboard']); // Go directly to the dashboard
       },
       error: (error: HttpErrorResponse) => {
         this.errorMessage = error.message;
@@ -54,6 +54,7 @@ export class RegisterComponent {
       }
     });
   }
+
 
   closeRegister() {
     this.popupService.toggleRegister();
