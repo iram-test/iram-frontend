@@ -69,7 +69,7 @@
       <td>{{testCase.assignedToName}}</td>
       <td><span [className]="getStatusClass(testCase.status)">{{testCase.status}}</span></td>
       <td>
-        <button (click)="navigateAddTestResult(testCase.testCaseId)">Add Test Result</button>
+        <button class="add-button" (click)="navigateAddTestResult(testCase.testCaseId)">Add Test Result</button>
       </td>
     </tr>
     </tbody>

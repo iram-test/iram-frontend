@@ -89,8 +89,6 @@ export class TestRunsComponent implements OnInit {
     return { passed, failed, blocked, untested, retested };
   }
 
-
-
   selectAll(): void {
     const checkboxes: NodeListOf<HTMLInputElement> = document.querySelectorAll(".test-run-checkbox");
     const allChecked = Array.from(checkboxes).every(checkbox => checkbox.checked);

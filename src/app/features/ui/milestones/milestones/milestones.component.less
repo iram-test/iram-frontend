@@ -9,6 +9,26 @@ h2 {
   color: #000000;
 }
 
+.remove-button {
+  font-family: 'Dosis';
+  border: none;
+  text-align: center;
+  color: #fff;
+  width: 120px;
+  background-color: #1B3687;
+  padding: 5px 10px;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 23px;
+  border: none;
+  transition: all 1.2s ease;
+}
+
+.remove-button:hover {
+  cursor: pointer;
+  transform: scale(1.2);
+}
+
 .info-box {
   margin-left: 24px;
   max-width: 1450px;
@@ -316,10 +336,15 @@ li {
   border: 1px solid #1B3687;
   border-radius: 12px;
   display: flex;
+  justify-content: space-between;
   gap: 10px;
   // align-items: center;
   margin-bottom: 5px;
   padding: 10px;
+}
+
+.case-item .flx {
+  gap: 5px;
 }
 
 .case-item-group {
@@ -458,19 +483,4 @@ li {
   justify-content: space-between;
   align-items: center;
   padding: 5px;
-}
-
-.remove-button {
-  font-family: 'Dosis';
-  font-style: normal;
-  font-weight: 400;
-  font-size: 35px;
-  background-color: inherit;
-  border: none;
-  text-align: center;
-  color: #FF0000;
-}
-
-.remove-button:hover {
-  cursor: pointer;
 }

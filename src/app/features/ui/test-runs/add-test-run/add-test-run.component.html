@@ -46,13 +46,8 @@
       <div class="form-group">
         <div class="radio-groups">
           <label>
-            <input
-              type="radio"
-              name="includeAllCases"
-              formControlName="includeAllCases"
-              [value]="true"
-              (change)="onIncludeAllCasesChange()"
-            />
+            <input type="radio" name="includeAllCases" formControlName="includeAllCases" [value]="true"
+              (change)="onIncludeAllCasesChange()" />
             <span>
               <h4>Include all test cases</h4>
               <p>
@@ -65,13 +60,8 @@
       </div>
       <div class="radio-groups">
         <label>
-          <input
-            type="radio"
-            name="includeAllCases"
-            formControlName="includeAllCases"
-            [value]="false"
-            (change)="onIncludeAllCasesChange()"
-          />
+          <input type="radio" name="includeAllCases" formControlName="includeAllCases" [value]="false"
+            (change)="onIncludeAllCasesChange()" />
           <span>
             <h4>Select specific test cases</h4>
             <p>
@@ -104,9 +94,5 @@
   </form>
 </div>
 
-<app-select-cases
-  *ngIf="showSelectCasesPopup"
-  (selectionConfirmed)="onSelectionConfirmed($event)"
-  (selectionCancelled)="onSelectionCancelled()"
-  [projectId]="projectId"
-></app-select-cases>
+<app-select-cases *ngIf="showSelectCasesPopup" (selectionConfirmed)="onSelectionConfirmed($event)"
+  (selectionCancelled)="onSelectionCancelled()" [projectId]="projectId"></app-select-cases>

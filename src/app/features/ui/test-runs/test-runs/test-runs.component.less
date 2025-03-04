@@ -35,6 +35,7 @@ h2 {
 }
 
 .header {
+  position: relative;
   padding: 10px 0;
   border-bottom: 1px solid #ccc;
   margin-bottom: 10px;
@@ -111,6 +112,7 @@ h2 {
   min-width: 386px;
   height: 85.9vh;
   position: absolute;
+  top: 0;
   right: 0;
   background-color: #F3F3FB;
   padding: 20px;
@@ -216,6 +218,55 @@ li {
   margin-top: 15px;
 }
 
+.test-run-progress button:hover {
+  cursor: pointer;
+  transform: scale(1.2);
+}
+
+.test-run-progress button {
+  color: #fff;
+  width: 120px;
+  background-color: #1B3687;
+  padding: 5px 10px;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 23px;
+  border: none;
+  transition: all 1.2s ease;
+}
+
+.progress-fill {
+  font-family: 'Dosis';
+  color: #fff;
+  height: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 135px;
+  height: 33px;
+}
+
+.passed {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 0;
+  height: 33px;
+  background: #44BE59;
+  border-radius: 3px;
+}
+
+.failed {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 0;
+  height: 33px;
+  background: red;
+  border-radius: 3px;
+}
+
 .title-row {
   display: flex;
   justify-content: start;
@@ -292,6 +343,10 @@ li {
   line-height: 28px;
 
   color: #000000;
+}
+
+.test-runs-section {
+  position: relative;
 }
 
 .test-runs-section h2 {
@@ -402,13 +457,8 @@ input[type='checkbox'] {
 
 .remove-button {
   font-family: 'Dosis';
-  font-style: normal;
-  font-weight: 400;
-  font-size: 35px;
-  background-color: inherit;
   border: none;
   text-align: center;
-  color: #FF0000;
 }
 
 .remove-button:hover {

@@ -3,6 +3,17 @@
   <div class="container">
     <div class="header">
       <h2>Test Runs</h2>
+      <div class="sidebar">
+        <button class="sidebar-btn" (click)="onAddTestRun()">+ Add Test Run</button>
+        <p *ngIf="testRuns.length === 0">There are no test runs.</p>
+        <div class="order-by-attribute">
+          <label for="attribute">Order By</label>
+          <select name="attribute" id="attribute" [(ngModel)]="selectedAttribute" (change)="onAttributeChange($event)">
+            <option value="date">Date</option>
+            <!-- Add other sorting options if needed -->
+          </select>
+        </div>
+      </div>
     </div>
 
     <div class="content" *ngIf="testRuns.length === 0">
@@ -49,27 +60,23 @@
                 <div class="progress-bar">
                   <div class="progress" [style.width.%]="calculatePercentage(testRun)"></div>
                 </div>
-                <span class="percentage">{{calculatePercentage(testRun)}}%</span>
-                <button class="remove-button" (click)="onRemoveTestRun(testRun.testRunId)">x</button>
-                <!-- Add Edit button -->
-                <button class="edit-button" (click)="onEditTestRun(testRun.testRunId, $event)">Edit</button>
+                <div class="flx">
+                  <div class="progress-fill">
+                    <div class="passed" [ngStyle]="{ 'width': calculatePercentage(testRun) + '%' }">
+                      {{calculatePercentage(testRun)}} %
+                    </div>
+                    <div class="failed" [ngStyle]="{ 'width': 100 - calculatePercentage(testRun) + '%' }">
+                      {{calculatePercentage(testRun)}} %
+                    </div>
+                  </div>
+                  <button class="remove-button" (click)="onRemoveTestRun(testRun.testRunId)">Delete</button>
+                  <!-- Add Edit button -->
+                  <button class="edit-button" (click)="onEditTestRun(testRun.testRunId, $event)">Edit</button>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </div>
-
-    <div class="sidebar">
-      <button class="sidebar-btn" (click)="onAddTestRun()">+ Add Test Run</button>
-      <p *ngIf="testRuns.length === 0">There are no test runs.</p>
-      <div class="order-by-attribute">
-        <label for="attribute">Order By</label>
-        <select name="attribute" id="attribute" [(ngModel)]="selectedAttribute"
-                (change)="onAttributeChange($event)">
-          <option value="date">Date</option>
-          <!-- Add other sorting options if needed -->
-        </select>
       </div>
     </div>
   </div>

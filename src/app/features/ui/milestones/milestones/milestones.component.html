@@ -23,10 +23,12 @@
       <div class="product-filtration">
         <div class="case-list">
           <div class="case-item" *ngFor="let milestone of filteredMilestones">
-            <div class="drag-handle">☰</div>
-            <div class="case-id">{{milestone.milestoneId?.slice(0, 2) || ''}}</div>
-            <div class="case-title"><span (click)="navigateEditMilestone(milestone.milestoneId)">{{milestone.name}}</span></div>
-            <button class="remove-button" (click)="onDeleteMilestone(milestone)">×</button>
+            <div class="flx">
+              <div class="drag-handle">☰</div>
+              <div class="case-id">{{milestone.milestoneId?.slice(0, 2) || ''}}</div>
+              <div class="case-title"><span (click)="navigateEditMilestone(milestone.milestoneId)">{{milestone.name}}</span></div>
+            </div>
+            <button class="remove-button" (click)="onDeleteMilestone(milestone)">Delete</button>
           </div>
         </div>
       </div>
