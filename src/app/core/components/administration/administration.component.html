@@ -1,0 +1,33 @@
+<app-internal-menu></app-internal-menu>
+
+<main>
+    <form method="post" [formGroup]="administrationForm" (ngSubmit)="onSubmit()">
+        <fieldset>
+            <div class="form-group">
+                <label for="name">UserId*</label><br />
+                <input id="name" class="name" type="text" readonly formControlName="name" placeholder="Some name" />
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label><br />
+                <input id="email" class="name" type="email" readonly placeholder="email" />
+            </div>
+            <div class="form-group">
+                <label for="passwd">New password</label><br />
+                <input id="passwd" class="name" type="password" formControlName="passwd"
+                    placeholder="Enter your password" />
+            </div>
+            <div class="form-group">
+                <label for="email">Repeat password</label><br />
+                <input id="repeat" class="name" type="password" formControlName="repeatPasswd"
+                    placeholder="Repeat your password" />
+            </div>
+        </fieldset>
+        <div class="btns">
+            <button type="submit" class="add-btn" [disabled]="administrationForm.invalid">
+                Submit
+            </button>
+            <button class="cancel-btn" type="button" (click)="onCancel()">Cancel</button>
+        </div>
+    </form>
+    <!-- <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div> -->
+</main>

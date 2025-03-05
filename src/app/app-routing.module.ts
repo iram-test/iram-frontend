@@ -11,6 +11,7 @@ import { AuthGuard } from './core/guards/auth.guard';
 import { TestCaseDetailsComponent } from './features/ui/test-cases/test-case-details/test-case-details.component';
 import { AddEditTestResultComponent } from './features/ui/test-runs/add-edit-test-result/add-edit-test-result.component';
 import { ProjectDetailsComponent } from './core/components/project-details/project-details.component';
+import { AdministrationComponent } from './core/components/administration/administration.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -34,6 +35,11 @@ const routes: Routes = [
       { path: 'test-cases', loadChildren: () => import('./features/ui/test-cases/test-cases.module').then(m => m.TestCasesModule) },
       { path: 'milestones', loadChildren: () => import('./features/ui/milestones/milestones.module').then(m => m.MilestonesModule) },
       { path: 'test-runs', loadChildren: () => import('./features/ui/test-runs/test-runs.module').then(m => m.TestRunsModule) },
+      {
+        path: 'administration',
+        component: AdministrationComponent,
+        canActivate: [AuthGuard]
+      },
       //  NO LONGER NEEDED: { path: 'project-details', component: ProjectDetailsComponent, canActivate: [AuthGuard] },
       { path: '', redirectTo: 'test-cases', pathMatch: 'full' }, //  Redirect to a default child route (e.g., test-cases)
     ]
