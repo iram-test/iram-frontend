@@ -5,19 +5,19 @@
   </div>
 
   <main class="section-container">
-    <section class="milestones">
+    <section class="test-runs">
       <h2><span class="underline">Milest</span>ones</h2>
       <div *ngIf="milestones.length === 0; else milestonesList">
         <p>There are no active milestones, yet.</p>
       </div>
       <ng-template #milestonesList>
         <div *ngFor="let milestone of milestones">
+          
+          <div class="milestone"></div>
           <div>
             <h3>{{ milestone.name }}</h3>
-            <p>{{ milestone.description }}</p>
-            <p>Status: {{ milestone.status }}</p>
             <p>Start Date: {{ milestone.startDate | date }}</p>
-            <p>End Date: {{ milestone.endDate | date }}</p>
+            <p>{{ milestone.description }}</p>
           </div>
         </div>
       </ng-template>

@@ -30,6 +30,12 @@
           </select>
         </div>
         <div>
+          <label for="template">Template*</label>
+          <select id="template" formControlName="template">
+            <option *ngFor="let template of templates" [value]="template">{{ template }}</option>
+          </select>
+        </div>
+        <div>
           <label for="type">Type*</label>
           <select id="type" formControlName="type">
             <option *ngFor="let type of types" [value]="type">{{ type }}</option>
