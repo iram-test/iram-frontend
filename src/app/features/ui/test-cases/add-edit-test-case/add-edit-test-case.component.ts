@@ -308,11 +308,40 @@ export class AddEditTestCaseComponent implements OnInit, OnDestroy {
   }
 
   removeImage(stepIndex: number, imageIndex: number, isStepImage: boolean): void {
-    if (isStepImage) {
-      this.stepImages[stepIndex].splice(imageIndex, 1);
-    } else {
-      this.expectedStepImages[stepIndex].splice(imageIndex, 1);
+    const imageUrl = isStepImage ? this.stepImages[stepIndex][imageIndex].url : this.expectedStepImages[stepIndex][imageIndex].url;
+
+    if (!imageUrl) {
+      console.error('Image URL is missing. Cannot delete.');
+      return;
     }
+
+    const stepId = this.steps.at(stepIndex).get('stepId')?.value;
+
+    if (!stepId) {
+      console.error('Step ID is missing. Cannot delete image.');
+      return;
+    }
+
+    let deleteObservable: Observable<void>;
+    if (isStepImage) {
+      deleteObservable = this.stepService.deleteImage(stepId, imageUrl);
+    } else {
+      deleteObservable = this.stepService.deleteExpectedImage(stepId, imageUrl);
+    }
+
+    deleteObservable.pipe(takeUntil(this.destroy$)).subscribe({
+      next: () => {
+        if (isStepImage) {
+          this.stepImages[stepIndex].splice(imageIndex, 1);
+        } else {
+          this.expectedStepImages[stepIndex].splice(imageIndex, 1);
+        }
+        console.log('Image deleted successfully.');
+      },
+      error: (error) => {
+        console.error('Error deleting image:', error);
+      }
+    });
   }
 
   getObjectURL(item: ImageUpload | null): SafeUrl | null {

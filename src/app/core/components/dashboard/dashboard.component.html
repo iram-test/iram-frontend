@@ -39,15 +39,19 @@
           <h3 (click)="navigateToProjectDetails(project.projectId)" style="cursor: pointer;">
             {{project.name}}
             <!-- Edit button (conditionally displayed) -->
-            <div class="pencil" *ngIf="hasRequiredRole()" (click)="navigateEditProject(project.projectId)">✏️</div> <!-- Added a pencil icon -->
+            <div class="pencil" *ngIf="hasRequiredRole()" (click)="navigateEditProject(project.projectId)">✏️</div>
+            <!-- Added a pencil icon -->
             <!-- Delete button (conditionally displayed)-->
-            <button *ngIf="hasRequiredRole()" (click)="deleteProject(project.projectId)" class="delete-button">❌</button> <!-- Added an X icon -->
+            <button (click)="deleteProject(project.projectId)" class="delete-button">❌</button> <!-- Added an X icon -->
           </h3>
           <div>
             <!-- Links now go to project-overview, and then the specific section -->
-            <a [routerLink]="['/project-overview', project.projectId, 'test-cases']" routerLinkActive="active">Test Cases | </a>
-            <a [routerLink]="['/project-overview', project.projectId, 'milestones']" routerLinkActive="active">Milestones | </a>
-            <a [routerLink]="['/project-overview', project.projectId, 'test-runs']" routerLinkActive="active">Test Runs</a>
+            <a [routerLink]="['/project-overview', project.projectId, 'test-cases']" routerLinkActive="active">Test
+              Cases | </a>
+            <a [routerLink]="['/project-overview', project.projectId, 'milestones']"
+              routerLinkActive="active">Milestones | </a>
+            <a [routerLink]="['/project-overview', project.projectId, 'test-runs']" routerLinkActive="active">Test
+              Runs</a>
           </div>
           <!-- Display dynamic project statistics -->
           <p *ngIf="projectStats[project.projectId]">
@@ -63,6 +67,11 @@
       <!-- Conditionally show the sidebar "Add Project" button -->
       <button class="sidebar-btn" (click)="addProject()" *ngIf="hasRequiredRole()">+ Add project</button>
       <p>{{activeProjects}} active and {{completedProjects}} completed projects</p>
+    </div>
+
+
+    <div *ngIf="errorMessage" class="error-message">
+      {{errorMessage}}
     </div>
   </div>
 </div>

@@ -53,4 +53,14 @@ export class StepService extends BaseService {
     const url = `http://localhost:3002/api/test-cases/${projectId}/steps/${stepId}/upload-expected-image`;
     return this.http.post(url, formData);
   }
+
+  deleteImage(stepId: string, imageUrl: string): Observable<void> {
+    const url = `http://localhost:3002/api/steps/${stepId}/image`;
+    return this.http.delete<void>(url, { body: { imageUrl } });
+  }
+
+  deleteExpectedImage(stepId: string, imageUrl: string): Observable<void> {
+    const url = `http://localhost:3002/api/steps/${stepId}/expected-image`;
+    return this.http.delete<void>(url, { body: { imageUrl } });
+  }
 }

@@ -605,21 +605,42 @@ li {
 }
 
 .delete-button {
-  background-color: #ff6347; /* Tomato color */
+  background-color: #ff6347;
+  /* Tomato color */
   color: white;
   border: none;
   padding: 5px 10px;
-  margin-left: 10px; /* Add some space between pencil and X */
+  margin-left: 10px;
+  /* Add some space between pencil and X */
   cursor: pointer;
   border-radius: 4px;
 }
 
 .delete-button:hover {
-  background-color: #e24127; /* Darker shade on hover */
+  background-color: #e24127;
+  /* Darker shade on hover */
 }
 
 .pencil {
-  display: inline-block; /* Allows the pencil to be next to the heading */
+  display: inline-block;
+  /* Allows the pencil to be next to the heading */
   margin-left: 10px;
   cursor: pointer;
+}
+
+.error-message {
+  margin-top: 20px;
+  color: #fff;
+  background-color: #dc3545; // Bootstrap danger color
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  i {
+    font-size: 16px;
+  }
 }

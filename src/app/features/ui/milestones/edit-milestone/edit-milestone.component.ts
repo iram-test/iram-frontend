@@ -116,7 +116,7 @@ export class EditMilestoneComponent {
       .subscribe({
         next: () => {
           this.loading = false;
-          this.router.navigate(['../../'], { relativeTo: this.route });
+          this.router.navigate(['../'], { relativeTo: this.route });
         },
         error: (error) => {
           this.errorMessage = error.message || 'Failed to create section';

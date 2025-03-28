@@ -111,20 +111,19 @@ export class DashboardComponent implements OnInit {
   }
 
   deleteProject(projectId: string): void {
-    if (this.currentUser && (this.currentUser.role === 'Admin' || this.currentUser.role === UserRole.MANAGER)) {
+    // if (this.currentUser && (this.currentUser.role === 'User')) {
       if (confirm('Are you sure you want to delete this project?')) {
         this.projectService.deleteProject(projectId).subscribe({
           next: () => {
             // Reload projects after successful deletion
+            this.router.navigate(['/dashboard']);
             this.loadProjects();
-            alert('Project deleted successfully.');
           },
           error: (error) => {
             this.errorMessage = error.message || 'Failed to delete project';
-            alert('Error deleting project: ' + this.errorMessage);
           }
         });
-      }
+      // }
     }
   }
 
