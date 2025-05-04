@@ -71,6 +71,7 @@ export class MilestonesComponent implements OnInit {
   }
 
   onDeleteMilestone(milestone: Milestone) {
+    console.log(milestone);
     if (!milestone || !milestone.milestoneId) {
       console.error('Milestone or Milestone ID is undefined. Cannot delete.');
       return;

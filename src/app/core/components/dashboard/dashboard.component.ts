@@ -88,7 +88,7 @@ export class DashboardComponent implements OnInit {
           const activeTestRunCount = testRuns.length; // Assuming all are active for now
 
           // Count active milestones. You might need to add a 'status' field to MilestoneDTO
-          const activeMilestoneCount = milestones.filter(m => m.status === 'Active').length;  // Example, adjust 'Active'
+          const activeMilestoneCount = milestones.filter(m => m.status === 'Open').length;  // Example, adjust 'Active'
 
           this.projectStats[project.projectId] = {
             testSuiteCount,

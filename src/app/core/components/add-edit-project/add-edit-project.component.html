@@ -21,7 +21,7 @@
       </div>
 
       <!-- User ID field (conditionally required) -->
-      <div class="form-group">
+      <div class="form-group" *ngIf="!id">
         <label for="user-id">User ID{{ id ? '' : '*' }}</label><br />
         <input id="user-id" class="name" type="text" formControlName="user-id" placeholder="user id" />
         <div *ngIf="projectForm.get('user-id')?.invalid && (projectForm.get('user-id')?.dirty || projectForm.get('user-id')?.touched)" class="error-message">
@@ -56,7 +56,8 @@
       </div>
     </fieldset>
     <div class="btns">
-      <button type="submit" class="add-btn">Add Project</button>
+      <button type="submit" class="add-btn" *ngIf="!id">Add Project</button>
+      <button type="submit" class="add-btn" *ngIf="id">Edit Project</button>
       <button class="cancel-btn" type="button" (click)="cancel()">Cancel</button>
     </div>
   </form>

@@ -23,6 +23,8 @@ export class TestCaseSectionsComponent implements OnInit, OnDestroy {
   selectedSectionId: string | null = null;
   selectedTestCases: string[] = []; // Array to store selected test case IDs
   private destroy$ = new Subject<void>();
+  sectionsLength: number = 0;
+  subsectionsLength: number = 0;
 
   constructor(
     private router: Router,
@@ -53,6 +55,7 @@ export class TestCaseSectionsComponent implements OnInit, OnDestroy {
     this.destroy$.next();
     this.destroy$.complete();
   }
+  
   private loadData(): void {
     if (!this.projectId) return;
 
@@ -64,6 +67,8 @@ export class TestCaseSectionsComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: ({ sections, testCases, subsections }) => {
+          this.sectionsLength = sections.length;
+          this.subsectionsLength = subsections.length;
           this.hierarchy = this.buildHierarchy(sections, subsections, testCases, this.projectId!);
         },
         error: (error) => { console.error("Error loading data:", error); }

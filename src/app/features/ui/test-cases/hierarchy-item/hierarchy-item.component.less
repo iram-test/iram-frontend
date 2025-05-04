@@ -1,8 +1,14 @@
 /* hierarchy-item.component.less */
 .hierarchy-item {
+  font-family: 'Dosis';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 30px;
+  color: #FFFFFF;
+  width: 80%;
   margin-left: 15px;
   padding: 5px;
-  border-left: 2px solid #1c3c88;
 
   &.expanded {
     .children {
@@ -28,8 +34,11 @@
 }
 
 .expand-icon {
-  width: 22px;
+  position: relative;
+  font-size: 40px;
   text-align: center;
+  width: 22px;
+  bottom: 5px;
   color: white;
 }
 
@@ -40,11 +49,13 @@
 /* Style for sections */
 .section-item {
   .section-header {
-    background-color: #1c3c88;
+    background: #EE5622;
+    border: 1px solid #000000;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 12px;
     color: white;
     padding: 10px;
     font-size: 20px;
-    border-radius: 6px;
 
     .expand-icon {
       color: white;
@@ -66,7 +77,7 @@
 /* Style for subsections */
 .subsection-item {
   .subsection-header {
-    background-color: #142c6e;
+    background: #f1673a;
     color: white;
     padding: 10px;
     font-size: 19px;
@@ -109,13 +120,14 @@
 }
 
 .test-case-title {
+  padding-left: 12px;
   cursor: pointer;
   flex-grow: 1;
   text-align: left;
 }
 
 .edit-button {
-  background-color: #4CAF50; /* Green */
+  background-color: #4CAF50;
   border: none;
   color: white;
   padding: 5px 10px;
@@ -125,4 +137,24 @@
   font-size: 14px;
   cursor: pointer;
   border-radius: 4px;
+  transition: all 0.4s ease;
+}
+
+.edit-button:hover {
+  background-color: #22bc2a;
+}
+
+.delete-button {
+  color: white;
+  background-color: #e24127;
+  border: none;
+  padding: 5px 10px;
+  margin-left: 10px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.4s ease;
+}
+
+.delete-button:hover {
+  background-color: #e02204;
 }

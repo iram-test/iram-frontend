@@ -1,5 +1,14 @@
 <!-- test-case-sections.component.html -->
 <app-internal-menu></app-internal-menu>
+<div class="header">
+  <h2>Test Runs</h2>
+  <div class="sidebar">
+    <button class="sidebar-btn" (click)="navigateAddSection()">+ Add Section</button>
+    <button class="sidebar-btn" (click)="navigateAddSubsection()">+ Add Subsection</button>
+    <button class="sidebar-btn" (click)="navigateAddTestCase()">+ Add TestCase</button>
+    <p>Contains {{sectionsLength}} sections and {{subsectionsLength}} subsections.</p>
+  </div>
+</div>
 
 <main>
   <app-hierarchy-item *ngFor="let item of hierarchy" [item]="item" [selectedSectionId]="selectedSectionId"
@@ -9,9 +18,6 @@
   ></app-hierarchy-item>
 
   <div class="buttons">
-    <button (click)="navigateAddTestCase()">Add Test Case</button>
-    <button (click)="navigateAddSection()">Add Section</button>
-    <button (click)="navigateAddSubsection()">Add Subsection</button>
 
     <!-- File Import Buttons -->
     <input type="file" id="importJson" (change)="onFileSelected($event, 'json')" accept=".json" style="display: none;">

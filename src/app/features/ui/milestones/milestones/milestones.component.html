@@ -24,9 +24,8 @@
         <div class="case-list">
           <div class="case-item" *ngFor="let milestone of filteredMilestones">
             <div class="flx">
-              <div class="drag-handle">☰</div>
               <div class="case-id">{{milestone.milestoneId?.slice(0, 2) || ''}}</div>
-              <div class="case-title"><span (click)="navigateEditMilestone(milestone.milestoneId)">{{milestone.name}}</span></div>
+              <div class="case-title"><span class="edit-milestone" (click)="navigateEditMilestone(milestone.milestoneId)">{{milestone.name}}</span></div>
             </div>
             <button class="remove-button" (click)="onDeleteMilestone(milestone)">Delete</button>
           </div>

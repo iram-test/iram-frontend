@@ -6,13 +6,6 @@
       <div class="sidebar">
         <button class="sidebar-btn" (click)="onAddTestRun()">+ Add Test Run</button>
         <p *ngIf="testRuns.length === 0">There are no test runs.</p>
-        <div class="order-by-attribute">
-          <label for="attribute">Order By</label>
-          <select name="attribute" id="attribute" [(ngModel)]="selectedAttribute" (change)="onAttributeChange($event)">
-            <option value="date">Date</option>
-            <!-- Add other sorting options if needed -->
-          </select>
-        </div>
       </div>
     </div>
 

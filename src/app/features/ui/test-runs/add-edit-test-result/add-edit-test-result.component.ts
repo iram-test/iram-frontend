@@ -176,13 +176,13 @@ export class AddEditTestResultComponent implements OnInit, OnDestroy {
 
   getHeaderColor(): string {
     switch (this.testResultForm.get('status')?.value) {
-      case 'passed':
+      case 'Passed':
         return '#2E7D38';
-      case 'failed':
+      case 'Failed':
         return '#AF093E';
-      case 'blocked':
+      case 'Blocked':
         return '#4B4B4B';
-      case 'retest':
+      case 'Retest':
         return '#AF970B';
       default:
         return '#7A7A78';

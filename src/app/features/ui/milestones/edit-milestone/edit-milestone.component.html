@@ -38,7 +38,8 @@
         <div class="row"></div>
 
         <div class="form-actions">
-            <button type="submit">Add Milestone</button>
+            <button type="submit" *ngIf="!id">Add Milestone</button>
+            <button type="submit" *ngIf="id">Edit Milestone</button>
             <button type="reset" (click)="onCancel()">Cancel</button>
         </div>
     </form>

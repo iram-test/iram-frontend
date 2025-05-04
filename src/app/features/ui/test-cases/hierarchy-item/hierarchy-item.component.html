@@ -4,7 +4,7 @@
   <div class="item-header"
        [ngClass]="{'section-header': item.type === 'section', 'subsection-header': item.type === 'subsection'}">
         <span *ngIf="item.type !== 'testCase'" class="expand-icon" (click)="toggleExpanded()">
-            {{ item.expanded ? '▼' : '►' }}
+            {{ item.expanded ? '-' : '+' }}
         </span>
     <input type="radio" *ngIf="item.type === 'section' || item.type === 'subsection'"
            [name]="item.type === 'section' ? 'sectionGroup' : 'subsectionGroup'" [value]="item.id"

@@ -63,7 +63,7 @@
           </label>
         </div>
       </div>
-      <div class="radio-groups">
+      <div>
         <label>
           <input
             type="radio"
@@ -90,9 +90,7 @@
           Edit Cases
         </button>
         <ul>
-          <li *ngFor="let testCase of selectedCases">
-            <input type="checkbox" [checked]="true" disabled /> {{ testCase.title }}
-          </li>
+          <li *ngFor="let testCase of selectedCases">{{ testCase.title }}</li>
         </ul>
       </div>
     </div>
