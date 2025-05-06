@@ -23,6 +23,7 @@ export class AdministrationComponent implements OnInit {
 
   ngOnInit() {
     const currentUser = this.authService.getCurrentUser();
+    console.log(currentUser);
     if (!currentUser) {
       // Якщо користувача немає, можна редіректнути на сторінку логіну
       this.router.navigate(['/login']);
@@ -32,7 +33,7 @@ export class AdministrationComponent implements OnInit {
     // Ініціалізація форми з поточними даними користувача
     this.administrationForm = this.fb.group({
       userId: [{ value: currentUser.userId, disabled: true }],
-      email: [{ value: currentUser.email, disabled: true }],
+      email: [currentUser.email],
       username: [currentUser.username, Validators.required],
       passwd: ['', [Validators.required, Validators.minLength(8)]],
       repeatPasswd: ['', [Validators.required, Validators.minLength(8)]]

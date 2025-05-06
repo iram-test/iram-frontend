@@ -10,6 +10,7 @@ import {
 } from '../models/auth-dto';
 import { AuthResult } from '../models/AuthResult';
 import { User } from '../models/user-entity';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -81,8 +82,6 @@ export class AuthenticationService {
     );
   }
 
-
-
   public logoutUser(): Observable<void> {
     const refreshToken = localStorage.getItem('refreshToken');
 
@@ -110,7 +109,6 @@ export class AuthenticationService {
     );
   }
 
-
   public isUserAuthenticated = (): boolean => {
     const token = localStorage.getItem('accessToken');
     return !!token;
@@ -129,23 +127,15 @@ export class AuthenticationService {
       const payloadBase64 = token.split('.')[1];
       const payloadJson = atob(payloadBase64);
       const payload = JSON.parse(payloadJson);
+      const user: User = undefined;
 
-      const user = new User(
-        payload.userId,
-        payload.firstName,
-        payload.lastName,
-        payload.username,
-        payload.email,
-        "",
-        payload.isVerified,
-        payload.createdAt,
-        payload.updatedAt,
-        payload.lastLoginAt,
-        null,
-        payload.role
-      );
-      return user;
-
+      this.http.get<User>(`${environment.apiUrl}/users/${payload.userId}`)
+        .subscribe(user => {
+          user = user;
+          localStorage.setItem('currentUser', JSON.stringify(user));
+          this.currentUserSubject.next(user);
+        });
+        return user;
     } catch (error) {
       console.error("Error decoding token:", error);
       return null;

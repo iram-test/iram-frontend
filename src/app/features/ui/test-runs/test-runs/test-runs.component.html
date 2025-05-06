@@ -55,10 +55,10 @@
                 </div>
                 <div class="flx">
                   <div class="progress-fill">
-                    <div class="passed" [ngStyle]="{ 'width': calculatePercentage(testRun) + '%' }">
+                    <div class="passed" *ngIf="calculatePercentage(testRun) !== 0" [ngStyle]="{ 'width': calculatePercentage(testRun) + '%' }">
                       {{calculatePercentage(testRun)}} %
                     </div>
-                    <div class="failed" [ngStyle]="{ 'width': 100 - calculatePercentage(testRun) + '%' }">
+                    <div class="failed" *ngIf="100 - calculatePercentage(testRun) !== 0" [ngStyle]="{ 'width': 100 - calculatePercentage(testRun) + '%' }">
                       {{calculatePercentage(testRun)}} %
                     </div>
                   </div>

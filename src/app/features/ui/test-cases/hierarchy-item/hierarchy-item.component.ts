@@ -2,6 +2,8 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { HierarchyItem } from '../../../../core/models/hierarchy-item';
 import { Router, ActivatedRoute } from '@angular/router';
 import { TestCaseService } from '../../../../core/services/test-case.service';
+import { SectionService } from '../../../../core/services/section.service';
+import { SubsectionService } from '../../../../core/services/subsection.service';
 
 @Component({
   selector: 'app-hierarchy-item',
@@ -20,7 +22,9 @@ export class HierarchyItemComponent {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private testCaseService: TestCaseService
+    private testCaseService: TestCaseService,
+    private sectionService: SectionService,
+    private subsectionService: SubsectionService
   ) { }
 
   toggleExpanded() {
@@ -42,6 +46,38 @@ export class HierarchyItemComponent {
       });
       this.sectionSelected.emit(itemId);
     }
+  }
+
+  deleteSection(sectionId: string) {
+    this.sectionService.deleteSection(sectionId).subscribe({
+      next: () => {
+        window.location.reload();
+        console.log('Section deleted successfully');
+      },
+      error: err => {
+        console.error('Failed to delete section:', err);
+      }
+    });
+  }
+
+  navigateEditSection(id: string) {
+    this.router.navigate(['edit-section', id], { relativeTo: this.route });
+  }
+  
+  navigateEditSubsection(id: string) {
+    console.log(name);
+    this.router.navigate(['edit-subsection', id], { relativeTo: this.route });
+  }
+
+  deleteSubsection(subsectionName: string) {
+    this.subsectionService.deleteSubsection(subsectionName).subscribe({
+      next: () => {
+        console.log("Subsection has been deleted!")
+      },
+      error: err => {
+        console.error('Failed to delete subsection:', err);
+      }
+    });
   }
 
   navigateToTestCaseDetails(id: string) {

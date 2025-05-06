@@ -9,7 +9,7 @@
       </div>
       <div class="form-group">
         <label for="email">Email</label><br />
-        <input id="email" class="name" type="email" readonly formControlName="email" placeholder="Email" />
+        <input id="email" class="name" type="email" formControlName="email" placeholder="Email" />
       </div>
       <div class="form-group">
         <label for="username">Username</label><br />
@@ -25,7 +25,7 @@
       </div>
       <!-- Повідомлення про помилку, якщо паролі не співпадають -->
       <div *ngIf="administrationForm.errors?.['notSame'] && administrationForm.get('repeatPasswd')?.touched" class="error-message">
-        Паролі не співпадають.
+        Incorrect password.
       </div>
     </fieldset>
     <div class="btns">

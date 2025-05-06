@@ -1,41 +1,47 @@
 <!-- hierarchy-item.component.html -->
 <div class="hierarchy-item"
-     [ngClass]="{'expanded': item.expanded, 'section-item': item.type === 'section', 'subsection-item': item.type === 'subsection'}">
+  [ngClass]="{'expanded': item.expanded, 'section-item': item.type === 'section', 'subsection-item': item.type === 'subsection'}">
   <div class="item-header"
-       [ngClass]="{'section-header': item.type === 'section', 'subsection-header': item.type === 'subsection'}">
-        <span *ngIf="item.type !== 'testCase'" class="expand-icon" (click)="toggleExpanded()">
-            {{ item.expanded ? '-' : '+' }}
-        </span>
+    [ngClass]="{'section-header': item.type === 'section', 'subsection-header': item.type === 'subsection'}">
+    <span *ngIf="item.type !== 'testCase'" class="expand-icon" (click)="toggleExpanded()">
+      {{ item.expanded ? '-' : '+' }}
+    </span>
     <input type="radio" *ngIf="item.type === 'section' || item.type === 'subsection'"
-           [name]="item.type === 'section' ? 'sectionGroup' : 'subsectionGroup'" [value]="item.id"
-           (change)="onSectionSelect(item.id, $event)" [checked]="selectedSectionId === item.id"/>
+      [name]="item.type === 'section' ? 'sectionGroup' : 'subsectionGroup'" [value]="item.id"
+      (change)="onSectionSelect(item.id, $event)" [checked]="selectedSectionId === item.id" />
 
     <span [ngClass]="item.type">
-            {{ isRoot ? 'Root' : item.name }}
-        </span>
+      <div>{{ isRoot ? 'Root' : item.name }}</div>
+
+      <div [ngSwitch]="item.type">
+        <div *ngSwitchCase="'section'">
+          <button *ngIf="!isRoot" class="edit-button" (click)="navigateEditSection(item.id)">Edit Section</button>
+          <button *ngIf="!isRoot" class="delete-button" (click)="deleteSection(item.id)">Delete Section</button>
+        </div>
+        <div *ngSwitchCase="'subsection'">
+          <button class="edit-button" (click)="navigateEditSubsection(item.id)">Edit Subsection</button>
+          <button class="delete-button" (click)="deleteSubsection(item.id)">Delete Subsection</button>
+        </div>
+      </div>
+    </span>
   </div>
 
   <div class="children" *ngIf="item.expanded && item.children">
-    <app-hierarchy-item *ngFor="let child of item.children" [item]="child"
-                        [selectedSectionId]="selectedSectionId"
-                        [selectedTestCases]="selectedTestCases"
-                        [isRoot]="false" (sectionSelected)="sectionSelected.emit($event)"
-                        (testCaseSelected)="testCaseSelected.emit($event)"
-    ></app-hierarchy-item>
+    <app-hierarchy-item *ngFor="let child of item.children" [item]="child" [selectedSectionId]="selectedSectionId"
+      [selectedTestCases]="selectedTestCases" [isRoot]="false" (sectionSelected)="sectionSelected.emit($event)"
+      (testCaseSelected)="testCaseSelected.emit($event)"></app-hierarchy-item>
   </div>
 
   <div *ngIf="item.expanded && item.testCases" class="test-cases-container">
     <div *ngFor="let testCase of item.testCases" class="test-case-item">
       <!-- Checkbox for test case selection -->
-      <input type="checkbox"
-             [checked]="isSelected(testCase.testCaseId)"
-             (change)="onTestCaseSelect(testCase.testCaseId)"
-      />
+      <input type="checkbox" [checked]="isSelected(testCase.testCaseId)"
+        (change)="onTestCaseSelect(testCase.testCaseId)" />
       <span class="test-case-title" (click)="navigateToTestCaseDetails(testCase.testCaseId)">
         {{ testCase.title }}
       </span>
-      <button class="edit-button" (click)="navigateEditTestCase(testCase.testCaseId)">Edit</button>
-      <button class="delete-button" (click)="deleteTestCase(testCase.testCaseId)">Delete</button>
+      <!-- <button class="edit-button" (click)="navigateEditTestCase(testCase.testCaseId)">Edit</button>
+      <button class="delete-button" (click)="deleteTestCase(testCase.testCaseId)">Delete</button> -->
     </div>
   </div>
 </div>
