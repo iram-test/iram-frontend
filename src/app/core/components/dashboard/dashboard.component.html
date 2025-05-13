@@ -37,12 +37,23 @@
         <div>
           <!-- Clickable h3 to navigate to project details -->
           <h3 (click)="navigateToProjectDetails(project.projectId)" style="cursor: pointer;">
-            {{project.name}}
-            <!-- Edit button (conditionally displayed) -->
-            <div class="pencil" *ngIf="hasRequiredRole()" (click)="navigateEditProject(project.projectId)">✏️</div>
-            <!-- Added a pencil icon -->
-            <!-- Delete button (conditionally displayed)-->
-            <button (click)="deleteProject(project.projectId)" class="delete-button">❌</button> <!-- Added an X icon -->
+            {{ project.name }}
+
+            <!-- Edit -->
+            <span
+              class="pencil"
+              *ngIf="hasRequiredRole()"
+              (click)="navigateEditProject(project.projectId)">
+        ✏️
+      </span>
+
+            <!-- Delete -->
+            <button
+              class="delete-button"
+              *ngIf="hasRequiredRole()"
+              (click)="deleteProject(project.projectId)">
+              ❌
+            </button>
           </h3>
           <div>
             <!-- Links now go to project-overview, and then the specific section -->

@@ -7,7 +7,8 @@ import { UserService } from '../../services/user.service'; // Import UserService
 import { CreateProjectDTO, ProjectDTO, UpdateProjectDTO } from '../../models/project-dto';
 import { Location } from '../../models/enums/location';
 import { HttpErrorResponse } from '@angular/common/http';
-import { forkJoin } from 'rxjs'; // Import forkJoin
+import { forkJoin } from 'rxjs';
+import {AuthenticationService} from "../../services/authentication.service"; // Import forkJoin
 
 @Component({
   selector: 'app-add-edit-project',
@@ -22,14 +23,16 @@ export class AddEditProjectComponent implements OnInit {
   errorMessage: string | null = null;
   projectId: string | null = null;
   projectUsers: string[] = []; // To store user IDs associated with the project
-  userNames: { [userId: string]: string } = {}; // To store usernames, keyed by user ID
+  userNames: { [userId: string]: string } = {};
+  public canModify = false;
 
   constructor(
     private readonly fb: FormBuilder,
     private readonly router: Router,
     private readonly route: ActivatedRoute,
     private projectService: ProjectService,
-    private userService: UserService // Inject UserService
+    private userService: UserService,
+    private authService: AuthenticationService
   ) {
     this.projectForm = this.fb.group({
       name: ['', [Validators.required]],
@@ -40,6 +43,14 @@ export class AddEditProjectComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.authService.currentUser$.subscribe(user => {
+      if (user && user.role && user.role !== 'User') {
+        this.canModify = true;
+      } else {
+        this.canModify = false;
+      }
+    });
+
     this.route.paramMap.subscribe(params => {
       this.id = params.get('id');
       if (this.id) {
